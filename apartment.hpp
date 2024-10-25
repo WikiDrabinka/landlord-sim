@@ -1,4 +1,5 @@
 #include "furniture.hpp"
+#include "canvas.hpp"
 #include <string>
 #include <vector>
 namespace apartment {
@@ -34,33 +35,22 @@ namespace apartment {
             }
             return current_max;
         }
-        std::vector<std::string> draw(int sizeX, int sizeY){
-            std::vector<std::string> drawing;
-            for (int i=0; i<sizeX; ++i) {
-                std::string line = "";
-                for (int j=0; j<sizeY; ++j){
-                    line = line + " ";
-                }
-                drawing.push_back(line);
-            }
-            for (walls::Wall *wall: walls) {
-                for (int i = std::min(wall->getStartX(),wall->getEndX()); i <= std::max(wall->getStartX(),wall->getEndX()); ++i){
+        canvas::Canvas* draw() {;
+            canvas::Canvas *drawing = new canvas::Canvas(this->maxX()+1,this->maxY()+1);
+            for (walls::Wall *wall : walls) {
+                for (int i = std::min(wall->getStartX(),wall->getEndX()); i <= std::max(wall->getStartX(),wall->getEndX()); ++i) {
                     for (int j = std::min(wall->getStartY(),wall->getEndY()); j <= std::max(wall->getStartY(),wall->getEndY()); ++j){
-                        drawing[i][j] = 'O';
+                        drawing->changeDrawing(i,j,'O');
                     }
                 }
-            }
-            for (walls::Door *door: doors) {
-                drawing[door->getX()][door->getY()] = 'X';
             }
             return drawing;
         }
     };
     std::ostream& operator<<(std::ostream& os, Room room) {
-        std::vector<std::string> drawing = room.draw(room.maxX()+1, room.maxY()+1);
-        for (int i=0; i<drawing.size(); ++i) {
-            os << drawing[i] << std::endl;
-        }
+        canvas::Canvas *drawing = room.draw();
+        os << *drawing;
+        delete drawing;
         return os;
     }
 }

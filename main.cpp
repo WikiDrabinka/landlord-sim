@@ -22,5 +22,13 @@ int main() {
     std::cout << bob->getRent() << std::endl;
     std::cout << bob->getApartment()->getName() << std::endl;
     std::cout << *room;
+    delete item1;
+    delete bob;
+    delete wall1;
+    delete wall2;
+    delete wall3;
+    delete wall4;
+    delete door1;
+    delete room;
     return 0;
 }
