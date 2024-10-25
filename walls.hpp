@@ -1,5 +1,6 @@
+#include "ISplittable.hpp"
 namespace walls {
-    class Wall {
+    class Wall: public splittable::ISplittable {
         private:
         int startX;
         int startY;
@@ -11,6 +12,14 @@ namespace walls {
             startY = wallStartY;
             endX = wallEndX;
             endY = wallEndY;
+        }
+        void merge(Wall *wall) {
+            // to do
+            return;
+        }
+        Wall* split() {
+            // to do
+            return nullptr;
         }
         int getStartX() { return startX; }
         int getStartY() { return startY; }

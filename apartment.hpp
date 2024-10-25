@@ -15,9 +15,20 @@ namespace apartment {
             walls = roomWalls;
             doors = roomDoors;
         }
-        bool containsPoint(int pointX, int pointY);
+        bool containsPoint(int pointX, int pointY) {
+            // to do
+            return true;
+        }
         void addFurniture(furniture::Furniture *newFurniture, int X, int Y) {
             //if position in room: newfurniture.setPosition;  furniture.push_back
+        }
+        void merge(Room *room) {
+            // to do
+            return;
+        }
+        Room* split() {
+            // to do
+            return nullptr;
         }
         int maxX() {
             int current_max = 0;
@@ -43,6 +54,9 @@ namespace apartment {
                         drawing->changeDrawing(i,j,'O');
                     }
                 }
+            }
+            for (walls::Door *door : doors) {
+                drawing->changeDrawing(door->getX(),door->getY(),'X');
             }
             return drawing;
         }

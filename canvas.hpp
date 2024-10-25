@@ -13,7 +13,7 @@ namespace canvas {
             sizeY = y;
             for (int i = 0; i < x; ++i) {
                 std::string line = "";
-                for (int j = 0; j < x; ++j) {
+                for (int j = 0; j < y; ++j) {
                     line = line + " ";
                 }
                 drawing.push_back(line);
