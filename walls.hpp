@@ -14,7 +14,6 @@ namespace walls {
             endY = wallEndY;
         }
         void merge(Wall *wall) {
-            // to do
             return;
         }
         Wall* split() {

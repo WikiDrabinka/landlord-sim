@@ -11,6 +11,9 @@ namespace item {
             size = itemSize;
             value = itemValue;
         }
+        std::string getName(){
+            return name;
+        }
         int getSize() {
             return size;
         }

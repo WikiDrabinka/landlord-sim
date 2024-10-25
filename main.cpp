@@ -1,8 +1,9 @@
-#include "apartment.hpp"
+#include "generator.hpp"
 #include <vector>
 int main() {
     std::vector<item::Item *> items;
-    item::Item *item1 = new item::Item("Sword", 50, 50);
+    generator::Generator<item::Item> *gen = new generator::Generator<item::Item>;
+    item::Item *item1 = gen->generate();
     items.push_back(item1);
     tenant::Tenant *bob = new tenant::Tenant("Bob",1000.0,200.0,100,100,items);
     std::vector<walls::Wall *> roomWalls;
@@ -26,7 +27,7 @@ int main() {
     apartment::Room *room = new apartment::Room("Bedroom",roomWalls,doors);
     bob->sign(room,500);
     std::cout << bob->getRent() << std::endl;
-    std::cout << bob->getApartment()->getName() << std::endl;
+    std::cout << bob->getItem(0)->getName() << std::endl;
     std::cout << *room;
     delete item1;
     delete bob;
