@@ -2,10 +2,8 @@
 #include <vector>
 int main() {
     std::vector<item::Item *> items;
-    generator::Generator<item::Item> *gen = new generator::Generator<item::Item>;
-    item::Item *item1 = gen->generate();
-    items.push_back(item1);
-    tenant::Tenant *bob = new tenant::Tenant("Bob",1000.0,200.0,100,100,items);
+    generator::Generator<tenant::Tenant> *gen = new generator::Generator<tenant::Tenant>;
+    tenant::Tenant *bob = (tenant::Tenant*) gen->generate();
     std::vector<walls::Wall *> roomWalls;
     walls::Wall *wall1 = new walls::Wall(0,0,0,9);
     walls::Wall *wall2 = new walls::Wall(0,0,3,0);
@@ -27,9 +25,9 @@ int main() {
     apartment::Room *room = new apartment::Room("Bedroom",roomWalls,doors);
     bob->sign(room,500);
     std::cout << bob->getRent() << std::endl;
+    std::cout << bob->getName() << std::endl;
     std::cout << bob->getItem(0)->getName() << std::endl;
     std::cout << *room;
-    delete item1;
     delete bob;
     delete wall1;
     delete wall2;

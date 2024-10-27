@@ -29,14 +29,9 @@ namespace tenant {
             apartment = newApartment;
             rent = newRent;
         }
-        float getRent() {
-            return rent;
-        }
-        item::Item* getItem(int idx) {
-            return items[idx];
-        }
-        livingSpace::LivingSpace* getApartment() {
-            return apartment;
-        }
+        float getRent() { return rent;}
+        std::string getName() { return name; }
+        item::Item* getItem(int idx) { return items[idx]; }
+        livingSpace::LivingSpace* getApartment() { return apartment; }
     };
 }

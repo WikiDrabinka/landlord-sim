@@ -11,14 +11,8 @@ namespace item {
             size = itemSize;
             value = itemValue;
         }
-        std::string getName(){
-            return name;
-        }
-        int getSize() {
-            return size;
-        }
-        float getValue() {
-            return value;
-        }
+        std::string getName(){ return name; }
+        int getSize() { return size; }
+        float getValue() { return value; }
     };
 }

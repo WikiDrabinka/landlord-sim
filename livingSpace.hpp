@@ -5,9 +5,7 @@ namespace livingSpace {
         protected:
         std::string name;
         public:
-        std::string getName() {
-            return name;
-        }
+        std::string getName() { return name; }
         void draw(int sizeX, int sizeY);
     };
 }
