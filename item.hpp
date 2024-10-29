@@ -15,5 +15,8 @@ namespace item {
         int getSize() { return size; }
         float getValue() { return value; }
     };
-    // TO DO :  overload << operator
+    std::ostream& operator<<(std::ostream& os, Item it) {
+        os << "Name: " << it.getName() << ", Size: " << it.getSize() << ", Value: " << it.getValue() << std::endl;
+        return os;
+    }
 }

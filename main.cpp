@@ -23,7 +23,7 @@ int main() {
     std::vector<walls::Door *> doors;
     doors.push_back(door1);
     apartment::Room *room = new apartment::Room("Bedroom",roomWalls,doors);
-    bob->sign(room,500.0);
+    bob->sign(room,500.10);
     std::cout << *bob;
     std::cout << *room;
     delete gen;

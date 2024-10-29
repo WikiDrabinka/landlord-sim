@@ -41,8 +41,10 @@ namespace tenant {
         float getRent() { return rent; }
         int getPatience() { return patience; }
         int getHappiness() { return happiness; }
+        int getNoOfItems () { return items.size(); }
         std::string getName() { return name; }
         std::string getNickname() { return nickname; }
+        std::vector<item::Item *> getItems() { return items; }
         item::Item* getItem(int idx) { return items[idx]; }
         livingSpace::LivingSpace* getApartment() { return apartment; }
         void setNickname(std::string newNickname) { nickname = newNickname; }
@@ -57,6 +59,10 @@ namespace tenant {
         os << "Rent: " << ten.getRent() << std::endl;
         os << "Hapiness: " << ten.getHappiness() << std::endl;
         os << "Patience: " << ten.getPatience() << std::endl;
+        os << "Items:" << std::endl;
+        for (int i=0; i<ten.getNoOfItems(); ++i) {
+            os << i+1 << ") " << *(ten.getItem(i));
+        }
         return os;
     }
 }
