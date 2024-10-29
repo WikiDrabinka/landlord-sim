@@ -16,17 +16,29 @@ namespace generator {
         public:
         void* generate() {
             std::random_device dev;
+            std::mt19937 gen(dev());
             std::vector<std::string> possibleNames = names<T>();
+            std::uniform_int_distribution<> nameDistr(0,possibleNames.size()-1);
+            std::uniform_int_distribution<> traitDistr(1,100);
             if (typeid(T)==typeid(item::Item)) {
-                item::Item *newItem = new item::Item(possibleNames[2],5,10);
+                std::uniform_int_distribution<> sizeDistr(1,10);
+                item::Item *newItem = new item::Item(possibleNames[nameDistr(gen)],sizeDistr(gen),traitDistr(gen));
                 return newItem;
             } else if (typeid(T)==typeid(tenant::Tenant)) {
+                std::uniform_int_distribution<> itemNoDistr(1,10);
+                std::vector<item::Item *> tenantItems;
+                int noItems = itemNoDistr(gen);
                 Generator<item::Item> *itemGen = new Generator<item::Item>;
-                item::Item *tenantItem = (item::Item*) itemGen->generate();
-                tenant::Tenant *newTenant = new tenant::Tenant(possibleNames[2],500,400,50,40,{tenantItem});
+                for (int i=0; i<noItems; ++i) {
+                    tenantItems.push_back((item::Item*) itemGen->generate());
+                }
+                std::uniform_int_distribution<> incomeDistr(50000,400000);
+                tenant::Tenant *newTenant = new tenant::Tenant(possibleNames[nameDistr(gen)],incomeDistr(gen)/100.0,incomeDistr(gen)/100.0,traitDistr(gen),traitDistr(gen),tenantItems);
+                delete itemGen;
                 return newTenant;
             } else if (typeid(T)==typeid(furniture::Storage)) {
                 //to do
+                return nullptr;
             } else {
                 std::cerr << "Cannot generate an object of type " << typeid(T).name() << std::endl;
                 return nullptr;

@@ -27,7 +27,10 @@ int main() {
     std::cout << bob->getRent() << std::endl;
     std::cout << bob->getName() << std::endl;
     std::cout << bob->getItem(0)->getName() << std::endl;
+    std::cout << bob->getItem(0)->getSize() << std::endl;
+    std::cout << bob->getIncome() << std::endl;
     std::cout << *room;
+    delete gen;
     delete bob;
     delete wall1;
     delete wall2;

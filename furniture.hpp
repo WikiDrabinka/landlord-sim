@@ -12,6 +12,7 @@ namespace furniture {
         int sizeY;
         int positionX;
         int positionY;
+        tenant::Tenant *claim;
         public:
         Furniture(std::string furnitureName, float furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY) {
             name = furnitureName;
@@ -20,6 +21,7 @@ namespace furniture {
             sizeX = furnitureSizeX;
             sizeY = furnitureSizeY;
         }
+        void claimFurniture(tenant::Tenant *newClaim) { claim = newClaim; }
         void setCondition(int new_condition) {
             if (new_condition>=0 && new_condition<=100) {
                 condition=new_condition;
