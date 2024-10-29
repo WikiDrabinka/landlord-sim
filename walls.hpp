@@ -1,4 +1,5 @@
 #include "ISplittable.hpp"
+#include <algorithm>
 namespace walls {
     class Wall: public splittable::ISplittable {
         private:
@@ -14,11 +15,59 @@ namespace walls {
             endY = wallEndY;
         }
         void merge(Wall *wall) {
-            return;
+            if (startX==endX && wall->startX==wall->endX && startX==wall->startX) {
+                std::vector<int> points1;
+                std::vector<int> points2;
+                for (int i=std::min(startY,endY); i<=std::max(startY,endY); ++i ) {
+                    points1.push_back(i);
+                }
+                for (int i=std::min(wall->startY,wall->endY); i<=std::max(wall->startY,wall->endY); ++i ) {
+                    points2.push_back(i);
+                }
+                std::vector<int> intersection;
+                std::set_intersection(points1.begin(),points1.end(),points2.begin(),points2.end(),std::back_inserter(intersection));
+                if (intersection.size()==0) {
+                    std::cerr << "Cannot merge incompatible walls." << std::endl;
+                    return;
+                }
+                std::vector<int> newPoints;
+                std::set_union(points1.begin(),points1.end(),points2.begin(),points2.end(),std::back_inserter(newPoints));
+                startY = *std::min_element(newPoints.begin(),newPoints.end());
+                endY = *std::max_element(newPoints.begin(),newPoints.end());
+                delete wall;
+            } else if (startY==endY && wall->startY==wall->endY && startY==wall->startY){
+                std::vector<int> points1;
+                std::vector<int> points2;
+                for (int i=std::min(startX,endX); i<=std::max(startX,endX); ++i ) {
+                    points1.push_back(i);
+                }
+                for (int i=std::min(wall->startX,wall->endX); i<=std::max(wall->startX,wall->endX); ++i ) {
+                    points2.push_back(i);
+                }
+                std::vector<int> intersection;
+                std::set_intersection(points1.begin(),points1.end(),points2.begin(),points2.end(),std::back_inserter(intersection));
+                if (intersection.size()==0) {
+                    std::cerr << "Cannot merge incompatible walls." << std::endl;
+                    return;
+                }
+                std::vector<int> newPoints;
+                std::set_union(points1.begin(),points1.end(),points2.begin(),points2.end(),std::back_inserter(newPoints));
+                startX = *std::min_element(newPoints.begin(),newPoints.end());
+                endX = *std::max_element(newPoints.begin(),newPoints.end());
+                delete wall;
+            } else {
+                std::cerr << "Cannot merge incompatible walls." << std::endl;
+            }
         }
-        Wall* split() {
-            // to do
-            return nullptr;
+        Wall* split(int newEndX, int newEndY) {
+            if (!containsPoint(newEndX, newEndY)) {
+                std::cerr << "Cannot split wall at a point not contained in it." << std::endl;
+                return nullptr;
+            }
+            Wall *newWall = new Wall(newEndX, newEndY, endX, endY);
+            endX = newEndX;
+            endY = newEndY;
+            return newWall;
         }
         int getStartX() { return startX; }
         int getStartY() { return startY; }

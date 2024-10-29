@@ -5,7 +5,9 @@ int main() {
     generator::Generator<tenant::Tenant> *gen = new generator::Generator<tenant::Tenant>;
     tenant::Tenant *bob = (tenant::Tenant*) gen->generate();
     std::vector<walls::Wall *> roomWalls;
-    walls::Wall *wall1 = new walls::Wall(0,0,0,9);
+    walls::Wall *wall1 = new walls::Wall(0,0,0,5);
+    walls::Wall *mergedWall = new walls::Wall(0,5,0,9);
+    wall1->merge(mergedWall);
     walls::Wall *wall2 = new walls::Wall(0,0,3,0);
     //walls::Wall *wall3 = new walls::Wall(0,4,4,4);
     walls::Wall *wall4 = new walls::Wall(3,0,3,4);
