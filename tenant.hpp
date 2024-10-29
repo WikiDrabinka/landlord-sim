@@ -28,20 +28,35 @@ namespace tenant {
             rent = 0.0;
         }
         ~Tenant() {
-            for (item::Item *deletedItem: items) {
-                delete deletedItem;
+            for (int i=items.size()-1; i<=0; --i) {
+                delete items[i];
             }
         }
         void sign(livingSpace::LivingSpace *newApartment, float newRent) {
             apartment = newApartment;
             rent = newRent;
         }
-        float getRent() { return rent; }
         float getIncome() { return monthlyIncome; }
+        float getSavings() { return savings; }
+        float getRent() { return rent; }
+        int getPatience() { return patience; }
+        int getHappiness() { return happiness; }
         std::string getName() { return name; }
+        std::string getNickname() { return nickname; }
         item::Item* getItem(int idx) { return items[idx]; }
         livingSpace::LivingSpace* getApartment() { return apartment; }
         void setNickname(std::string newNickname) { nickname = newNickname; }
     };
-    // TO DO : overload operator <<
+    std::ostream& operator<< (std::ostream& os, Tenant ten) {
+        os << "Name: " << ten.getName() << std::endl;
+        if (ten.getName()!=ten.getNickname()) {
+            os << "Nickname: " << ten.getNickname() << std::endl;
+        }
+        os << "Income: " << ten.getIncome() << std::endl;
+        os << "Savings: " << ten.getSavings() << std::endl;
+        os << "Rent: " << ten.getRent() << std::endl;
+        os << "Hapiness: " << ten.getHappiness() << std::endl;
+        os << "Patience: " << ten.getPatience() << std::endl;
+        return os;
+    }
 }

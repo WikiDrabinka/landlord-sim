@@ -15,4 +15,5 @@ namespace item {
         int getSize() { return size; }
         float getValue() { return value; }
     };
+    // TO DO :  overload << operator
 }

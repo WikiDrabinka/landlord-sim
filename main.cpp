@@ -23,12 +23,8 @@ int main() {
     std::vector<walls::Door *> doors;
     doors.push_back(door1);
     apartment::Room *room = new apartment::Room("Bedroom",roomWalls,doors);
-    bob->sign(room,500);
-    std::cout << bob->getRent() << std::endl;
-    std::cout << bob->getName() << std::endl;
-    std::cout << bob->getItem(0)->getName() << std::endl;
-    std::cout << bob->getItem(0)->getSize() << std::endl;
-    std::cout << bob->getIncome() << std::endl;
+    bob->sign(room,500.0);
+    std::cout << *bob;
     std::cout << *room;
     delete gen;
     delete bob;
