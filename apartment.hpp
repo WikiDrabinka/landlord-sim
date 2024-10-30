@@ -1,6 +1,7 @@
 #include "furniture.hpp"
 #include "canvas.hpp"
 #include <string>
+#include <memory>
 #include <vector>
 namespace apartment {
     class Room: public livingSpace::LivingSpace {
@@ -10,10 +11,11 @@ namespace apartment {
         std::vector<walls::Door *> doors;
         std::vector<furniture::Furniture> furniture;
         public:
-        Room(std::string roomName, std::vector<walls::Wall *> roomWalls, std::vector<walls::Door *> roomDoors) {
+        Room(std::string roomName, std::vector<walls::Wall *> roomWalls, std::vector<walls::Door *> roomDoors, livingSpace::state newState) {
             name = roomName;
             walls = roomWalls;
             doors = roomDoors;
+            occupancyState = newState;
         }
         bool containsPoint(int pointX, int pointY) {
             // to do
