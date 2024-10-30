@@ -1,5 +1,6 @@
 #include "ISplittable.hpp"
 #include <algorithm>
+#include <memory>
 namespace walls {
     class Wall: public splittable::ISplittable {
         private:
@@ -14,7 +15,7 @@ namespace walls {
             endX = wallEndX;
             endY = wallEndY;
         }
-        void merge(Wall *wall) {
+        void merge(std::shared_ptr<Wall> wall) {
             if (startX==endX && wall->startX==wall->endX && startX==wall->startX) {
                 std::vector<int> points1;
                 std::vector<int> points2;
@@ -34,7 +35,6 @@ namespace walls {
                 std::set_union(points1.begin(),points1.end(),points2.begin(),points2.end(),std::back_inserter(newPoints));
                 startY = *std::min_element(newPoints.begin(),newPoints.end());
                 endY = *std::max_element(newPoints.begin(),newPoints.end());
-                delete wall;
             } else if (startY==endY && wall->startY==wall->endY && startY==wall->startY){
                 std::vector<int> points1;
                 std::vector<int> points2;
@@ -54,17 +54,16 @@ namespace walls {
                 std::set_union(points1.begin(),points1.end(),points2.begin(),points2.end(),std::back_inserter(newPoints));
                 startX = *std::min_element(newPoints.begin(),newPoints.end());
                 endX = *std::max_element(newPoints.begin(),newPoints.end());
-                delete wall;
             } else {
                 std::cerr << "Cannot merge incompatible walls." << std::endl;
             }
         }
-        Wall* split(int newEndX, int newEndY) {
+        std::shared_ptr<Wall> split(int newEndX, int newEndY) {
             if (!containsPoint(newEndX, newEndY)) {
                 std::cerr << "Cannot split wall at a point not contained in it." << std::endl;
                 return nullptr;
             }
-            Wall *newWall = new Wall(newEndX, newEndY, endX, endY);
+            std::shared_ptr<Wall> newWall = std::shared_ptr<Wall>(new Wall(newEndX, newEndY, endX, endY));
             endX = newEndX;
             endY = newEndY;
             return newWall;

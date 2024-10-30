@@ -7,14 +7,14 @@ namespace apartment {
     class Room: public livingSpace::LivingSpace {
         private:
         //std::string name;
-        std::vector<walls::Wall *> walls;
-        std::vector<walls::Door *> doors;
+        std::vector<std::shared_ptr<walls::Wall>> walls;
+        std::shared_ptr<walls::Door> door;
         std::vector<furniture::Furniture> furniture;
         public:
-        Room(std::string roomName, std::vector<walls::Wall *> roomWalls, std::vector<walls::Door *> roomDoors, livingSpace::state newState) {
+        Room(std::string roomName, std::vector<std::shared_ptr<walls::Wall>> roomWalls, std::shared_ptr<walls::Door> roomDoor, livingSpace::state newState) {
             name = roomName;
             walls = roomWalls;
-            doors = roomDoors;
+            door = roomDoor;
             occupancyState = newState;
         }
         bool containsPoint(int pointX, int pointY) {
@@ -34,7 +34,7 @@ namespace apartment {
         }
         int maxX() {
             int current_max = 0;
-            for (walls::Wall *wall: walls) {
+            for (std::shared_ptr<walls::Wall> wall: walls) {
                 current_max = std::max(current_max,wall->getStartX());
                 current_max = std::max(current_max,wall->getEndX());
             }
@@ -42,7 +42,7 @@ namespace apartment {
         }
         int maxY() {
             int current_max = 0;
-            for (walls::Wall *wall: walls) {
+            for (std::shared_ptr<walls::Wall> wall: walls) {
                 current_max = std::max(current_max,wall->getStartY());
                 current_max = std::max(current_max,wall->getEndY());
             }
@@ -50,16 +50,14 @@ namespace apartment {
         }
         canvas::Canvas* draw() {;
             canvas::Canvas *drawing = new canvas::Canvas(this->maxX()+1,this->maxY()+1);
-            for (walls::Wall *wall : walls) {
+            for (std::shared_ptr<walls::Wall> wall : walls) {
                 for (int i = std::min(wall->getStartX(),wall->getEndX()); i <= std::max(wall->getStartX(),wall->getEndX()); ++i) {
                     for (int j = std::min(wall->getStartY(),wall->getEndY()); j <= std::max(wall->getStartY(),wall->getEndY()); ++j){
                         drawing->changeDrawing(i,j,'O');
                     }
                 }
             }
-            for (walls::Door *door : doors) {
-                drawing->changeDrawing(door->getX(),door->getY(),'X');
-            }
+            drawing->changeDrawing(door->getX(),door->getY(),'X');
             return drawing;
         }
     };

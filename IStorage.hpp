@@ -16,6 +16,7 @@ namespace storage {
             return lastItem;
         }
         void addItem(std::shared_ptr<item::Item> newItem) { items.push_back(newItem); }
+        void clear() { items.clear(); }
     };
     std::ostream& operator<<(std::ostream& os, IStorage storage) {
         os << "Items:" << std::endl;
