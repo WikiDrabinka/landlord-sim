@@ -1,12 +1,12 @@
-#include "generator.hpp"
+#include "apartment.hpp"
 #include <vector>
 int main() {
-    std::vector<item::Item *> items;
-    generator::Generator<tenant::Tenant> *gen = new generator::Generator<tenant::Tenant>;
-    tenant::Tenant *bob = (tenant::Tenant*) gen->generate();
+    //generator::Generator<tenant::Tenant> *gen = new generator::Generator<tenant::Tenant>;
+    //std::shared_ptr<tenant::Tenant> bob = gen->generate();
+    tenant::Tenant *bob = new tenant::Tenant();
     std::vector<walls::Wall *> roomWalls;
-    walls::Wall *wall1 = new walls::Wall(0,0,0,5);
-    walls::Wall *mergedWall = new walls::Wall(0,5,0,9);
+    walls::Wall *wall1 = new walls::Wall(0,0,0,9);
+    walls::Wall *mergedWall = wall1->split(0,5);
     wall1->merge(mergedWall);
     walls::Wall *wall2 = new walls::Wall(0,0,3,0);
     //walls::Wall *wall3 = new walls::Wall(0,4,4,4);
@@ -14,6 +14,7 @@ int main() {
     walls::Wall *wall5 = new walls::Wall(0,9,5,9);
     walls::Wall *wall6 = new walls::Wall(3,4,5,4);
     walls::Wall *wall7 = new walls::Wall(5,9,5,4);
+    item::Item *item1 = new item::Item();
     roomWalls.push_back(wall1);
     roomWalls.push_back(wall2);
     //roomWalls.push_back(wall3);
@@ -25,19 +26,10 @@ int main() {
     std::vector<walls::Door *> doors;
     doors.push_back(door1);
     apartment::Room *room = new apartment::Room("Bedroom",roomWalls,doors);
-    bob->sign(room,500.10);
+    //bob->sign(room,500);
     std::cout << *bob;
     std::cout << *room;
-    delete gen;
-    delete bob;
-    delete wall1;
-    delete wall2;
-    //delete wall3;
-    delete wall4;
-    delete wall5;
-    delete wall6;
-    delete wall7;
-    delete door1;
-    delete room;
+    //delete gen; 
+    std::cout << *item1;
     return 0;
 }
