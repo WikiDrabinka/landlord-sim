@@ -1,6 +1,6 @@
 #pragma once
 #include "point.h"
-#include "canvas.h"
+#include "../display/canvas.h"
 #include <memory>
 namespace splittable {
     class ISplittable {

@@ -1,4 +1,4 @@
-#include "../headers/point.h"
+#include "../../headers/geometry/point.h"
 #include <random>
 namespace point {
     Point::Point(int pointX, int pointY) {
@@ -6,8 +6,8 @@ namespace point {
         y = pointY;
     }
     Point::Point() {
-        x=0;
-        y=0;
+        x = 0;
+        y = 0;
     }
     bool Point::operator==(Point &otherPoint) {
         return (x == otherPoint.x && y == otherPoint.y);

@@ -2,7 +2,7 @@
 #include <random>
 #include <vector>
 #include <iostream>
-#include "../headers/item.h"
+#include "../../headers/objects/item.h"
 namespace item {
     Item::Item(std::string itemName, int itemSize, int itemValue) {
         name = itemName;

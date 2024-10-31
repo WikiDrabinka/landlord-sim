@@ -1,7 +1,7 @@
 #pragma once
 #include "furniture.h"
-#include "canvas.h"
-#include "rectangle.h"
+#include "../display/canvas.h"
+#include "../geometry/rectangle.h"
 #include <string>
 #include <memory>
 #include <vector>

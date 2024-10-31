@@ -1,4 +1,4 @@
-#include "../headers/room.h"
+#include "../../headers/objects/room.h"
 #include <algorithm>
 namespace room {
     Room::Room(std::string roomName, livingSpace::state newState) {
@@ -52,16 +52,7 @@ namespace room {
         return maxY;
     }
     canvas::Canvas* Room::draw() {;
-        // canvas::Canvas *drawing = new canvas::Canvas(this->maxX()+1,this->maxY()+1);
-        // for (std::shared_ptr<wall::Wall> wall : walls) {
-        //     for (int i = std::min(wall->getStartX(),wall->getEndX()); i <= std::max(wall->getStartX(),wall->getEndX()); ++i) {
-        //         for (int j = std::min(wall->getStartY(),wall->getEndY()); j <= std::max(wall->getStartY(),wall->getEndY()); ++j){
-        //             drawing->changeDrawing(i,j,'O');
-        //         }
-        //     }
-        // }
-        // drawing->changeDrawing(door->getX(),door->getY(),'X');
-        // return drawing;
+        return nullptr;
     }
     std::ostream& operator<<(std::ostream& os, Room room) {
         canvas::Canvas *drawing = room.draw();

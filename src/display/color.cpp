@@ -1,4 +1,4 @@
-#include "../headers/color.h"
+#include "../../headers/display/color.h"
 namespace color {
     Color::Color(int r, int g, int b) {
         red = r;

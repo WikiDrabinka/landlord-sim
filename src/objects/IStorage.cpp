@@ -1,4 +1,4 @@
-#include "../headers/IStorage.h"
+#include "../../headers/objects/IStorage.h"
 namespace storage {
     int IStorage::getNoOfItems () { return items.size(); }
     std::vector<std::shared_ptr<item::Item>> IStorage::getItems() { return items; }
