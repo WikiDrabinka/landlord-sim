@@ -23,7 +23,7 @@ namespace room {
         Room* split();
         int maxX();
         int maxY();
-        canvas::Canvas* draw();
+        std::unique_ptr<canvas::Canvas> draw(char c);
     };
     std::ostream& operator<<(std::ostream& os, Room room);
 }

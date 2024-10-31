@@ -51,13 +51,12 @@ namespace room {
         }
         return maxY;
     }
-    canvas::Canvas* Room::draw() {;
+    std::unique_ptr<canvas::Canvas> Room::draw(char c) {;
         return nullptr;
     }
     std::ostream& operator<<(std::ostream& os, Room room) {
-        canvas::Canvas *drawing = room.draw();
-        os << *drawing;
-        delete drawing;
+        std::unique_ptr<canvas::Canvas> drawing = room.draw('c');
+        os << *(drawing.get());
         return os;
     }
 }

@@ -35,7 +35,13 @@ namespace rectangle {
         point2.x = x;
         return newRect;
     }
-    canvas::Canvas Rectangle::draw(int sizeX, int sizeY) {
-        
+    std::unique_ptr<canvas::Canvas> Rectangle::draw() {
+        std::unique_ptr<canvas::Canvas> drawing(new canvas::Canvas(point2.x+1,point2.y+1));
+        for (int i = point1.x; i<=point2.x; ++i) {
+            for (int j = point1.y; j<=point2.y; ++j) {
+                drawing.get()->changeDrawing(i,j,'X');
+            }
+        }
+        return drawing;
     }
 }

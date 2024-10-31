@@ -1,6 +1,7 @@
 #pragma once
 #include "ISplittable.h"
 #include <memory>
+#include <iostream>
 namespace rectangle {
     class Rectangle: public splittable::ISplittable {
         private:
@@ -15,6 +16,6 @@ namespace rectangle {
         int area();
         std::shared_ptr<Rectangle> splitVertically(int y);
         std::shared_ptr<Rectangle> splitHorizontally(int x);
-        canvas::Canvas draw(int sizeX, int sizeY);
+        std::unique_ptr<canvas::Canvas> draw();
     };
 }
