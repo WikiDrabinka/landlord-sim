@@ -1,4 +1,4 @@
-#include "furniture.h"
+#include "../headers/furniture.h"
 namespace furniture {
     Furniture::Furniture(std::string furnitureName, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY) {
         name = furnitureName;

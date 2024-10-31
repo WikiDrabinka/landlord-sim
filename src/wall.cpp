@@ -1,4 +1,4 @@
-#include "wall.h"
+#include "../headers/wall.h"
 #include <vector>
 #include <algorithm>
 #include <iostream>

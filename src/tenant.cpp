@@ -1,4 +1,4 @@
-#include "tenant.h"
+#include "../headers/tenant.h"
 #include <random>
 namespace tenant {
     Tenant::Tenant(std::string tenantName, int tenantIncome, int tenantSavings, int tenantPatience, int tenantHappiness) {

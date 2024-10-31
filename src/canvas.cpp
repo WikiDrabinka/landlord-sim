@@ -1,4 +1,4 @@
-#include "canvas.h"
+#include "../headers/canvas.h"
 namespace canvas {
     Canvas::Canvas(int x, int y) {
         sizeX = x;
