@@ -11,10 +11,10 @@ int main() {
     std::cout << *shelf;
     point::Point p1 = point::Point(1,1);
     point::Point p2 = point::Point(2,5);
-    rectangle::Rectangle *rect = new rectangle::Rectangle(p1,p2);
-    color::BackgroundColor green = color::BackgroundColor(0,0,255);
-    std::cout << green << rect->area() << color::Color::reset << std::endl;
-    std::cout << *(rect->draw().get());
+    color::BackgroundColor blue = color::BackgroundColor(0,0,255);
+    rectangle::Rectangle *rect = new rectangle::Rectangle(p1,p2,blue);
+    std::cout << blue << rect->area() << color::Color::reset << std::endl;
+    std::cout << *rect;
     delete bob; 
     delete shelf;
     return 0;

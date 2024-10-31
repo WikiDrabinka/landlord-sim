@@ -1,4 +1,5 @@
 #include "../../headers/display/canvas.h"
+#include <algorithm>
 namespace canvas {
     Canvas::Canvas(int x, int y) {
         sizeX = x;

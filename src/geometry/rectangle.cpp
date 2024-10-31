@@ -5,9 +5,16 @@ namespace rectangle {
     Rectangle::Rectangle(point::Point rectanglePoint1, point::Point rectanglePoint2) {
         point1 = point::Point(std::min(rectanglePoint1.x,rectanglePoint2.x),std::min(rectanglePoint1.y,rectanglePoint2.y));
         point2 = point::Point(std::max(rectanglePoint1.x,rectanglePoint2.x),std::max(rectanglePoint1.y,rectanglePoint2.y));
+        color = color::BackgroundColor(255,255,255);
+    }
+    Rectangle::Rectangle(point::Point rectanglePoint1, point::Point rectanglePoint2, color::BackgroundColor rectangleColor) {
+        point1 = point::Point(std::min(rectanglePoint1.x,rectanglePoint2.x),std::min(rectanglePoint1.y,rectanglePoint2.y));
+        point2 = point::Point(std::max(rectanglePoint1.x,rectanglePoint2.x),std::max(rectanglePoint1.y,rectanglePoint2.y));
+        color = rectangleColor;
     }
     point::Point Rectangle::getPoint1() { return point1; }
     point::Point Rectangle::getPoint2() { return point2; }
+    color::BackgroundColor Rectangle::getColor() { return color; }
     bool Rectangle::containsPoint(point::Point point) {
         return (point.x <= std::max(point1.x,point2.x) && point.x >= std::min(point1.x,point2.x) && point.y <= std::max(point1.y,point2.y) && point.y >= std::min(point1.y,point2.y));
     }
@@ -43,5 +50,18 @@ namespace rectangle {
             }
         }
         return drawing;
+    }
+    std::ostream& operator<<(std::ostream& os, Rectangle rec) {
+        std::vector<std::string> drawing = rec.draw().get()->getDrawing();
+        for (int i=0; i<drawing.size(); ++i) {
+            for (int j=0; j<drawing[i].size(); ++j) {
+                if (drawing[i][j]=='X') {
+                    std::cout << rec.getColor();
+                }
+                std::cout << " " << color::Color::reset;
+            }
+            std::cout << std::endl;
+        }
+        return os;
     }
 }

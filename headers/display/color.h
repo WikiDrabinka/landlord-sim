@@ -13,10 +13,14 @@ namespace color {
     class BackgroundColor: public Color {
         public:
         BackgroundColor(int r, int g, int b);
+        BackgroundColor();
+        std::string getString();
     };
     class ForegroundColor: public Color {
         public:
         ForegroundColor(int r, int g, int b);
+        ForegroundColor();
+        std::string getString();
     };
     std::ostream& operator<<(std::ostream& os, BackgroundColor c);
     std::ostream& operator<<(std::ostream& os, ForegroundColor c);
