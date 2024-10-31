@@ -1,5 +1,7 @@
+#pragma once
 #include "furniture.h"
 #include "canvas.h"
+#include "rectangle.h"
 #include <string>
 #include <memory>
 #include <vector>
@@ -7,14 +9,15 @@ namespace room {
     class Room: public livingSpace::LivingSpace {
         private:
         std::string name;
-        std::vector<std::shared_ptr<wall::Wall>> walls;
-        std::shared_ptr<wall::Door> door;
+        std::vector<std::shared_ptr<rectangle::Rectangle>> rectangles;
         std::vector<std::shared_ptr<furniture::Furniture>> furniture;
         public:
-        Room(std::string roomName, std::vector<std::shared_ptr<wall::Wall>> roomWalls, std::shared_ptr<wall::Door> roomDoor, livingSpace::state newState);
-        std::vector<std::shared_ptr<wall::Wall>> getWalls();
+        Room(std::string roomName, livingSpace::state newState);
+        Room(std::string roomName, livingSpace::state newState, std::shared_ptr<rectangle::Rectangle> roomRectangle);
+        Room(std::string roomName, livingSpace::state newState, std::vector<std::shared_ptr<rectangle::Rectangle>> roomRectangles);
+        std::vector<std::shared_ptr<rectangle::Rectangle>> getRectangles();
         std::vector<std::shared_ptr<furniture::Furniture>> getFurniture();
-        bool containsPoint(int pointX, int pointY);
+        bool containsPoint(point::Point point);
         void addFurniture(std::unique_ptr<furniture::Furniture> newFurniture, int X, int Y);
         void merge(std::shared_ptr<Room> otherRoom);
         Room* split();

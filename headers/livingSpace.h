@@ -1,5 +1,5 @@
 #include <string>
-#include "wall.h"
+#include "ISplittable.h"
 namespace livingSpace {
     enum state {shared, claimed, unclaimed};
     class LivingSpace: public  splittable::ISplittable {
@@ -8,6 +8,5 @@ namespace livingSpace {
         state occupancyState;
         public:
         std::string getName() { return name; }
-        void draw(int sizeX, int sizeY);
     };
 }
