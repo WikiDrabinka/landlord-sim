@@ -8,6 +8,7 @@ namespace tenant {
     class Tenant: public storage::IStorage {
         private:
         static std::vector<std::string> generatedFirstNames;
+        static std::vector<std::string> generatedLastNames;
         std::string name;
         std::string nickname;
         int monthlyIncome;

@@ -25,4 +25,4 @@ int main() {
     return 0;
 }
 
-//TO DO : finish rewriting rooms:), add last name generation to tenant, representing furniture, placing furniture, create class apartment
+//TO DO : add last name generation to tenant, unit tests, add other furniture, make room state relevant, create class apartment, create starter apartment
