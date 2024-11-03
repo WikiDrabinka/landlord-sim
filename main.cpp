@@ -26,4 +26,4 @@ int main() {
     return 0;
 }
 
-//TO DO : unit tests, add other furniture, make room state relevant, create class apartment, create starter apartment
+//TO DO : write class market, generating furniture, saving and loading files, class game, unit tests, make room state relevant, create starter apartment
