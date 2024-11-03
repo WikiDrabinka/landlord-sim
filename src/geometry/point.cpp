@@ -12,4 +12,10 @@ namespace point {
     bool Point::operator==(Point &otherPoint) {
         return (x == otherPoint.x && y == otherPoint.y);
     }
+    Point Point::operator+(const Point &otherPoint) {
+        return Point(x+otherPoint.x,y+otherPoint.y);
+    }
+    Point Point::operator-(const Point &otherPoint) {
+        return Point(x-otherPoint.x,y-otherPoint.y);
+    }
 }

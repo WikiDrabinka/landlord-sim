@@ -12,17 +12,20 @@ namespace furniture {
         int condition;
         int sizeX;
         int sizeY;
-        int positionX;
-        int positionY;
+        point::Point position;
         std::shared_ptr<tenant::Tenant> claim;
         public:
         Furniture(std::string furnitureName, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY);
         std::string getName();
         int getPrice();
         int getCondition();
+        int getSizeY();
+        int getSizeX();
+        point::Point getPosition();
+        void rotate();
         void claimFurniture(std::shared_ptr<tenant::Tenant> newClaim);
         void setCondition(int new_condition);
-        void setPosition(int newX, int newY);
+        void setPosition(point::Point newPosition);
         float repairPrice();
     };
     class Storage: public Furniture, public storage::IStorage {

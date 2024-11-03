@@ -47,7 +47,7 @@ namespace rectangle {
         std::shared_ptr<canvas::Canvas> drawing(new canvas::Canvas(point2.x+1,point2.y+1));
         for (int i = point1.x; i<=point2.x; ++i) {
             for (int j = point1.y; j<=point2.y; ++j) {
-                drawing.get()->changeDrawing(i,j,'X');
+                drawing.get()->changeDrawing(i,j,'r');
             }
         }
         return drawing;
@@ -55,7 +55,7 @@ namespace rectangle {
     void Rectangle::draw(std::shared_ptr<canvas::Canvas> drawing) {
         for (int i = point1.x; i<=point2.x; ++i) {
             for (int j = point1.y; j<=point2.y; ++j) {
-                drawing.get()->changeDrawing(i,j,'X');
+                drawing.get()->changeDrawing(i,j,'r');
             }
         }
     }
@@ -63,7 +63,7 @@ namespace rectangle {
         std::vector<std::string> drawing = rec.draw().get()->getDrawing();
         for (int i=0; i<drawing.size(); ++i) {
             for (int j=0; j<drawing[i].size(); ++j) {
-                if (drawing[i][j]=='X') {
+                if (drawing[i][j]=='r') {
                     std::cout << rec.getColor();
                 }
                 std::cout << " " << color::Color::reset;

@@ -10,6 +10,14 @@ namespace furniture {
     std::string Furniture::getName() { return name; }
     int Furniture::getPrice() { return price; }
     int Furniture::getCondition() { return condition; }
+    int Furniture::getSizeX() { return sizeX; }
+    int Furniture::getSizeY() { return sizeY; }
+    point::Point Furniture::getPosition() { return position; }
+    void Furniture::rotate() {
+        int temp = sizeX;
+        sizeX = sizeY;
+        sizeY = temp;
+    }
     void Furniture::claimFurniture(std::shared_ptr<tenant::Tenant> newClaim) { claim = newClaim; }
     void Furniture::setCondition(int new_condition) {
         if (new_condition>=0 && new_condition<=100) {
@@ -18,9 +26,8 @@ namespace furniture {
             std::cerr << "Condition needs to be an integer between 0 and 100." << std::endl;
         }
     }
-    void Furniture::setPosition(int newX, int newY) {
-        positionX = newX;
-        positionY = newY;
+    void Furniture::setPosition(point::Point newPosition) {
+        position = newPosition;
     }
     float Furniture::repairPrice() {
         return price*condition/100;

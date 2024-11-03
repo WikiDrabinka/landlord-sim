@@ -26,6 +26,9 @@ namespace canvas {
         }
         drawing[x][y] = newChar;
     }
+    void Canvas::changeDrawing(point::Point position, char newChar) {
+        changeDrawing(position.x,position.y, newChar);
+    }
     std::string Canvas::operator[](int idx) {
         return drawing[idx];
     }

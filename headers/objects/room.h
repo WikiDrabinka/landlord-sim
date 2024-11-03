@@ -21,7 +21,7 @@ namespace room {
         std::vector<std::shared_ptr<furniture::Furniture>> getFurniture();
         color::BackgroundColor getColor();
         bool containsPoint(point::Point point);
-        void addFurniture(std::unique_ptr<furniture::Furniture> newFurniture, int X, int Y);
+        void addFurniture(std::shared_ptr<furniture::Furniture> newFurniture, point::Point position);
         void merge(std::shared_ptr<Room> otherRoom);
         std::shared_ptr<Room> split(std::string newName, std::set<int> rectIndices);
         //std::shared_ptr<Room> split(std::string newName, std::vector<std::shared_ptr<rectangle::Rectangle>> splitRectangles);

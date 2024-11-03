@@ -1,4 +1,5 @@
 #pragma once
+#include "../geometry/point.h"
 #include <string>
 #include <vector>
 #include <iostream>
@@ -14,6 +15,7 @@ namespace canvas {
         int getY();
         std::vector<std::string> getDrawing();
         void changeDrawing(int x, int y, char newChar);
+        void changeDrawing(point::Point position, char newChar);
         std::string operator[](int idx);
     };
     std::ostream& operator<<(std::ostream& os, Canvas canvas);

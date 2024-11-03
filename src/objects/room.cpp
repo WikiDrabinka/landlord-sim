@@ -32,8 +32,13 @@ namespace room {
         }
         return false;
     }
-    void Room::addFurniture(std::unique_ptr<furniture::Furniture> newFurniture, int X, int Y) {
-        //if position in room: newfurniture.setPosition;  furniture.push_back
+    void Room::addFurniture(std::shared_ptr<furniture::Furniture> newFurniture, point::Point position) {
+        if (!containsPoint(position) || !containsPoint(position+point::Point(newFurniture.get()->getSizeX(),newFurniture.get()->getSizeY()))) {
+            std::cerr << "Invalid position." << std::endl;
+            return;
+        }
+        newFurniture.get()->setPosition(position);
+        furniture.push_back(newFurniture);
     }
     void Room::merge(std::shared_ptr<Room> otherRoom) {
         for (std::shared_ptr<rectangle::Rectangle> rect: otherRoom.get()->getRectangles()) {
@@ -108,16 +113,27 @@ namespace room {
         for (std::shared_ptr<rectangle::Rectangle> rect: rectangles) {
             rect.get()->draw(drawing);
         }
+        for (std::shared_ptr<furniture::Furniture> furn : furniture) {
+            for (int i = 0; i<furn.get()->getSizeX(); ++i) {
+                for (int j = 0; j<furn.get()->getSizeY(); ++j) {
+                    drawing->changeDrawing(furn.get()->getPosition()+point::Point(i,j),'X');
+                }
+            }
+        }
         return drawing;
     }
     std::ostream& operator<<(std::ostream& os, Room room) {
         std::vector<std::string> drawing = room.draw().get()->getDrawing();
         for (int i=0; i<drawing.size(); ++i) {
             for (int j=0; j<drawing[i].size(); ++j) {
-                if (drawing[i][j]=='X') {
+                if (drawing[i][j]=='r' || drawing[i][j]=='X') {
                     std::cout << room.getColor();
                 }
-                std::cout << " " << color::Color::reset;
+                if (drawing[i][j]!='X'){
+                    std::cout << " " << color::Color::reset;
+                } else {
+                    std::cout<< "X" << color::Color::reset;
+                }
             }
             std::cout << std::endl;
         }
