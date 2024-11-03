@@ -19,6 +19,9 @@ int main() {
     room2->merge(room1);
     std::cout << *room1;
     std::cout << *room2;
+    std::shared_ptr<room::Room> room3 = room2.get()->split("Room2",{3});
+    std::cout << *room2;
+    std::cout << *room3;
     delete bob; 
     delete shelf;
     return 0;

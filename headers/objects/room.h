@@ -3,6 +3,7 @@
 #include "../display/canvas.h"
 #include "../geometry/rectangle.h"
 #include <string>
+#include <set>
 #include <memory>
 #include <vector>
 namespace room {
@@ -22,7 +23,10 @@ namespace room {
         bool containsPoint(point::Point point);
         void addFurniture(std::unique_ptr<furniture::Furniture> newFurniture, int X, int Y);
         void merge(std::shared_ptr<Room> otherRoom);
-        Room* split();
+        std::shared_ptr<Room> split(std::string newName, std::set<int> rectIndices);
+        //std::shared_ptr<Room> split(std::string newName, std::vector<std::shared_ptr<rectangle::Rectangle>> splitRectangles);
+        std::shared_ptr<Room> splitVertically(std::string newName, int y);
+        std::shared_ptr<Room> splitHorizontally(std::string newName, int x);
         int maxX();
         int maxY();
         std::shared_ptr<canvas::Canvas> draw();

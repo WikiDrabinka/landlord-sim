@@ -9,7 +9,8 @@ namespace splittable {
         public:
         virtual bool containsPoint(point::Point point) = 0;
         void merge(std::shared_ptr<ISplittable> newSplittable);
-        std::shared_ptr<ISplittable> split();
+        std::shared_ptr<ISplittable> splitVertically(int y);
+        std::shared_ptr<ISplittable> splitHorizontally(int x);
         std::unique_ptr<canvas::Canvas> draw();
     };
 }

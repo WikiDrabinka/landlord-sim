@@ -41,10 +41,22 @@ namespace room {
             rectangles.push_back(rect);
         }
     }
-    Room* Room::split() {
-        // to do
-        return nullptr;
+    std::shared_ptr<Room> Room::split(std::string newName, std::set<int> rectIndices) {
+        std::vector<std::shared_ptr<rectangle::Rectangle>> newRectangles;
+        std::vector<std::shared_ptr<rectangle::Rectangle>> splitRectangles;
+        for (int i=0; i<rectangles.size(); ++i) {
+            if (rectIndices.count(i)>0) {
+                splitRectangles.push_back(rectangles[i]);
+            } else {
+                newRectangles.push_back(rectangles[i]);
+            }
+        }
+        std::shared_ptr<Room> newRoom(new Room(newName,occupancyState,splitRectangles,color));
+        rectangles = newRectangles;
+        return newRoom;
     }
+    std::shared_ptr<Room> splitVertically(int y);
+    std::shared_ptr<Room> splitHorizontally(int x);
     int Room::maxX() {
         int maxX = 0;
         for (std::shared_ptr<rectangle::Rectangle> rectangle: rectangles) {
