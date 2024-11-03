@@ -1,4 +1,5 @@
 #include "../../headers/objects/apartment.h"
+#include <algorithm>
 namespace apartment {
     Apartment::Apartment(std::string apartmentName, std::vector<std::shared_ptr<room::Room>> apartmentRooms) {
         name = apartmentName;
@@ -63,5 +64,11 @@ namespace apartment {
     }
     void Apartment::sign(std::shared_ptr<tenant::Tenant> newTenant) {
         tenants.push_back(newTenant);
+    }
+    void Apartment::removeTenant(std::shared_ptr<tenant::Tenant> tenant) {
+        if (std::find(tenants.begin(),tenants.end(),tenant)!=tenants.end()) {
+            tenants[std::distance(tenants.begin(),std::find(tenants.begin(),tenants.end(),tenant))] = tenants[tenants.size()-1];
+            tenants.pop_back();
+        }
     }
 }

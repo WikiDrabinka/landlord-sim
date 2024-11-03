@@ -1,4 +1,7 @@
+#pragma once
 #include "room.h"
+#include "tenant.h"
+#include "livingSpace.h"
 #include <string>
 #include <vector>
 #include <memory>
@@ -17,5 +20,6 @@ namespace apartment {
         std::unique_ptr<canvas::Canvas> draw();
         int area();
         void sign(std::shared_ptr<tenant::Tenant> newTenant);
+        void removeTenant(std::shared_ptr<tenant::Tenant> tenant);
     };
 }

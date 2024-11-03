@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 #include "IStorage.h"
-#include "apartment.h"
+
 namespace tenant {
     class Tenant: public storage::IStorage {
         private:
@@ -18,11 +18,10 @@ namespace tenant {
         int happiness;
         int leaseTime;
         int rent;
-        std::shared_ptr<apartment::Apartment> apartment;
         public:
         Tenant(std::string tenantName, int tenantIncome, int tenantSavings, int tenantSpending, int tenantPatience, int tenantHappiness);
         Tenant();
-        void sign(std::shared_ptr<apartment::Apartment> newApartment, float newRent, int newLeaseTime);
+        void sign(int newRent, int newLeaseTime);
         int getIncome();
         int getSavings();
         int getRent();
@@ -31,7 +30,6 @@ namespace tenant {
         int getLeaseTime();
         std::string getName();
         std::string getNickname();
-        std::shared_ptr<apartment::Apartment> getApartment();
         void setNickname(std::string newNickname);
         bool payRent();
     };

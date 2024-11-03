@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include "tenant.h"
+#include "../geometry/point.h"
 namespace furniture {
     class Furniture {
         private:
