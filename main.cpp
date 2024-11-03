@@ -14,11 +14,14 @@ int main() {
     color::BackgroundColor blue = color::BackgroundColor(50,0,150);
     std::shared_ptr<rectangle::Rectangle> rect(new rectangle::Rectangle(p1,p2,blue));
     std::shared_ptr<rectangle::Rectangle> rect2(new rectangle::Rectangle(point::Point(3,4),point::Point(2,7),color::BackgroundColor(150,0,50)));
-    room::Room *newRoom = new room::Room("Bedroom",livingSpace::unclaimed,{rect,rect2},blue);
-    std::cout << *newRoom;
+    std::shared_ptr<room::Room> room1(new room::Room("Bedroom",livingSpace::unclaimed,rect));
+    std::shared_ptr<room::Room> room2(new room::Room("Bathroom",livingSpace::unclaimed,rect2));
+    room2->merge(room1);
+    std::cout << *room1;
+    std::cout << *room2;
     delete bob; 
     delete shelf;
     return 0;
 }
 
-//TO DO : add colors to rooms. finish rewriting rooms:), add last name generation to tenant, representing furniture, placing furniture, create class apartment
+//TO DO : finish rewriting rooms:), add last name generation to tenant, representing furniture, placing furniture, create class apartment

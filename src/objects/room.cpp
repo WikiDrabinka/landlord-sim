@@ -36,7 +36,10 @@ namespace room {
         //if position in room: newfurniture.setPosition;  furniture.push_back
     }
     void Room::merge(std::shared_ptr<Room> otherRoom) {
-        // to do
+        for (std::shared_ptr<rectangle::Rectangle> rect: otherRoom.get()->getRectangles()) {
+            rect.get()->setColor(color);
+            rectangles.push_back(rect);
+        }
     }
     Room* Room::split() {
         // to do
