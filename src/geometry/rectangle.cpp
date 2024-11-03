@@ -15,6 +15,7 @@ namespace rectangle {
     point::Point Rectangle::getPoint1() { return point1; }
     point::Point Rectangle::getPoint2() { return point2; }
     color::BackgroundColor Rectangle::getColor() { return color; }
+    void Rectangle::setColor(color::BackgroundColor newColor) { color = newColor; }
     bool Rectangle::containsPoint(point::Point point) {
         return (point.x <= std::max(point1.x,point2.x) && point.x >= std::min(point1.x,point2.x) && point.y <= std::max(point1.y,point2.y) && point.y >= std::min(point1.y,point2.y));
     }
@@ -42,14 +43,21 @@ namespace rectangle {
         point2.x = x;
         return newRect;
     }
-    std::unique_ptr<canvas::Canvas> Rectangle::draw() {
-        std::unique_ptr<canvas::Canvas> drawing(new canvas::Canvas(point2.x+1,point2.y+1));
+    std::shared_ptr<canvas::Canvas> Rectangle::draw() {
+        std::shared_ptr<canvas::Canvas> drawing(new canvas::Canvas(point2.x+1,point2.y+1));
         for (int i = point1.x; i<=point2.x; ++i) {
             for (int j = point1.y; j<=point2.y; ++j) {
                 drawing.get()->changeDrawing(i,j,'X');
             }
         }
         return drawing;
+    }
+    void Rectangle::draw(std::shared_ptr<canvas::Canvas> drawing) {
+        for (int i = point1.x; i<=point2.x; ++i) {
+            for (int j = point1.y; j<=point2.y; ++j) {
+                drawing.get()->changeDrawing(i,j,'X');
+            }
+        }
     }
     std::ostream& operator<<(std::ostream& os, Rectangle rec) {
         std::vector<std::string> drawing = rec.draw().get()->getDrawing();

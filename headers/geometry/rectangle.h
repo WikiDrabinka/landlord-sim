@@ -14,12 +14,14 @@ namespace rectangle {
         point::Point getPoint1();
         point::Point getPoint2();
         color::BackgroundColor getColor();
+        void setColor(color::BackgroundColor newColor);
         bool containsPoint(point::Point point);
         bool operator==(Rectangle &otherRectangle);
         int area();
         std::shared_ptr<Rectangle> splitVertically(int y);
         std::shared_ptr<Rectangle> splitHorizontally(int x);
-        std::unique_ptr<canvas::Canvas> draw();
+        std::shared_ptr<canvas::Canvas> draw();
+        void draw(std::shared_ptr<canvas::Canvas> drawing);
     };
     std::ostream& operator<<(std::ostream& os, Rectangle rec);
 }
