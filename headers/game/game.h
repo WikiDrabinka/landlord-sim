@@ -11,5 +11,11 @@ namespace game {
         int money;
         public:
         Game();
+        int getMoney();
+        std::vector<std::shared_ptr<apartment::Apartment>> getApartments();
+        std::shared_ptr<market::RealEstate> getRealEstateMarket();
+        std::shared_ptr<market::Furniture> getFurnitureStore();
+        void setMoney(int newMoney);
+        void addApartment(std::shared_ptr<apartment::Apartment> newApartment);
     };
 }

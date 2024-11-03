@@ -10,5 +10,6 @@ namespace livingSpace {
         state occupancyState;
         public:
         std::string getName() { return name; }
+        state getState() { return occupancyState; }
     };
 }

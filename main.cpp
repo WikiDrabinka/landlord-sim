@@ -1,5 +1,6 @@
 #include "headers/objects/room.h"
 #include "headers/display/color.h"
+#include "headers/game/saveReader.h"
 #include <vector>
 
 int main() {
@@ -22,6 +23,7 @@ int main() {
     std::cout << *room1;
     std::cout << std::endl;
     std::cout << *room2;
+    saveReader::loadGame("k");
     delete bob;
     return 0;
 }
