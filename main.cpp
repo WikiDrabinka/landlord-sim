@@ -1,6 +1,7 @@
 #include "headers/objects/room.h"
 #include "headers/display/color.h"
 #include <vector>
+
 int main() {
     tenant::Tenant *bob = new tenant::Tenant();
     std::shared_ptr<item::Item> item1 = std::shared_ptr<item::Item>(new item::Item());
@@ -21,14 +22,6 @@ int main() {
     std::cout << *room1;
     std::cout << std::endl;
     std::cout << *room2;
-    while (true) {
-        std::string input;
-        std::cin >> input;
-        if (input=="\033[A"){
-            std::cout << "did it";
-            break;
-        }
-    }
     delete bob;
     return 0;
 }

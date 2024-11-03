@@ -2,6 +2,7 @@
 #include "furniture.h"
 #include "../display/canvas.h"
 #include "../geometry/rectangle.h"
+#include "livingSpace.h"
 #include <string>
 #include <set>
 #include <memory>
@@ -27,7 +28,10 @@ namespace room {
         std::shared_ptr<Room> splitVertically(std::string newName, int y);
         std::shared_ptr<Room> splitHorizontally(std::string newName, int x);
         int maxX();
+        int minX();
         int maxY();
+        int minY();
+        int area();
         std::shared_ptr<canvas::Canvas> draw();
     };
     std::ostream& operator<<(std::ostream& os, Room room);

@@ -10,7 +10,7 @@ namespace room {
         name = roomName;
         occupancyState = roomState;
         rectangles.push_back(roomRectangle);
-        color = roomRectangle.get()->getColor();
+        color = roomRectangle->getColor();
     }
     Room::Room(std::string roomName, livingSpace::state roomState, std::vector<std::shared_ptr<rectangle::Rectangle>> roomRectangles, color::BackgroundColor roomColor) {
         name = roomName;
@@ -18,7 +18,7 @@ namespace room {
         color = roomColor;
         for (int i=0; i<roomRectangles.size(); ++i) {
             rectangles.push_back(roomRectangles[i]);
-            roomRectangles[i].get()->setColor(roomColor);
+            roomRectangles[i]->setColor(roomColor);
         }
     }
     std::vector<std::shared_ptr<rectangle::Rectangle>> Room::getRectangles() { return rectangles; }
@@ -26,14 +26,14 @@ namespace room {
     color::BackgroundColor Room::getColor() { return color; }
     bool Room::containsPoint(point::Point point) {
         for (std::shared_ptr<rectangle::Rectangle> rectangle: rectangles) {
-            if (rectangle.get()->containsPoint(point)) {
+            if (rectangle->containsPoint(point)) {
                 return true;
             }
         }
         return false;
     }
     void Room::addFurniture(std::shared_ptr<furniture::Furniture> newFurniture, point::Point position) {
-        if (!containsPoint(position) || !containsPoint(position+point::Point(newFurniture.get()->getSizeX(),newFurniture.get()->getSizeY()))) {
+        if (!containsPoint(position) || !containsPoint(position+point::Point(newFurniture->getSizeX(),newFurniture->getSizeY()))) {
             std::cerr << "Invalid position." << std::endl;
             return;
         }
@@ -41,8 +41,8 @@ namespace room {
         furniture.push_back(newFurniture);
     }
     void Room::merge(std::shared_ptr<Room> otherRoom) {
-        for (std::shared_ptr<rectangle::Rectangle> rect: otherRoom.get()->getRectangles()) {
-            rect.get()->setColor(color);
+        for (std::shared_ptr<rectangle::Rectangle> rect: otherRoom->getRectangles()) {
+            rect->setColor(color);
             rectangles.push_back(rect);
         }
     }
@@ -66,10 +66,10 @@ namespace room {
         for (std::shared_ptr<rectangle::Rectangle> rect: rectangles) {
             if (rect.get()->getPoint2().y<=y){
                 newRectangles.push_back(rect);
-            } else if (rect.get()->getPoint1().y>y) {
+            } else if (rect->getPoint1().y>y) {
                 splitRectangles.push_back(rect);
             } else {
-                splitRectangles.push_back(rect.get()->splitVertically(y));
+                splitRectangles.push_back(rect->splitVertically(y));
                 newRectangles.push_back(rect);
             }
         }
@@ -81,12 +81,12 @@ namespace room {
         std::vector<std::shared_ptr<rectangle::Rectangle>> newRectangles;
         std::vector<std::shared_ptr<rectangle::Rectangle>> splitRectangles;
         for (std::shared_ptr<rectangle::Rectangle> rect: rectangles) {
-            if (rect.get()->getPoint2().x<=x){
+            if (rect->getPoint2().x<=x){
                 newRectangles.push_back(rect);
-            } else if (rect.get()->getPoint1().x>x) {
+            } else if (rect->getPoint1().x>x) {
                 splitRectangles.push_back(rect);
             } else {
-                splitRectangles.push_back(rect.get()->splitHorizontally(x));
+                splitRectangles.push_back(rect->splitHorizontally(x));
                 newRectangles.push_back(rect);
             }
         }
@@ -97,21 +97,43 @@ namespace room {
     int Room::maxX() {
         int maxX = 0;
         for (std::shared_ptr<rectangle::Rectangle> rectangle: rectangles) {
-            maxX = std::max(maxX,rectangle.get()->getPoint2().x);
+            maxX = std::max(maxX,rectangle->getPoint2().x);
         }
         return maxX;
+    }
+    int Room::minX() {
+        int minX = INT16_MAX;
+        for (std::shared_ptr<rectangle::Rectangle> rectangle: rectangles) {
+            minX = std::min(minX,rectangle->getPoint1().x);
+        }
+        return minX;
     }
     int Room::maxY() {
         int maxY = 0;
         for (std::shared_ptr<rectangle::Rectangle> rectangle: rectangles) {
-            maxY = std::max(maxY,rectangle.get()->getPoint2().y);
+            maxY = std::max(maxY,rectangle->getPoint2().y);
         }
         return maxY;
+    }
+    int Room::minY() {
+        int minY = INT16_MAX;
+        for (std::shared_ptr<rectangle::Rectangle> rectangle: rectangles) {
+            minY = std::min(minY,rectangle->getPoint1().y);
+        }
+        return minY;
+    }
+    int Room::area() {
+        // to change once I have an idea
+        int sum = 0;
+        for (std::shared_ptr<rectangle::Rectangle> rect: rectangles) {
+            sum += rect->area();
+        }
+        return sum;
     }
     std::shared_ptr<canvas::Canvas> Room::draw() {
         std::shared_ptr<canvas::Canvas> drawing(new canvas::Canvas(maxX()+1,maxY()+1));
         for (std::shared_ptr<rectangle::Rectangle> rect: rectangles) {
-            rect.get()->draw(drawing);
+            rect->draw(drawing);
         }
         for (std::shared_ptr<furniture::Furniture> furn : furniture) {
             for (int i = 0; i<furn.get()->getSizeX(); ++i) {

@@ -1,4 +1,5 @@
 #include <string>
+#include <memory>
 #include "../geometry/ISplittable.h"
 namespace livingSpace {
     enum state {shared, claimed, unclaimed};
