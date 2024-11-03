@@ -21,8 +21,16 @@ int main() {
     std::cout << *room1;
     std::cout << std::endl;
     std::cout << *room2;
+    while (true) {
+        std::string input;
+        std::cin >> input;
+        if (input=="\033[A"){
+            std::cout << "did it";
+            break;
+        }
+    }
     delete bob;
     return 0;
 }
 
-//TO DO : add last name generation to tenant, unit tests, add other furniture, make room state relevant, create class apartment, create starter apartment
+//TO DO : unit tests, add other furniture, make room state relevant, create class apartment, create starter apartment

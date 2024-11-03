@@ -9,7 +9,6 @@
 namespace room {
     class Room: public livingSpace::LivingSpace {
         private:
-        std::string name;
         std::vector<std::shared_ptr<rectangle::Rectangle>> rectangles;
         std::vector<std::shared_ptr<furniture::Furniture>> furniture;
         color::BackgroundColor color;

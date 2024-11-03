@@ -132,7 +132,7 @@ namespace room {
                 if (drawing[i][j]!='X'){
                     std::cout << " " << color::Color::reset;
                 } else {
-                    std::cout<< "X" << color::Color::reset;
+                    std::cout<< drawing[i][j] << color::Color::reset;
                 }
             }
             std::cout << std::endl;

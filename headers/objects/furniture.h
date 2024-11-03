@@ -39,6 +39,15 @@ namespace furniture {
         std::shared_ptr<item::Item> popItem();
         void clear();
     };
+    class Sleepable: public Furniture {
+        private:
+        int comfortability;
+        public:
+        Sleepable(std::string name, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY, int furnitureComfortability);
+    };
+    class Utility: public Furniture {
+        
+    };
     std::ostream& operator<<(std::ostream& os, Furniture furniture);
     std::ostream& operator<<(std::ostream& os, Storage storage);
 } 
