@@ -23,9 +23,15 @@ int main() {
     std::cout << *room1;
     std::cout << std::endl;
     std::cout << *room2;
-    saveReader::loadGame("k");
+    game::Game newGame = game::Game();
+    newGame.setMoney(77);
+    saveReader::saveGame("k",newGame);
+    game::Game SecondGame = game::Game();
+    saveReader::loadGame("k",SecondGame);
+    std::cout << SecondGame.getMoney() << std::endl;
+    std::cout << *(SecondGame.getApartments()[0]->getRooms()[0]);
     delete bob;
     return 0;
 }
 
-//TO DO : write class market, generating furniture, saving and loading files, class game, unit tests, make room state relevant, create starter apartment
+//TO DO : write class market, generating furniture, finish saving and loading files, class game, unit tests, make room state relevant, create starter apartment

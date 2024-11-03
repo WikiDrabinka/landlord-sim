@@ -10,12 +10,12 @@ namespace saveReader {
             fs << apartment->getName() << std::endl;
             fs << apartment->getRooms().size() << std::endl;
             for (std::shared_ptr<room::Room> room: apartment->getRooms()) {
-                fs << room->getName();
+                fs << room->getName() <<std::endl;
                 fs << room->getColor().red << " " << room->getColor().green << " " << room->getColor().blue << std::endl;
                 fs << room->getState() << std::endl;
                 fs << room->getRectangles().size() << std::endl;
                 for (std::shared_ptr<rectangle::Rectangle> rect: room->getRectangles()) {
-                    fs << rect->getPoint1().x << " " << rect->getPoint1().y << " " << rect->getPoint2().x << rect->getPoint2().y << std::endl;
+                    fs << rect->getPoint1().x << " " << rect->getPoint1().y << " " << rect->getPoint2().x << " " << rect->getPoint2().y << std::endl;
                 }
                 fs << room->getFurniture().size() << std::endl;
                 // furniture
