@@ -72,7 +72,23 @@ namespace room {
         rectangles = newRectangles;
         return newRoom;
     }
-    std::shared_ptr<Room> splitHorizontally(int x);
+    std::shared_ptr<Room> Room::splitHorizontally(std::string newName, int x) {
+        std::vector<std::shared_ptr<rectangle::Rectangle>> newRectangles;
+        std::vector<std::shared_ptr<rectangle::Rectangle>> splitRectangles;
+        for (std::shared_ptr<rectangle::Rectangle> rect: rectangles) {
+            if (rect.get()->getPoint2().x<=x){
+                newRectangles.push_back(rect);
+            } else if (rect.get()->getPoint1().x>x) {
+                splitRectangles.push_back(rect);
+            } else {
+                splitRectangles.push_back(rect.get()->splitHorizontally(x));
+                newRectangles.push_back(rect);
+            }
+        }
+        std::shared_ptr<Room> newRoom(new Room(newName,occupancyState,splitRectangles,color));
+        rectangles = newRectangles;
+        return newRoom;
+    }
     int Room::maxX() {
         int maxX = 0;
         for (std::shared_ptr<rectangle::Rectangle> rectangle: rectangles) {
