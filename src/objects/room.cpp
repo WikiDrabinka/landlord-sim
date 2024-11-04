@@ -142,7 +142,7 @@ namespace room {
         for (std::shared_ptr<furniture::Furniture> furn : furniture) {
             for (int i = 0; i<furn.get()->getSizeX(); ++i) {
                 for (int j = 0; j<furn.get()->getSizeY(); ++j) {
-                    drawing->changeDrawing(furn.get()->getPosition()+point::Point(i,j),'X');
+                    drawing->changeDrawing(furn.get()->getPosition()+point::Point(i,j),'R');
                 }
             }
         }
@@ -155,19 +155,19 @@ namespace room {
         for (std::shared_ptr<furniture::Furniture> furn : furniture) {
             for (int i = 0; i<furn.get()->getSizeX(); ++i) {
                 for (int j = 0; j<furn.get()->getSizeY(); ++j) {
-                    drawing->changeDrawing(furn.get()->getPosition()+point::Point(i,j),'X');
+                    drawing->changeDrawing(furn.get()->getPosition()+point::Point(i,j),c+32);
                 }
             }
         }
     }
     std::ostream& operator<<(std::ostream& os, Room room) {
-        std::vector<std::string> drawing = room.draw().get()->getDrawing();
+        std::vector<std::string> drawing = room.draw()->getDrawing();
         for (int i=0; i<drawing.size(); ++i) {
             for (int j=0; j<drawing[i].size(); ++j) {
-                if (drawing[i][j]=='r' || drawing[i][j]=='X') {
+                if (drawing[i][j]=='r' || drawing[i][j]=='R') {
                     std::cout << room.getColor();
                 }
-                if (drawing[i][j]!='X'){
+                if (drawing[i][j]!='R'){
                     std::cout << " " << color::Color::reset;
                 } else {
                     std::cout<< drawing[i][j] << color::Color::reset;

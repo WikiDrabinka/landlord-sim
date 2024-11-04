@@ -24,10 +24,7 @@ int main() {
     // std::cout << std::endl;
     // std::cout << *room2;
     game::Game newGame = game::Game();
-    for (std::shared_ptr<room::Room> room: newGame.getApartments()[0]->getRooms()){
-        std::cout << *room;
-    }
-    std::cout << *(newGame.getApartments()[0]->draw());
+    std::cout << *newGame.getApartments()[0];
     return 0;
 }
 

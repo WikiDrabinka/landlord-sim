@@ -96,4 +96,18 @@ namespace apartment {
             tenants.pop_back();
         }
     }
+    std::ostream& operator<<(std::ostream& os, Apartment apartment) {
+        std::vector<std::string> drawing = apartment.draw()->getDrawing();
+        for (int i = 0; i<drawing.size(); ++i) {
+            for (int j = 0; j<drawing[i].size(); ++j) {
+                if (drawing[i][j]<91 && drawing[i][j]>64) {
+                    std::cout << apartment.getRooms()[drawing[i][j]-65]->getColor() << " " << color::Color::reset;
+                } else if (drawing[i][j]<123 && drawing[i][j]>96) {
+                    std::cout << apartment.getRooms()[drawing[i][j]-97]->getColor() << "X" << color::Color::reset;
+                }
+            }
+            std::cout << std::endl;
+        }
+        return os;
+    }
 }

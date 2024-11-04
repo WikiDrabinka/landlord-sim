@@ -15,7 +15,7 @@ namespace game {
         apartments[0]->getRooms()[2]->addRectangle(std::shared_ptr<rectangle::Rectangle>(new rectangle::Rectangle(point::Point(6,0),point::Point(7,11))));
         apartments[0]->getRooms()[2]->addRectangle(std::shared_ptr<rectangle::Rectangle>(new rectangle::Rectangle(point::Point(8,4),point::Point(10,11))));
         apartments[0]->getRooms()[3]->addRectangle(std::shared_ptr<rectangle::Rectangle>(new rectangle::Rectangle(point::Point(8,0),point::Point(10,3))));
-
+        apartments[0]->getRooms()[0]->addFurniture(std::shared_ptr<furniture::Storage>(new furniture::Storage("Bed",100,100,3,2,10)),point::Point(1,2));
     }
     int Game::getMoney() { return money; }
     std::vector<std::shared_ptr<apartment::Apartment>> Game::getApartments() { return apartments; }
