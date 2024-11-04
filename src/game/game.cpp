@@ -4,7 +4,18 @@ namespace game {
         money = 1000;
         realEstateMarket = nullptr;
         FurnitureStore = nullptr;
-        apartments.push_back(std::shared_ptr<apartment::Apartment>(new apartment::Apartment("Apartment", {std::shared_ptr<room::Room>(new room::Room("Bedroom",livingSpace::shared,std::shared_ptr<rectangle::Rectangle>(new rectangle::Rectangle(point::Point(0,0),point::Point(4,4)))))})));
+        apartments.push_back(std::shared_ptr<apartment::Apartment>(new apartment::Apartment("33 Harms Way")));
+        apartments[0]->addRoom(std::shared_ptr<room::Room>(new room::Room("Bedroom",livingSpace::unclaimed,color::BackgroundColor(128,72,184))));
+        apartments[0]->addRoom(std::shared_ptr<room::Room>(new room::Room("Master bathroom",livingSpace::unclaimed,color::BackgroundColor(72,128,184))));
+        apartments[0]->addRoom(std::shared_ptr<room::Room>(new room::Room("Living Room",livingSpace::shared,color::BackgroundColor(184,72,128))));
+        apartments[0]->addRoom(std::shared_ptr<room::Room>(new room::Room("Guest bathroom",livingSpace::shared,color::BackgroundColor(72,184,128))));
+        apartments[0]->getRooms()[0]->addRectangle(std::shared_ptr<rectangle::Rectangle>(new rectangle::Rectangle(point::Point(0,0),point::Point(5,7))));
+        apartments[0]->getRooms()[1]->addRectangle(std::shared_ptr<rectangle::Rectangle>(new rectangle::Rectangle(point::Point(0,8),point::Point(2,11))));
+        apartments[0]->getRooms()[2]->addRectangle(std::shared_ptr<rectangle::Rectangle>(new rectangle::Rectangle(point::Point(3,8),point::Point(5,11))));
+        apartments[0]->getRooms()[2]->addRectangle(std::shared_ptr<rectangle::Rectangle>(new rectangle::Rectangle(point::Point(6,0),point::Point(7,11))));
+        apartments[0]->getRooms()[2]->addRectangle(std::shared_ptr<rectangle::Rectangle>(new rectangle::Rectangle(point::Point(8,4),point::Point(10,11))));
+        apartments[0]->getRooms()[3]->addRectangle(std::shared_ptr<rectangle::Rectangle>(new rectangle::Rectangle(point::Point(8,0),point::Point(10,3))));
+
     }
     int Game::getMoney() { return money; }
     std::vector<std::shared_ptr<apartment::Apartment>> Game::getApartments() { return apartments; }

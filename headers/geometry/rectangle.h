@@ -21,7 +21,7 @@ namespace rectangle {
         std::shared_ptr<Rectangle> splitVertically(int y);
         std::shared_ptr<Rectangle> splitHorizontally(int x);
         std::shared_ptr<canvas::Canvas> draw();
-        void draw(std::shared_ptr<canvas::Canvas> drawing);
+        void draw(std::shared_ptr<canvas::Canvas> drawing, char c);
     };
     std::ostream& operator<<(std::ostream& os, Rectangle rec);
 }

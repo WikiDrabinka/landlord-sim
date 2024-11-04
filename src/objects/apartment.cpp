@@ -1,12 +1,17 @@
 #include "../../headers/objects/apartment.h"
 #include <algorithm>
 namespace apartment {
-    Apartment::Apartment(std::string apartmentName, std::vector<std::shared_ptr<room::Room>> apartmentRooms) {
+    Apartment::Apartment(std::string apartmentName="Apartment") {
         name = apartmentName;
-        rooms = apartmentRooms;
         occupancyState = livingSpace::shared;
     }
+    Apartment::Apartment(std::string apartmentName, std::vector<std::shared_ptr<room::Room>> apartmentRooms) {
+        name = apartmentName;
+        occupancyState = livingSpace::shared;
+        rooms = apartmentRooms;
+    }
     std::vector<std::shared_ptr<room::Room>> Apartment::getRooms() { return rooms; }
+    void Apartment::addRoom(std::shared_ptr<room::Room> newRoom) { rooms.push_back(newRoom); }
     bool Apartment::containsPoint(point::Point point) {
         for (std::shared_ptr<room::Room> room: rooms) {
             if (room->containsPoint(point)) {
@@ -19,6 +24,20 @@ namespace apartment {
         for (std::shared_ptr<room::Room> room : otherApartment->getRooms()) {
             rooms.push_back(room);
         }
+    }
+    int Apartment::maxX() {
+        int maxX = 0;
+        for (std::shared_ptr<room::Room> room: rooms) {
+            maxX = std::max(maxX,room->maxX());
+        }
+        return maxX;
+    }
+    int Apartment::maxY() {
+        int maxY = 0;
+        for (std::shared_ptr<room::Room> room: rooms) {
+            maxY = std::max(maxY,room->maxY());
+        }
+        return maxY;
     }
     std::shared_ptr<Apartment> Apartment::splitVertically(std::string newName, int y) {
         std::vector<std::shared_ptr<room::Room>> newRooms;
@@ -54,7 +73,13 @@ namespace apartment {
         rooms = newRooms;
         return newApartment;
     }
-    std::unique_ptr<canvas::Canvas> draw();
+    std::shared_ptr<canvas::Canvas> Apartment::draw() {
+        std::shared_ptr<canvas::Canvas> drawing(new canvas::Canvas(maxX()+1,maxY()+1));
+        for (int i = 0; i<rooms.size(); ++i) {
+            rooms[i]->draw(drawing, (char) i+65);
+        }
+        return drawing;
+    }
     int Apartment::area() {
         int sum = 0;
         for (std::shared_ptr<room::Room> room : rooms) {

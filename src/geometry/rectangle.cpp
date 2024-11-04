@@ -52,10 +52,10 @@ namespace rectangle {
         }
         return drawing;
     }
-    void Rectangle::draw(std::shared_ptr<canvas::Canvas> drawing) {
+    void Rectangle::draw(std::shared_ptr<canvas::Canvas> drawing, char c) {
         for (int i = point1.x; i<=point2.x; ++i) {
             for (int j = point1.y; j<=point2.y; ++j) {
-                drawing.get()->changeDrawing(i,j,'r');
+                drawing.get()->changeDrawing(i,j,c);
             }
         }
     }

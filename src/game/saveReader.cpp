@@ -20,6 +20,7 @@ namespace saveReader {
                 fs << room->getFurniture().size() << std::endl;
                 // furniture
             }
+            // tenants
         }
         fs.close();
     }
@@ -70,6 +71,7 @@ namespace saveReader {
                 rooms.push_back(newRoom);
                 newGame.addApartment(std::shared_ptr<apartment::Apartment>(new apartment::Apartment(apartmentName,rooms)));
             }
+            // tenants
         }
     }
 }

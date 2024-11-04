@@ -24,6 +24,10 @@ namespace room {
     std::vector<std::shared_ptr<rectangle::Rectangle>> Room::getRectangles() { return rectangles; }
     std::vector<std::shared_ptr<furniture::Furniture>> Room::getFurniture() { return furniture; }
     color::BackgroundColor Room::getColor() { return color; }
+    void Room::addRectangle(std::shared_ptr<rectangle::Rectangle> newRectangle) {
+        rectangles.push_back(newRectangle);
+        newRectangle->setColor(color);
+    }
     bool Room::containsPoint(point::Point point) {
         for (std::shared_ptr<rectangle::Rectangle> rectangle: rectangles) {
             if (rectangle->containsPoint(point)) {
@@ -133,7 +137,7 @@ namespace room {
     std::shared_ptr<canvas::Canvas> Room::draw() {
         std::shared_ptr<canvas::Canvas> drawing(new canvas::Canvas(maxX()+1,maxY()+1));
         for (std::shared_ptr<rectangle::Rectangle> rect: rectangles) {
-            rect->draw(drawing);
+            rect->draw(drawing,'r');
         }
         for (std::shared_ptr<furniture::Furniture> furn : furniture) {
             for (int i = 0; i<furn.get()->getSizeX(); ++i) {
@@ -143,6 +147,18 @@ namespace room {
             }
         }
         return drawing;
+    }
+    void Room::draw(std::shared_ptr<canvas::Canvas> drawing, char c) {
+        for (std::shared_ptr<rectangle::Rectangle> rect: rectangles) {
+            rect->draw(drawing,c);
+        }
+        for (std::shared_ptr<furniture::Furniture> furn : furniture) {
+            for (int i = 0; i<furn.get()->getSizeX(); ++i) {
+                for (int j = 0; j<furn.get()->getSizeY(); ++j) {
+                    drawing->changeDrawing(furn.get()->getPosition()+point::Point(i,j),'X');
+                }
+            }
+        }
     }
     std::ostream& operator<<(std::ostream& os, Room room) {
         std::vector<std::string> drawing = room.draw().get()->getDrawing();

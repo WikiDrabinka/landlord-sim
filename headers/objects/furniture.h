@@ -43,8 +43,9 @@ namespace furniture {
     class Sleepable: public Furniture {
         private:
         int comfortability;
+        int capacity;
         public:
-        Sleepable(std::string name, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY, int furnitureComfortability);
+        Sleepable(std::string name, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY, int furnitureComfortability, int sleepableCapacity);
     };
     class Utility: public Furniture {
         

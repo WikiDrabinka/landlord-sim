@@ -22,6 +22,7 @@ namespace room {
         color::BackgroundColor getColor();
         bool containsPoint(point::Point point);
         void addFurniture(std::shared_ptr<furniture::Furniture> newFurniture, point::Point position);
+        void addRectangle(std::shared_ptr<rectangle::Rectangle> newRectangle);
         void merge(std::shared_ptr<Room> otherRoom);
         std::shared_ptr<Room> split(std::string newName, std::set<int> rectIndices);
         //std::shared_ptr<Room> split(std::string newName, std::vector<std::shared_ptr<rectangle::Rectangle>> splitRectangles);
@@ -33,6 +34,7 @@ namespace room {
         int minY();
         int area();
         std::shared_ptr<canvas::Canvas> draw();
+        void draw(std::shared_ptr<canvas::Canvas> drawing, char c);
     };
     std::ostream& operator<<(std::ostream& os, Room room);
 }
