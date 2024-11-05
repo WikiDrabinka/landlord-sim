@@ -15,6 +15,7 @@ namespace furniture {
     int Furniture::getSizeX() { return sizeX; }
     int Furniture::getSizeY() { return sizeY; }
     point::Point Furniture::getPosition() { return position; }
+    color::ForegroundColor Furniture::getColor() const { return color::ForegroundColor(0,0,0); }
     void Furniture::rotate() {
         int temp = sizeX;
         sizeX = sizeY;
@@ -67,6 +68,7 @@ namespace furniture {
             std::cerr << "Exceeded the capacity of storage." << std::endl;
         }
     }
+    color::ForegroundColor Storage::getColor() const { return color::ForegroundColor(100,50,0); }
     std::shared_ptr<item::Item> Storage::popItem() { 
         std::shared_ptr<item::Item> lastItem = items[items.size()-1];
         items.resize(items.size()-1);
@@ -103,11 +105,14 @@ namespace furniture {
     }
     int Sleepable::getCapacity() { return capacity; }
     int Sleepable::getComfortability() { return comfortability; }
+    color::ForegroundColor Sleepable::getColor() const { return color::ForegroundColor(100,0,100); }
     std::vector<std::string> Sleepable::generatedNames = {"Bed", "Couch", "Hammock", "Armchair", "Chair"};
 
     Utility::Utility(std::string furnitureName, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY, utilityType newType): Furniture(furnitureName, furniturePrice, furnitureCondition, furnitureSizeX, furnitureSizeY) {
         type = newType;
     }
+    Utility::utilityType Utility::getType() { return type; }
+    color::ForegroundColor Utility::getColor() const { return color::ForegroundColor(0,50,50); }
 
     std::ostream& operator<<(std::ostream& os, Furniture furniture) {
         os << "Name: " << furniture.getName() << std::endl;

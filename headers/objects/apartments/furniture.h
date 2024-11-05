@@ -5,6 +5,7 @@
 #include <memory>
 #include "../people/tenant.h"
 #include "../../geometry/point.h"
+#include "../../display/color.h"
 namespace furniture {
     class Furniture {
         protected:
@@ -25,6 +26,7 @@ namespace furniture {
         int getSizeY();
         int getSizeX();
         point::Point getPosition();
+        virtual color::ForegroundColor getColor() const;
         void rotate();
         void claimFurniture(std::shared_ptr<tenant::Tenant> newClaim);
         void setCondition(int new_condition);
@@ -40,6 +42,7 @@ namespace furniture {
         Storage(std::string furnitureName, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY, int StorageCapacity);
         Storage();
         int getCapacity();
+        color::ForegroundColor getColor() const;
         void addItem(std::shared_ptr<item::Item> newItem);
         std::shared_ptr<item::Item> popItem();
         void clear();
@@ -54,6 +57,7 @@ namespace furniture {
         Sleepable();
         int getCapacity();
         int getComfortability();
+        color::ForegroundColor getColor() const;
     };
     class Utility: public Furniture {
         public:
@@ -62,6 +66,8 @@ namespace furniture {
         utilityType type;
         public:
         Utility(std::string furnitureName, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY, utilityType type);
+        utilityType getType();
+        color::ForegroundColor getColor() const;
     };
     std::ostream& operator<<(std::ostream& os, Furniture furniture);
     std::ostream& operator<<(std::ostream& os, Storage storage);
