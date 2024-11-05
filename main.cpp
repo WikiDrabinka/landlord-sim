@@ -23,8 +23,12 @@ int main() {
     // std::cout << *room1;
     // std::cout << std::endl;
     // std::cout << *room2;
+    furniture::Storage *storage = new furniture::Storage();
+    furniture::Sleepable *sleep = new furniture::Sleepable();
     game::Game newGame = game::Game();
     std::cout << *newGame.getApartments()[0];
+    std::cout << *storage;
+    std::cout << *sleep;
     return 0;
 }
 

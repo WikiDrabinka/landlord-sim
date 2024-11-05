@@ -30,10 +30,8 @@ namespace tenant {
         }
     }
     void Tenant::sign(int newRent, int newLeaseTime) {
-        // apartment = newApartment;
         rent = newRent;
         leaseTime = newLeaseTime;
-        // apartment->sign(std::shared_ptr<Tenant>(this));
     }
     int Tenant::getIncome() { return monthlyIncome; }
     int Tenant::getSavings() { return savings; }

@@ -15,9 +15,7 @@ namespace item {
         std::uniform_int_distribution<> nameDistr(0,generatedNames.size()-1);
         std::uniform_int_distribution<> sizeDistr(1,10);
         std::uniform_int_distribution<> valueDistr(1,100);
-        name = generatedNames[nameDistr(gen)];
-        size = sizeDistr(gen);
-        value = valueDistr(gen);
+        Item(generatedNames[nameDistr(gen)],sizeDistr(gen),valueDistr(gen));
     }
     std::string Item::getName() { return name; }
     int Item::getSize() { return size; }

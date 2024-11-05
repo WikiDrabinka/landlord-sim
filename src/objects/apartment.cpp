@@ -1,7 +1,7 @@
 #include "../../headers/objects/apartment.h"
 #include <algorithm>
 namespace apartment {
-    Apartment::Apartment(std::string apartmentName="Apartment") {
+    Apartment::Apartment(std::string apartmentName) {
         name = apartmentName;
         occupancyState = livingSpace::shared;
     }
