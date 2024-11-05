@@ -7,7 +7,7 @@ namespace canvas {
         for (int i = 0; i < x; ++i) {
             std::vector<std::string> line;
             for (int j = 0; j < y; ++j) {
-                line.push_back(" ");
+                line.push_back("  ");
             }
             drawing.push_back(line);
         }

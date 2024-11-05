@@ -105,7 +105,7 @@ namespace furniture {
     }
     int Sleepable::getCapacity() { return capacity; }
     int Sleepable::getComfortability() { return comfortability; }
-    color::ForegroundColor Sleepable::getColor() const { return color::ForegroundColor(100,0,100); }
+    color::ForegroundColor Sleepable::getColor() const { return color::ForegroundColor(100,0,150); }
     std::vector<std::string> Sleepable::generatedNames = {"Bed", "Couch", "Hammock", "Armchair", "Chair"};
 
     Utility::Utility(std::string furnitureName, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY, utilityType newType): Furniture(furnitureName, furniturePrice, furnitureCondition, furnitureSizeX, furnitureSizeY) {

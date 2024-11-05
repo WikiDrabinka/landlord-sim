@@ -43,21 +43,17 @@ namespace rectangle {
         point2.x = x;
         return newRect;
     }
-    std::shared_ptr<canvas::Canvas> Rectangle::draw() {
-        std::shared_ptr<canvas::Canvas> drawing(new canvas::Canvas(point2.x+1,point2.y+1));
-        for (int i = point1.x; i<=point2.x; ++i) {
-            for (int j = point1.y; j<=point2.y; ++j) {
-                drawing.get()->changeDrawing(i,j,color.getString() + drawing->getDrawing()[i][j] + color::Color::reset);
-            }
-        }
-        return drawing;
-    }
     void Rectangle::draw(std::shared_ptr<canvas::Canvas> drawing) {
         for (int i = point1.x; i<=point2.x; ++i) {
             for (int j = point1.y; j<=point2.y; ++j) {
                 drawing.get()->changeDrawing(i,j,color.getString()+ drawing->getDrawing()[i][j] + color::Color::reset);
             }
         }
+    }
+    std::shared_ptr<canvas::Canvas> Rectangle::draw() {
+        std::shared_ptr<canvas::Canvas> drawing(new canvas::Canvas(point2.x+1,point2.y+1));
+        draw(drawing);
+        return drawing;
     }
     std::ostream& operator<<(std::ostream& os, Rectangle rec) {
         os << *(rec.draw());

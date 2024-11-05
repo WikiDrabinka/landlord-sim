@@ -61,7 +61,7 @@ namespace furniture {
     };
     class Utility: public Furniture {
         public:
-        enum utilityType {cooking, hygiene, waste};
+        enum utilityType {cooking, hygiene, waste, entertaiment};
         private:
         utilityType type;
         public:

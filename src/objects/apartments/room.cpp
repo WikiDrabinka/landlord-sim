@@ -138,31 +138,31 @@ namespace room {
     void Room::draw(std::shared_ptr<canvas::Canvas> drawing) {
         for (std::shared_ptr<furniture::Furniture> furn : furniture) {
             if (furn->getSizeX()==1 && furn->getSizeY()==1) {
-                drawing->changeDrawing(furn->getPosition(),furn->getColor().getString()+"≡");
+                drawing->changeDrawing(furn->getPosition(),furn->getColor().getString()+"╠╣");
             } else if (furn->getSizeX()==1) {
-                drawing->changeDrawing(furn->getPosition(),furn->getColor().getString()+"╠");
+                drawing->changeDrawing(furn->getPosition(),furn->getColor().getString()+"╠═");
                 for (int i = 1; i<furn->getSizeY()-1; ++i) {
-                    drawing->changeDrawing(furn->getPosition()+point::Point(0,i),furn->getColor().getString()+"═");
+                    drawing->changeDrawing(furn->getPosition()+point::Point(0,i),furn->getColor().getString()+"══");
                 }
-                drawing->changeDrawing(furn->getPosition()+point::Point(0,furn->getSizeY()-1),furn->getColor().getString()+"╣");
+                drawing->changeDrawing(furn->getPosition()+point::Point(0,furn->getSizeY()-1),furn->getColor().getString()+"═╣");
             } else if (furn->getSizeY()==1) {
-                drawing->changeDrawing(furn->getPosition(),furn->getColor().getString()+"╦");
+                drawing->changeDrawing(furn->getPosition(),furn->getColor().getString()+" ╦");
                 for (int i = 1; i<furn->getSizeX()-1; ++i) {
-                    drawing->changeDrawing(furn->getPosition()+point::Point(i,0),furn->getColor().getString()+"║");
+                    drawing->changeDrawing(furn->getPosition()+point::Point(i,0),furn->getColor().getString()+" ║");
                 }
-                drawing->changeDrawing(furn->getPosition()+point::Point(furn->getSizeX()-1,0),furn->getColor().getString()+"╩");
+                drawing->changeDrawing(furn->getPosition()+point::Point(furn->getSizeX()-1,0),furn->getColor().getString()+" ╩");
             } else {
-                drawing->changeDrawing(furn->getPosition(),furn->getColor().getString()+"╔");
-                drawing->changeDrawing(furn->getPosition()+point::Point(0,furn->getSizeY()-1),furn->getColor().getString()+"╗");
-                drawing->changeDrawing(furn->getPosition()+point::Point(furn->getSizeX()-1,0),furn->getColor().getString()+"╚");
-                drawing->changeDrawing(furn->getPosition()+point::Point(furn->getSizeX()-1,furn->getSizeY()-1),furn->getColor().getString()+"╝");
+                drawing->changeDrawing(furn->getPosition(),furn->getColor().getString()+"╔═");
+                drawing->changeDrawing(furn->getPosition()+point::Point(0,furn->getSizeY()-1),furn->getColor().getString()+"═╗");
+                drawing->changeDrawing(furn->getPosition()+point::Point(furn->getSizeX()-1,0),furn->getColor().getString()+"╚═");
+                drawing->changeDrawing(furn->getPosition()+point::Point(furn->getSizeX()-1,furn->getSizeY()-1),furn->getColor().getString()+"═╝");
                 for (int i = 1; i<furn->getSizeX()-1; ++i) {
-                    drawing->changeDrawing(furn->getPosition()+point::Point(i,0),furn->getColor().getString()+"║");
-                    drawing->changeDrawing(furn->getPosition()+point::Point(i,furn->getSizeY()-1),furn->getColor().getString()+"║");
+                    drawing->changeDrawing(furn->getPosition()+point::Point(i,0),furn->getColor().getString()+"║ ");
+                    drawing->changeDrawing(furn->getPosition()+point::Point(i,furn->getSizeY()-1),furn->getColor().getString()+" ║");
                 }
                 for (int i = 1; i<furn->getSizeY()-1; ++i) {
-                    drawing->changeDrawing(furn->getPosition()+point::Point(0,i),furn->getColor().getString()+"═");
-                    drawing->changeDrawing(furn->getPosition()+point::Point(furn->getSizeX()-1,i),furn->getColor().getString()+"═");
+                    drawing->changeDrawing(furn->getPosition()+point::Point(0,i),furn->getColor().getString()+"══");
+                    drawing->changeDrawing(furn->getPosition()+point::Point(furn->getSizeX()-1,i),furn->getColor().getString()+"══");
                 }
                 // for (int i = 1; i<furn->getSizeX()-1; ++i) {
                 //     for (int j = 1; j<furn->getSizeY()-1; ++j) {
