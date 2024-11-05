@@ -1,4 +1,4 @@
-#include "../../headers/objects/furniture.h"
+#include "../../../headers/objects/apartments/furniture.h"
 #include <random>
 namespace furniture {
     Furniture::Furniture(std::string furnitureName, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY) {
@@ -107,6 +107,7 @@ namespace furniture {
 
     std::ostream& operator<<(std::ostream& os, Furniture furniture) {
         os << "Name: " << furniture.getName() << std::endl;
+        os << "Size: " << furniture.getSizeX() << "x" << furniture.getSizeY() << std::endl;
         os << "Price: " << furniture.getPrice() << std::endl;
         os << "Condition: " << furniture.getCondition() << std::endl;
         return os;

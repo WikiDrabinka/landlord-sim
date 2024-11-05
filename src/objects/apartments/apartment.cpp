@@ -1,4 +1,4 @@
-#include "../../headers/objects/apartment.h"
+#include "../../../headers/objects/apartments/apartment.h"
 #include <algorithm>
 namespace apartment {
     Apartment::Apartment(std::string apartmentName) {
@@ -87,15 +87,7 @@ namespace apartment {
         }
         return sum;
     }
-    void Apartment::sign(std::shared_ptr<tenant::Tenant> newTenant) {
-        tenants.push_back(newTenant);
-    }
-    void Apartment::removeTenant(std::shared_ptr<tenant::Tenant> tenant) {
-        if (std::find(tenants.begin(),tenants.end(),tenant)!=tenants.end()) {
-            tenants[std::distance(tenants.begin(),std::find(tenants.begin(),tenants.end(),tenant))] = tenants[tenants.size()-1];
-            tenants.pop_back();
-        }
-    }
+
     std::ostream& operator<<(std::ostream& os, Apartment apartment) {
         std::vector<std::string> drawing = apartment.draw()->getDrawing();
         for (int i = 0; i<drawing.size(); ++i) {

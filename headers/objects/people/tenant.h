@@ -16,22 +16,16 @@ namespace tenant {
         int spending;
         int patience;
         int happiness;
-        int leaseTime;
-        int rent;
         public:
         Tenant(std::string tenantName, int tenantIncome, int tenantSavings, int tenantSpending, int tenantPatience, int tenantHappiness);
         Tenant();
-        void sign(int newRent, int newLeaseTime);
         int getIncome();
         int getSavings();
-        int getRent();
         int getPatience();
         int getHappiness();
-        int getLeaseTime();
         std::string getName();
         std::string getNickname();
         void setNickname(std::string newNickname);
-        bool payRent();
     };
     std::ostream& operator<< (std::ostream& os, Tenant ten);
 }

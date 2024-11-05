@@ -3,8 +3,8 @@
 #include <iostream>
 #include <vector>
 #include <memory>
-#include "tenant.h"
-#include "../geometry/point.h"
+#include "../people/tenant.h"
+#include "../../geometry/point.h"
 namespace furniture {
     class Furniture {
         protected:
@@ -56,7 +56,7 @@ namespace furniture {
         int getComfortability();
     };
     class Utility: public Furniture {
-        
+        enum type {cooking, hygiene};
     };
     std::ostream& operator<<(std::ostream& os, Furniture furniture);
     std::ostream& operator<<(std::ostream& os, Storage storage);

@@ -1,4 +1,5 @@
-#include "apartment.h"
+#pragma once
+#include "../apartments/apartment.h"
 #include <memory>
 #include <vector>
 #include <iostream>

@@ -1,6 +1,6 @@
 #pragma once
 #include "room.h"
-#include "tenant.h"
+#include "../people/tenant.h"
 #include "livingSpace.h"
 #include <string>
 #include <vector>
@@ -10,7 +10,6 @@ namespace apartment {
     class Apartment: public livingSpace::LivingSpace {
         private:
         std::vector<std::shared_ptr<room::Room>> rooms;
-        std::vector<std::shared_ptr<tenant::Tenant>> tenants;
         public:
         Apartment(std::string apartmentName);
         Apartment(std::string apartmentName, std::vector<std::shared_ptr<room::Room>> apartmentRooms);
@@ -24,8 +23,6 @@ namespace apartment {
         std::shared_ptr<Apartment> splitHorizontally(std::string newName, int x);
         std::shared_ptr<canvas::Canvas> draw();
         int area();
-        void sign(std::shared_ptr<tenant::Tenant> newTenant);
-        void removeTenant(std::shared_ptr<tenant::Tenant> tenant);
     };
     std::ostream& operator<<(std::ostream& os, Apartment apartment);
 }
