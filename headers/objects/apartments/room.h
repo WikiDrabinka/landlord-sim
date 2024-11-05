@@ -25,7 +25,6 @@ namespace room {
         void addRectangle(std::shared_ptr<rectangle::Rectangle> newRectangle);
         void merge(std::shared_ptr<Room> otherRoom);
         std::shared_ptr<Room> split(std::string newName, std::set<int> rectIndices);
-        //std::shared_ptr<Room> split(std::string newName, std::vector<std::shared_ptr<rectangle::Rectangle>> splitRectangles);
         std::shared_ptr<Room> splitVertically(std::string newName, int y);
         std::shared_ptr<Room> splitHorizontally(std::string newName, int x);
         int maxX();
@@ -34,7 +33,7 @@ namespace room {
         int minY();
         int area();
         std::shared_ptr<canvas::Canvas> draw();
-        void draw(std::shared_ptr<canvas::Canvas> drawing, char c);
+        void draw(std::shared_ptr<canvas::Canvas> drawing);
     };
     std::ostream& operator<<(std::ostream& os, Room room);
 }

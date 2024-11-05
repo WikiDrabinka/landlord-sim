@@ -105,6 +105,10 @@ namespace furniture {
     int Sleepable::getComfortability() { return comfortability; }
     std::vector<std::string> Sleepable::generatedNames = {"Bed", "Couch", "Hammock", "Armchair", "Chair"};
 
+    Utility::Utility(std::string furnitureName, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY, utilityType newType): Furniture(furnitureName, furniturePrice, furnitureCondition, furnitureSizeX, furnitureSizeY) {
+        type = newType;
+    }
+
     std::ostream& operator<<(std::ostream& os, Furniture furniture) {
         os << "Name: " << furniture.getName() << std::endl;
         os << "Size: " << furniture.getSizeX() << "x" << furniture.getSizeY() << std::endl;

@@ -76,7 +76,7 @@ namespace apartment {
     std::shared_ptr<canvas::Canvas> Apartment::draw() {
         std::shared_ptr<canvas::Canvas> drawing(new canvas::Canvas(maxX()+1,maxY()+1));
         for (int i = 0; i<rooms.size(); ++i) {
-            rooms[i]->draw(drawing, (char) i+65);
+            rooms[i]->draw(drawing);
         }
         return drawing;
     }
@@ -89,17 +89,7 @@ namespace apartment {
     }
 
     std::ostream& operator<<(std::ostream& os, Apartment apartment) {
-        std::vector<std::string> drawing = apartment.draw()->getDrawing();
-        for (int i = 0; i<drawing.size(); ++i) {
-            for (int j = 0; j<drawing[i].size(); ++j) {
-                if (drawing[i][j]<91 && drawing[i][j]>64) {
-                    std::cout << apartment.getRooms()[drawing[i][j]-65]->getColor() << " " << color::Color::reset;
-                } else if (drawing[i][j]<123 && drawing[i][j]>96) {
-                    std::cout << apartment.getRooms()[drawing[i][j]-97]->getColor() << "X" << color::Color::reset;
-                }
-            }
-            std::cout << std::endl;
-        }
+        os << *(apartment.draw());
         return os;
     }
 }

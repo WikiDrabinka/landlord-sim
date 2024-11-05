@@ -15,7 +15,16 @@ namespace game {
         apartments[0]->getRooms()[2]->addRectangle(std::shared_ptr<rectangle::Rectangle>(new rectangle::Rectangle(point::Point(6,0),point::Point(7,11))));
         apartments[0]->getRooms()[2]->addRectangle(std::shared_ptr<rectangle::Rectangle>(new rectangle::Rectangle(point::Point(8,4),point::Point(10,11))));
         apartments[0]->getRooms()[3]->addRectangle(std::shared_ptr<rectangle::Rectangle>(new rectangle::Rectangle(point::Point(8,0),point::Point(10,3))));
-        apartments[0]->getRooms()[0]->addFurniture(std::shared_ptr<furniture::Storage>(new furniture::Storage("Bed",100,100,3,2,10)),point::Point(1,2));
+        apartments[0]->getRooms()[0]->addFurniture(std::shared_ptr<furniture::Sleepable>(new furniture::Sleepable("Default Bed",300,75,3,3,75,3)),point::Point(0,2));
+        apartments[0]->getRooms()[0]->addFurniture(std::shared_ptr<furniture::Storage>(new furniture::Storage("Default Nightstand",150,75,1,1,20)),point::Point(0,1));
+        apartments[0]->getRooms()[0]->addFurniture(std::shared_ptr<furniture::Storage>(new furniture::Storage("Default Cabinet",200,75,1,3,50)),point::Point(5,0));
+        apartments[0]->getRooms()[0]->addFurniture(std::shared_ptr<furniture::Storage>(new furniture::Storage("Default Wardrobe",250,75,4,1,70)),point::Point(2,7));
+        apartments[0]->getRooms()[1]->addFurniture(std::shared_ptr<furniture::Utility>(new furniture::Utility("Default Sink",300,75,1,1,furniture::Utility::utilityType::hygiene)),point::Point(0,9));
+        apartments[0]->getRooms()[1]->addFurniture(std::shared_ptr<furniture::Utility>(new furniture::Utility("Default Toilet",300,75,1,1,furniture::Utility::utilityType::waste)),point::Point(0,11));
+        apartments[0]->getRooms()[1]->addFurniture(std::shared_ptr<furniture::Utility>(new furniture::Utility("Default Bathtub",350,75,1,2,furniture::Utility::utilityType::hygiene)),point::Point(2,8));
+        apartments[0]->getRooms()[1]->addFurniture(std::shared_ptr<furniture::Storage>(new furniture::Storage("Default Cupboard",200,75,1,1,20)),point::Point(0,10));
+        apartments[0]->getRooms()[1]->addFurniture(std::shared_ptr<furniture::Storage>(new furniture::Storage("Default Cabinet",200,75,1,1,25)),point::Point(2,10));
+
     }
     int Game::getMoney() { return money; }
     std::vector<std::shared_ptr<apartment::Apartment>> Game::getApartments() { return apartments; }

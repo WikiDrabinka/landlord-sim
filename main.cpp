@@ -26,8 +26,9 @@ int main() {
     furniture::Storage *storage = new furniture::Storage();
     furniture::Sleepable *sleep = new furniture::Sleepable();
     game::Game newGame = game::Game();
+    color::ForegroundColor blue = color::ForegroundColor(255,0,0);
     std::cout << *newGame.getApartments()[0];
-    std::cout << *storage;
+    std::cout << blue.getString() <<*storage << color::Color::reset;
     std::cout << *sleep;
     return 0;
 }

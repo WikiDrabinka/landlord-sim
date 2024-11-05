@@ -56,7 +56,12 @@ namespace furniture {
         int getComfortability();
     };
     class Utility: public Furniture {
-        enum type {cooking, hygiene};
+        public:
+        enum utilityType {cooking, hygiene, waste};
+        private:
+        utilityType type;
+        public:
+        Utility(std::string furnitureName, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY, utilityType type);
     };
     std::ostream& operator<<(std::ostream& os, Furniture furniture);
     std::ostream& operator<<(std::ostream& os, Storage storage);

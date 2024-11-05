@@ -37,8 +37,8 @@ namespace room {
         return false;
     }
     void Room::addFurniture(std::shared_ptr<furniture::Furniture> newFurniture, point::Point position) {
-        if (!containsPoint(position) || !containsPoint(position+point::Point(newFurniture->getSizeX(),newFurniture->getSizeY()))) {
-            std::cerr << "Invalid position." << std::endl;
+        if (!containsPoint(position) || !containsPoint(position+point::Point(newFurniture->getSizeX()-1,newFurniture->getSizeY()-1))) {
+            std::cerr << "Invalid position. (" << position.x << "," << position.y << ")" << std::endl;
             return;
         }
         newFurniture.get()->setPosition(position);
@@ -136,45 +136,34 @@ namespace room {
     }
     std::shared_ptr<canvas::Canvas> Room::draw() {
         std::shared_ptr<canvas::Canvas> drawing(new canvas::Canvas(maxX()+1,maxY()+1));
-        for (std::shared_ptr<rectangle::Rectangle> rect: rectangles) {
-            rect->draw(drawing,'r');
-        }
+        color::ForegroundColor furnColor = color::ForegroundColor(0,0,0);
         for (std::shared_ptr<furniture::Furniture> furn : furniture) {
             for (int i = 0; i<furn.get()->getSizeX(); ++i) {
                 for (int j = 0; j<furn.get()->getSizeY(); ++j) {
-                    drawing->changeDrawing(furn.get()->getPosition()+point::Point(i,j),'R');
+                    drawing->changeDrawing(furn.get()->getPosition()+point::Point(i,j),furnColor.getString()+"X");
                 }
             }
+        }
+        for (std::shared_ptr<rectangle::Rectangle> rect: rectangles) {
+            rect->draw(drawing);
         }
         return drawing;
     }
-    void Room::draw(std::shared_ptr<canvas::Canvas> drawing, char c) {
-        for (std::shared_ptr<rectangle::Rectangle> rect: rectangles) {
-            rect->draw(drawing,c);
-        }
+    void Room::draw(std::shared_ptr<canvas::Canvas> drawing) {
+        color::ForegroundColor furnColor = color::ForegroundColor(0,0,0);
         for (std::shared_ptr<furniture::Furniture> furn : furniture) {
             for (int i = 0; i<furn.get()->getSizeX(); ++i) {
                 for (int j = 0; j<furn.get()->getSizeY(); ++j) {
-                    drawing->changeDrawing(furn.get()->getPosition()+point::Point(i,j),c+32);
+                    drawing->changeDrawing(furn.get()->getPosition()+point::Point(i,j),furnColor.getString()+"X");
                 }
             }
+        }
+        for (std::shared_ptr<rectangle::Rectangle> rect: rectangles) {
+            rect->draw(drawing);
         }
     }
     std::ostream& operator<<(std::ostream& os, Room room) {
-        std::vector<std::string> drawing = room.draw()->getDrawing();
-        for (int i=0; i<drawing.size(); ++i) {
-            for (int j=0; j<drawing[i].size(); ++j) {
-                if (drawing[i][j]=='r' || drawing[i][j]=='R') {
-                    std::cout << room.getColor();
-                }
-                if (drawing[i][j]!='R'){
-                    std::cout << " " << color::Color::reset;
-                } else {
-                    std::cout<< drawing[i][j] << color::Color::reset;
-                }
-            }
-            std::cout << std::endl;
-        }
+        os << *(room.draw());
         return os;
     }
 }
