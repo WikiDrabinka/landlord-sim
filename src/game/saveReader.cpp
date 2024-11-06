@@ -16,10 +16,12 @@ namespace saveReader {
                 fs << room->getState() << std::endl;
                 fs << room->getRectangles().size() << std::endl;
                 for (std::shared_ptr<rectangle::Rectangle> rect: room->getRectangles()) {
-                    fs << rect->getPoint1().x << " " << rect->getPoint1().y << " " << rect->getPoint2().x << " " << rect->getPoint2().y << std::endl;
+                    fs << rect->getPoint1().getString() << " " << rect->getPoint2().getString() << std::endl;
                 }
                 fs << room->getFurniture().size() << std::endl;
-                // furniture
+                for (std::shared_ptr<furniture::Furniture> furn: room->getFurniture()) {
+                    fs << furn->getString() << std::endl;
+                }
             }
             // tenants
         }
@@ -70,7 +72,54 @@ namespace saveReader {
                 std::shared_ptr<room::Room> newRoom(new room::Room(roomName,(livingSpace::state) state,rects,roomColor));
                 getline(fs,line);
                 int furnitureNo = stoi(line);
-                // furniture
+                for (int k = 0; k<furnitureNo; ++k) {
+                    getline(fs,line,' ');
+                    int type = stoi(line);
+                    std::string furnitureName;
+                    getline(fs, furnitureName,'\'');
+                    getline(fs, furnitureName,'\'');
+                    getline(fs,line,' ');
+                    getline(fs,line,' ');
+                    int price = stoi(line);
+                    getline(fs,line,' ');
+                    int condition = stoi(line);
+                    getline(fs,line,' ');
+                    int sizeX = stoi(line);
+                    getline(fs,line,' ');
+                    int sizeY = stoi(line);
+                    getline(fs,line,' ');
+                    int posX = stoi(line);
+                    getline(fs,line,' ');
+                    int posY = stoi(line);
+                    switch (type) {
+                    case 1:
+                    {
+                        getline(fs,line,' ');
+                        int comfortability = stoi(line);
+                        getline(fs,line);
+                        int capacity = stoi(line);
+                        newRoom->addFurniture(std::shared_ptr<furniture::Sleepable>(new furniture::Sleepable(furnitureName,price,condition,sizeX,sizeY,comfortability,capacity)),point::Point(posX,posY));
+                        break;
+                    }
+                    case 2:
+                    {
+                        getline(fs,line);
+                        int capacity = stoi(line);
+                        newRoom->addFurniture(std::shared_ptr<furniture::Storage>(new furniture::Storage(furnitureName,price,condition,sizeX,sizeY,capacity)),point::Point(posX,posY));
+                        //add items
+                        break;
+                    }
+                    case 3:
+                    {
+                        getline(fs,line);
+                        furniture::Utility::utilityType type = (furniture::Utility::utilityType) stoi(line);
+                        newRoom->addFurniture(std::shared_ptr<furniture::Utility>(new furniture::Utility(furnitureName,price,condition,sizeX,sizeY,type)),point::Point(posX,posY));
+                        break;
+                    }
+                    default:
+                        break;
+                    }
+                }
                 rooms.push_back(newRoom);
             }
             newGame.addApartment(std::shared_ptr<apartment::Apartment>(new apartment::Apartment(apartmentName,rooms)));

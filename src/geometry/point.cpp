@@ -9,13 +9,19 @@ namespace point {
         x = 0;
         y = 0;
     }
-    bool Point::operator==(Point &otherPoint) {
-        return (x == otherPoint.x && y == otherPoint.y);
+    bool operator==(const Point &left,const Point &right) {
+        return (left.x == right.x && left.y == right.y);
+    }
+    bool operator!=(const Point &left, const Point &right) {
+        return (left.x != right.x || left.y != right.y);
     }
     Point Point::operator+(const Point &otherPoint) {
         return Point(x+otherPoint.x,y+otherPoint.y);
     }
     Point Point::operator-(const Point &otherPoint) {
         return Point(x-otherPoint.x,y-otherPoint.y);
+    }
+    std::string Point::getString() const {
+        return std::to_string(x) + " " + std::to_string(y);
     }
 }

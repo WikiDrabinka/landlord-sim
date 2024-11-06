@@ -27,6 +27,7 @@ namespace furniture {
         int getSizeX();
         point::Point getPosition();
         virtual color::ForegroundColor getColor() const;
+        virtual std::string getString() const;
         void rotate();
         void claimFurniture(std::shared_ptr<tenant::Tenant> newClaim);
         void setCondition(int new_condition);

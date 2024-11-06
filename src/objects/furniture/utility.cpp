@@ -5,13 +5,8 @@ namespace furniture {
     }
     Utility::utilityType Utility::getType() { return type; }
     color::ForegroundColor Utility::getColor() const { return color::ForegroundColor(0,50,50); }
-
-    std::ostream& operator<<(std::ostream& os, Furniture furniture) {
-        os << "Name: " << furniture.getName() << std::endl;
-        os << "Size: " << furniture.getSizeX() << "x" << furniture.getSizeY() << std::endl;
-        os << "Price: " << furniture.getPrice() << std::endl;
-        os << "Condition: " << furniture.getCondition() << std::endl;
-        return os;
+    std::string Utility::getString() const {
+        return "3 '" + name + "' " + std::to_string(price) + " " + std::to_string(condition) + " " + std::to_string(sizeX) + " " + std::to_string(sizeY) + " " + position.getString() + " " + std::to_string(type);
     }
     std::ostream& operator<<(std::ostream& os, Utility utility) {
         os << (Furniture) utility;

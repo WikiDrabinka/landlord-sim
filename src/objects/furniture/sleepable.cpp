@@ -22,10 +22,14 @@ namespace furniture {
         comfortability = comfortabilityDistr(gen);
         std::normal_distribution<> priceDistr(300*(condition+comfortability)/100,50*(condition+comfortability)/100);
         price = priceDistr(gen);
+        position = point::Point(-1,-1);
     }
     int Sleepable::getCapacity() { return capacity; }
     int Sleepable::getComfortability() { return comfortability; }
     color::ForegroundColor Sleepable::getColor() const { return color::ForegroundColor(100,0,150); }
+    std::string Sleepable::getString() const {
+        return "1 '" + name + "' " + std::to_string(price) + " " + std::to_string(condition) + " " + std::to_string(sizeX) + " " + std::to_string(sizeY) + " " + position.getString() + " " + std::to_string(comfortability) + " " + std::to_string(capacity);
+    }
     std::vector<std::string> Sleepable::generatedNames = {"Bed", "Couch", "Hammock", "Armchair", "Chair"};
     std::ostream& operator<<(std::ostream& os, Sleepable sleepable) {
         os << (Furniture) sleepable;

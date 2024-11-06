@@ -5,7 +5,11 @@
 
 int main() {
     game::Game newGame = game::Game();
+    furniture::Storage *storage = new furniture::Storage();
+    std::cout << *storage;
+    saveReader::loadGame("start",newGame);
     std::cout << *newGame.getApartments()[0];
+    delete storage;
     return 0;
 }
 

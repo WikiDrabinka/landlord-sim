@@ -10,6 +10,7 @@ namespace furniture {
         Storage();
         int getCapacity();
         color::ForegroundColor getColor() const;
+        std::string getString() const;
         void addItem(std::shared_ptr<item::Item> newItem);
         std::shared_ptr<item::Item> popItem();
         void clear();

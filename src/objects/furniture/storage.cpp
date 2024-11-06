@@ -22,6 +22,7 @@ namespace furniture {
         std::normal_distribution<> priceDistr(200*(condition+capacity)/100,50*(condition+capacity)/100);
         price = priceDistr(gen);
         occupied = 0;
+        position = point::Point(-1,-1);
     }
     int Storage::getCapacity() { return capacity; }
     void Storage::addItem(std::shared_ptr<item::Item> newItem) {
@@ -33,6 +34,9 @@ namespace furniture {
         }
     }
     color::ForegroundColor Storage::getColor() const { return color::ForegroundColor(100,50,0); }
+    std::string Storage::getString() const {
+        return  "2 '" + name + "' " + std::to_string(price) + " " + std::to_string(condition) + " " + std::to_string(sizeX) + " " + std::to_string(sizeY) + " " + position.getString() + " " + std::to_string(capacity);
+    }
     std::shared_ptr<item::Item> Storage::popItem() { 
         std::shared_ptr<item::Item> lastItem = items[items.size()-1];
         items.resize(items.size()-1);

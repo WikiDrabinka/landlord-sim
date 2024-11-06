@@ -7,6 +7,7 @@ namespace furniture {
         condition = furnitureCondition;
         sizeX = furnitureSizeX;
         sizeY = furnitureSizeY;
+        position = point::Point(-1,-1);
     }
     Furniture::Furniture() {}
     std::string Furniture::getName() { return name; }
@@ -16,6 +17,7 @@ namespace furniture {
     int Furniture::getSizeY() { return sizeY; }
     point::Point Furniture::getPosition() { return position; }
     color::ForegroundColor Furniture::getColor() const { return color::ForegroundColor(0,0,0); }
+    std::string Furniture::getString() const { return  ""; }
     void Furniture::rotate() {
         int temp = sizeX;
         sizeX = sizeY;
@@ -35,5 +37,13 @@ namespace furniture {
     float Furniture::repairPrice() {
         return price*condition/100;
     }
+    
     std::vector<std::string> Furniture::generatedAdjectives = {"Ancient", "New", "Shiny", "Giant", "Tiny", "Hexagonal", "Bright", "Plain", "Neat", "Colorful", "Elegant", "Strange", "Stunning", "Classy", "Hideous", "Messy", "Polished", "Wacky"};
+    std::ostream& operator<<(std::ostream& os, Furniture furniture) {
+        os << "Name: " << furniture.getName() << std::endl;
+        os << "Size: " << furniture.getSizeX() << "x" << furniture.getSizeY() << std::endl;
+        os << "Price: " << furniture.getPrice() << std::endl;
+        os << "Condition: " << furniture.getCondition() << std::endl;
+        return os;
+    }
 }
