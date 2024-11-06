@@ -5,6 +5,7 @@ namespace saveReader {
         std::fstream fs;
         fs.open(filePath, std::fstream::out);
         fs << newGame.getMoney() << std::endl;
+        fs << newGame.getTime() << std::endl;
         fs << newGame.getApartments().size() << std::endl;
         for (std::shared_ptr<apartment::Apartment> apartment: newGame.getApartments()) {
             fs << apartment->getName() << std::endl;
@@ -29,6 +30,8 @@ namespace saveReader {
         std::string line;
         getline(fs,line);
         newGame.setMoney(stoi(line));
+        getline(fs,line);
+        newGame.setTime(stoi(line));
         getline(fs,line);
         int apartmentNo = stoi(line);
         for (int i = 0; i<apartmentNo; ++i) {
@@ -69,8 +72,8 @@ namespace saveReader {
                 int furnitureNo = stoi(line);
                 // furniture
                 rooms.push_back(newRoom);
-                newGame.addApartment(std::shared_ptr<apartment::Apartment>(new apartment::Apartment(apartmentName,rooms)));
             }
+            newGame.addApartment(std::shared_ptr<apartment::Apartment>(new apartment::Apartment(apartmentName,rooms)));
             // tenants
         }
     }

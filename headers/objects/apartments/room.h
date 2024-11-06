@@ -1,5 +1,5 @@
 #pragma once
-#include "furniture.h"
+#include "../furniture/furniture.h"
 #include "../../display/canvas.h"
 #include "../../geometry/rectangle.h"
 #include "livingSpace.h"

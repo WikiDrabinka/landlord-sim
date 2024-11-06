@@ -54,9 +54,11 @@ namespace game {
         apartments[0]->getRooms()[4]->addFurniture(std::shared_ptr<furniture::Sleepable>(new furniture::Sleepable("Default Chair",100,75,1,1,10,1)),point::Point(9,6));
     }
     int Game::getMoney() { return money; }
+    int Game::getTime() { return time; }
     std::vector<std::shared_ptr<apartment::Apartment>> Game::getApartments() { return apartments; }
     std::shared_ptr<market::RealEstate> Game::getRealEstateMarket() { return realEstateMarket; }
     std::shared_ptr<market::Furniture> Game::getFurnitureStore() { return FurnitureStore; }
     void Game::setMoney(int newMoney) { money = newMoney; }
+    void Game::setTime(int newTime) { time = newTime; }
     void Game::addApartment(std::shared_ptr<apartment::Apartment> newApartment) { apartments.push_back(newApartment); }
 }

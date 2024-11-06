@@ -9,4 +9,4 @@ int main() {
     return 0;
 }
 
-//TO DO : write class market, generating utilities, (!) finish saving and loading files, class game, unit tests, make room state relevant
+//TO DO : probably make class time, write class market, generating utilities, (!) finish saving and loading files, class game, unit tests, make room state relevant
