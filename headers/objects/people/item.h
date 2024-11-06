@@ -16,6 +16,7 @@ namespace item {
         std::string getName();
         int getSize();
         int getValue();
+        std::string getString();
     };
     std::ostream& operator<<(std::ostream& os, Item it);
 }

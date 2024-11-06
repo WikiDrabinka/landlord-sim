@@ -35,7 +35,12 @@ namespace furniture {
     }
     color::ForegroundColor Storage::getColor() const { return color::ForegroundColor(100,50,0); }
     std::string Storage::getString() const {
-        return  "2 '" + name + "' " + std::to_string(price) + " " + std::to_string(condition) + " " + std::to_string(sizeX) + " " + std::to_string(sizeY) + " " + position.getString() + " " + std::to_string(capacity);
+        std::string line = "2 '" + name + "' " + std::to_string(price) + " " + std::to_string(condition) + " " + std::to_string(sizeX) + " " + std::to_string(sizeY) + " " + position.getString() + " " + std::to_string(capacity);
+        line += " " + std::to_string(items.size());
+        for (std::shared_ptr<item::Item> item: items) {
+            line += "\n" + item->getString();
+        }
+        return line;
     }
     std::shared_ptr<item::Item> Storage::popItem() { 
         std::shared_ptr<item::Item> lastItem = items[items.size()-1];

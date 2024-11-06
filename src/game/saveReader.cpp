@@ -103,10 +103,23 @@ namespace saveReader {
                     }
                     case 2:
                     {
-                        getline(fs,line);
+                        getline(fs,line,' ');
                         int capacity = stoi(line);
-                        newRoom->addFurniture(std::shared_ptr<furniture::Storage>(new furniture::Storage(furnitureName,price,condition,sizeX,sizeY,capacity)),point::Point(posX,posY));
-                        //add items
+                        getline(fs,line);
+                        std::shared_ptr<furniture::Storage> newStorage(new furniture::Storage(furnitureName,price,condition,sizeX,sizeY,capacity));
+                        int itemNo = stoi(line);
+                        for (int l = 0; l<itemNo; ++l) {
+                            std::string itemName;
+                            getline(fs,itemName,'\'');
+                            getline(fs,itemName,'\'');
+                            getline(fs,line,' ');
+                            getline(fs,line,' ');
+                            int size = stoi(line);
+                            getline(fs,line);
+                            int value = stoi(line);
+                            newStorage->addItem(std::shared_ptr<item::Item>(new item::Item(itemName,size,value)));
+                        }
+                        newRoom->addFurniture(newStorage,point::Point(posX,posY));
                         break;
                     }
                     case 3:

@@ -17,12 +17,15 @@ namespace tenant {
         std::uniform_int_distribution<> traitDistr(1,100);
         std::uniform_int_distribution<> itemNoDistr(1,10);
         std::normal_distribution<> incomeDistr(2000,500);
-        int income = incomeDistr(gen);
-        std::normal_distribution<> savingsDistr(income*2,income*3/2);
-        std::normal_distribution<> spendingDistr(income/2,income/4);
+        monthlyIncome = incomeDistr(gen);
+        std::normal_distribution<> savingsDistr(monthlyIncome*2,monthlyIncome*3/2);
+        std::normal_distribution<> spendingDistr(monthlyIncome/2,monthlyIncome/4);
         name = generatedFirstNames[firstNameDistr(gen)] + " " + generatedLastNames[lastNameDistr(gen)];
+        savings = savingsDistr(gen);
+        spending = spendingDistr(gen);
+        patience = traitDistr(gen);
+        happiness = traitDistr(gen);
         int itemNo = itemNoDistr(gen);
-        Tenant(name,income,savingsDistr(gen),spendingDistr(gen),traitDistr(gen),traitDistr(gen));
         for (int i = 0; i<itemNo; ++i) {
             items.push_back(std::shared_ptr<item::Item>(new item::Item));
         }
