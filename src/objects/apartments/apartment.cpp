@@ -39,38 +39,28 @@ namespace apartment {
         }
         return maxY;
     }
-    std::shared_ptr<Apartment> Apartment::splitVertically(std::string newName, int y) {
-        std::vector<std::shared_ptr<room::Room>> newRooms;
+    std::shared_ptr<Apartment> Apartment::splitVertically(std::string newName, int y, std::vector<std::shared_ptr<furniture::Furniture>>& storage) {
         std::vector<std::shared_ptr<room::Room>> splitRooms;
-        for (std::shared_ptr<room::Room> room: rooms) {
-            if (room->maxY()<=y){
-                newRooms.push_back(room);
-            } else if (room->minY()>y) {
-                splitRooms.push_back(room);
-            } else {
-                splitRooms.push_back(room->splitVertically("Split room",y));
-                newRooms.push_back(room);
-            }
+        std::vector<std::shared_ptr<room::Room>> rightRooms;
+        std::copy_if(rooms.begin(),rooms.end(),std::back_inserter(rightRooms),[y](std::shared_ptr<room::Room> room) {return room->minY()>y;});
+        std::copy_if(rooms.begin(),rooms.end(),std::back_inserter(splitRooms),[y](std::shared_ptr<room::Room> room) {return room->minY()<=y && room->maxY()>y;});
+        rooms.erase(std::remove_if(rooms.begin(),rooms.end(),[y](std::shared_ptr<room::Room> room) {return room->minY()>y;}),rooms.end());
+        for (std::shared_ptr<room::Room> room: splitRooms) {
+            rightRooms.push_back(room->splitVertically("Split room",y,storage));
         }
-        std::shared_ptr<Apartment> newApartment(new Apartment(newName,splitRooms));
-        rooms = newRooms;
+        std::shared_ptr<Apartment> newApartment(new Apartment(newName,rightRooms));
         return newApartment;
     }
-    std::shared_ptr<Apartment> Apartment::splitHorizontally(std::string newName, int x) {
-        std::vector<std::shared_ptr<room::Room>> newRooms;
+    std::shared_ptr<Apartment> Apartment::splitHorizontally(std::string newName, int x, std::vector<std::shared_ptr<furniture::Furniture>>& storage) {
         std::vector<std::shared_ptr<room::Room>> splitRooms;
-        for (std::shared_ptr<room::Room> room: rooms) {
-            if (room->maxX()<=x){
-                newRooms.push_back(room);
-            } else if (room->minX()>x) {
-                splitRooms.push_back(room);
-            } else {
-                splitRooms.push_back(room->splitHorizontally("Split room",x));
-                newRooms.push_back(room);
-            }
+        std::vector<std::shared_ptr<room::Room>> bottomRooms;
+        std::copy_if(rooms.begin(),rooms.end(),std::back_inserter(bottomRooms),[x](std::shared_ptr<room::Room> room) {return room->minX()>x;});
+        std::copy_if(rooms.begin(),rooms.end(),std::back_inserter(splitRooms),[x](std::shared_ptr<room::Room> room) {return room->minX()<=x && room->maxX()>x;});
+        rooms.erase(std::remove_if(rooms.begin(),rooms.end(),[x](std::shared_ptr<room::Room> room) {return room->minX()>x;}),rooms.end());
+        for (std::shared_ptr<room::Room> room: splitRooms) {
+            bottomRooms.push_back(room->splitHorizontally("Split room",x,storage));
         }
-        std::shared_ptr<Apartment> newApartment(new Apartment(newName,splitRooms));
-        rooms = newRooms;
+        std::shared_ptr<Apartment> newApartment(new Apartment(newName,bottomRooms));
         return newApartment;
     }
     std::shared_ptr<canvas::Canvas> Apartment::draw(int sizeX, int sizeY) {

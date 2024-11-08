@@ -25,8 +25,8 @@ namespace room {
         void addRectangle(std::shared_ptr<rectangle::Rectangle> newRectangle);
         void merge(std::shared_ptr<Room> otherRoom);
         std::shared_ptr<Room> split(std::string newName, std::set<int> rectIndices);
-        std::shared_ptr<Room> splitVertically(std::string newName, int y);
-        std::shared_ptr<Room> splitHorizontally(std::string newName, int x);
+        std::shared_ptr<Room> splitVertically(std::string newName, int y, std::vector<std::shared_ptr<furniture::Furniture>>& storage);
+        std::shared_ptr<Room> splitHorizontally(std::string newName, int x, std::vector<std::shared_ptr<furniture::Furniture>>& storage);
         int maxX();
         int minX();
         int maxY();

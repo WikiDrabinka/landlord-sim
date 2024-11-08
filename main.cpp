@@ -10,7 +10,10 @@ int main() {
     std::shared_ptr<tenant::Tenant> bob(new tenant::Tenant());
     std::shared_ptr<lease::Lease> lol(new lease::Lease(bob,screen->getDisplayedApartment(),600,30,false));
     screen->getGame()->addLease(lol);
-    screen->getGame()->addApartment(screen->getGame()->getApartments()[0]->splitVertically("apt 2",5));
+    std::vector<std::shared_ptr<furniture::Furniture>> backup;
+    std::cout << *screen;
+    screen->getGame()->addApartment(screen->getGame()->getApartments()[0]->splitHorizontally("apt 2",4,backup));
+    std::cout << *screen;
     screen->setSelectedApartment(1);
     std::cout << *screen;
     std::string line;
@@ -23,16 +26,8 @@ int main() {
     std::cin >> line;
     std::cout << "\033[1A\033[0K";
     screen->addLog(line);
-    std::cin >> line;
-    std::cout << "\033[1A\033[0K";
-    screen->addLog(line);
-    std::cin >> line;
-    std::cout << "\033[1A\033[0K";
-    screen->addLog(line);
-    std::cin >> line;
-    std::cout << "\033[1A\033[0K";
-    screen->addLog(line);
-    std::cout << *bob;
+    std::cout << backup.size();
+    //std::cout << *bob;
     return 0;
 }
 

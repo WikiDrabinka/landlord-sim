@@ -19,8 +19,8 @@ namespace apartment {
         void merge(std::shared_ptr<Apartment> otherApartment);
         int maxX();
         int maxY();
-        std::shared_ptr<Apartment> splitVertically(std::string newName, int y);
-        std::shared_ptr<Apartment> splitHorizontally(std::string newName, int x);
+        std::shared_ptr<Apartment> splitVertically(std::string newName, int y, std::vector<std::shared_ptr<furniture::Furniture>>& storage);
+        std::shared_ptr<Apartment> splitHorizontally(std::string newName, int x, std::vector<std::shared_ptr<furniture::Furniture>>& storage);
         std::shared_ptr<canvas::Canvas> draw();
         std::shared_ptr<canvas::Canvas> draw(int sizeX, int sizeY);
         int area();
