@@ -21,6 +21,7 @@ namespace tenant {
         Tenant();
         int getIncome();
         int getSavings();
+        int getSpending();
         int getPatience();
         int getHappiness();
         std::string getName();

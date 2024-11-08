@@ -13,6 +13,7 @@ namespace lease {
         Lease(std::shared_ptr<tenant::Tenant> newTenant,std::shared_ptr<livingSpace::LivingSpace> newLivingSpace, int leaseRent, int leaseTime, bool utilitiesIncluded);
         std::shared_ptr<tenant::Tenant> getTenant();
         std::shared_ptr<livingSpace::LivingSpace> getLivingSpace();
+        int getRent();
         void renew(int newTime);
         void switchUtilities();
         void setRent(int newRent);

@@ -6,6 +6,7 @@ namespace tenant {
         nickname = tenantName;
         monthlyIncome = tenantIncome;
         savings = tenantSavings;
+        spending = tenantSpending;
         patience = tenantPatience;
         happiness = tenantHappiness;
     }
@@ -21,6 +22,7 @@ namespace tenant {
         std::normal_distribution<> savingsDistr(monthlyIncome*2,monthlyIncome*3/2);
         std::normal_distribution<> spendingDistr(monthlyIncome/2,monthlyIncome/4);
         name = generatedFirstNames[firstNameDistr(gen)] + " " + generatedLastNames[lastNameDistr(gen)];
+        nickname = name;
         savings = savingsDistr(gen);
         spending = spendingDistr(gen);
         patience = traitDistr(gen);
@@ -32,6 +34,7 @@ namespace tenant {
     }
     int Tenant::getIncome() { return monthlyIncome; }
     int Tenant::getSavings() { return savings; }
+    int Tenant::getSpending() { return spending; }
     int Tenant::getPatience() { return patience; }
     int Tenant::getHappiness() { return happiness; }
     std::string Tenant::getName() { return name; }
@@ -47,6 +50,7 @@ namespace tenant {
         }
         os << "Income: " << ten.getIncome() << std::endl;
         os << "Savings: " << ten.getSavings() << std::endl;
+        os << "Spending: " << ten.getSpending() << std::endl;
         os << "Hapiness: " << ten.getHappiness() << std::endl;
         os << "Patience: " << ten.getPatience() << std::endl;
         os << (storage::IStorage) ten;

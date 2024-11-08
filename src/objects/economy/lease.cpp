@@ -9,6 +9,7 @@ namespace lease {
     }
     std::shared_ptr<tenant::Tenant> Lease::getTenant() { return tenant; }
     std::shared_ptr<livingSpace::LivingSpace> Lease::getLivingSpace() { return livingSpace; }
+    int Lease::getRent() { return rent; }
     void Lease::renew(int addedTime) {
         time += addedTime;
     }

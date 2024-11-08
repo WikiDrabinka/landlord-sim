@@ -19,6 +19,7 @@ namespace screen {
         public:
         int apartmentWidth;
         int sideDisplayWidth;
+        int totalWidth;
         int topHeight;
         int logBoxHeight;
         Screen();

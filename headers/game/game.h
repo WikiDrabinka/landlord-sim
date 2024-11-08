@@ -27,7 +27,8 @@ namespace game {
         void setMoney(int newMoney);
         void setTime(int newTime);
         void addApartment(std::shared_ptr<apartment::Apartment> newApartment);
-        // int totalRent();
-        // int averageHapiness();
+        void addLease(std::shared_ptr<lease::Lease> newLease);
+        int totalRent();
+        int averageHapiness();
     };
 }

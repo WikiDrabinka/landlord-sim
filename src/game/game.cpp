@@ -61,4 +61,24 @@ namespace game {
     void Game::setMoney(int newMoney) { money = newMoney; }
     void Game::setTime(int newTime) { time = newTime; }
     void Game::addApartment(std::shared_ptr<apartment::Apartment> newApartment) { apartments.push_back(newApartment); }
+    void Game::addLease(std::shared_ptr<lease::Lease> newLease) { leases.push_back(newLease); }
+    int Game::totalRent() {
+        int sum = 0;
+        for (std::shared_ptr<lease::Lease> lease: leases) {
+            sum += lease->getRent();
+        }
+        return sum;
+    }
+    int Game::averageHapiness() {
+        int sum = 0;
+        int size = 0;
+        for (std::shared_ptr<lease::Lease> lease: leases) {
+            sum += lease->getTenant()->getHappiness();
+            size += 1;
+        }
+        if (size==0) {
+            return 0;
+        }
+        return sum/size;
+    }
 }
