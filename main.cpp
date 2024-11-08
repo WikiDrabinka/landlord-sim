@@ -1,14 +1,20 @@
 #include "headers/objects/apartments/apartment.h"
 #include "headers/display/color.h"
 #include "headers/game/saveReader.h"
+#include "headers/display/screen.h"
 #include <vector>
 
 int main() {
-    game::Game newGame = game::Game();
-    saveReader::loadGame("start",newGame);
-    saveReader::saveGame("end",newGame);
-    std::cout << *newGame.getApartments()[0];
-    std::cout << *newGame.getApartments()[0]->getRooms()[0]->getFurniture()[2];
+    std::cout << "line 1 uwuwuwuwuwuwuuwuwuwu" << std::endl;
+    std::cout << "line 2 uwuwuwuwuwuwuuwuwuwu" << std::endl;
+    std::cout << "line 3 uwuwuwuwuwuwuuwuwuwu" << std::endl;
+    std::cout << "\033[2A\033[0Kheeeeeej\033[2E";
+    screen::Screen *screen = new screen::Screen();
+    screen->addLog("uwu1");
+    screen->addLog("uwu2");
+    screen->addLog("uwu3");
+    screen->addLog("uwu4");
+    std::cout << *screen;
     return 0;
 }
 

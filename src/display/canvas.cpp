@@ -29,6 +29,13 @@ namespace canvas {
     void Canvas::changeDrawing(point::Point position, std::string newString) {
         changeDrawing(position.x,position.y, newString);
     }
+    std::string Canvas::getLine(int idx) {
+        std::string line = "";
+        for (std::string s: drawing[idx]){
+            line += s;
+        }
+        return line;
+    }
     std::ostream& operator<<(std::ostream& os, Canvas canvas) {
         std::vector<std::vector<std::string>> drawing = canvas.getDrawing();
         for (int i=0; i<canvas.getX(); ++i) {

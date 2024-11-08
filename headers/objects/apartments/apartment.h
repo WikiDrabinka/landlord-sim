@@ -22,6 +22,7 @@ namespace apartment {
         std::shared_ptr<Apartment> splitVertically(std::string newName, int y);
         std::shared_ptr<Apartment> splitHorizontally(std::string newName, int x);
         std::shared_ptr<canvas::Canvas> draw();
+        std::shared_ptr<canvas::Canvas> draw(int sizeX, int sizeY);
         int area();
     };
     std::ostream& operator<<(std::ostream& os, Apartment apartment);

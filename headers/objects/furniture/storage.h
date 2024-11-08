@@ -1,3 +1,4 @@
+#pragma once
 #include "furniture.h"
 namespace furniture {
     class Storage: public Furniture, public storage::IStorage {

@@ -16,6 +16,7 @@ namespace canvas {
         std::vector<std::vector<std::string>> getDrawing();
         void changeDrawing(int x, int y, std::string newString);
         void changeDrawing(point::Point position, std::string newString);
+        std::string getLine(int idx);
     };
     std::ostream& operator<<(std::ostream& os, Canvas canvas);
 }

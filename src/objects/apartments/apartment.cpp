@@ -73,12 +73,15 @@ namespace apartment {
         rooms = newRooms;
         return newApartment;
     }
-    std::shared_ptr<canvas::Canvas> Apartment::draw() {
-        std::shared_ptr<canvas::Canvas> drawing(new canvas::Canvas(maxX()+1,maxY()+1));
+    std::shared_ptr<canvas::Canvas> Apartment::draw(int sizeX, int sizeY) {
+        std::shared_ptr<canvas::Canvas> drawing(new canvas::Canvas(sizeX,sizeY));
         for (int i = 0; i<rooms.size(); ++i) {
             rooms[i]->draw(drawing);
         }
         return drawing;
+    }
+    std::shared_ptr<canvas::Canvas> Apartment::draw() {
+        return draw(maxX()+1,maxY()+1);
     }
     int Apartment::area() {
         int sum = 0;

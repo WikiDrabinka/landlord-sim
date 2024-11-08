@@ -1,3 +1,4 @@
+#pragma once
 #include "../objects/economy/lease.h"
 #include "../objects/economy/market.h"
 #include "../objects/furniture/furniture.h"
@@ -26,5 +27,7 @@ namespace game {
         void setMoney(int newMoney);
         void setTime(int newTime);
         void addApartment(std::shared_ptr<apartment::Apartment> newApartment);
+        // int totalRent();
+        // int averageHapiness();
     };
 }
