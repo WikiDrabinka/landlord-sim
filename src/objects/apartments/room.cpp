@@ -91,7 +91,7 @@ namespace room {
         std::copy_if(rectangles.begin(),rectangles.end(),std::back_inserter(splitRectangles),[x](std::shared_ptr<rectangle::Rectangle> rect) {return rect->getPoint1().x<=x && rect->getPoint2().x>x;});
         rectangles.erase(std::remove_if(rectangles.begin(),rectangles.end(),[x](std::shared_ptr<rectangle::Rectangle> rect) {return rect->getPoint1().x>x;}),rectangles.end());
         for (std::shared_ptr<rectangle::Rectangle> rect: splitRectangles) {
-            bottomRectangles.push_back(rect->splitVertically(x));
+            bottomRectangles.push_back(rect->splitHorizontally(x));
         }
 
         std::vector<std::shared_ptr<furniture::Furniture>> bottomFurniture;

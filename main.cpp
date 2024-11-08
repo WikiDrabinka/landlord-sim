@@ -12,23 +12,34 @@ int main() {
     screen->getGame()->addLease(lol);
     std::vector<std::shared_ptr<furniture::Furniture>> backup;
     std::cout << *screen;
-    screen->getGame()->addApartment(screen->getGame()->getApartments()[0]->splitHorizontally("apt 2",4,backup));
-    std::cout << *screen;
-    screen->setSelectedApartment(1);
-    std::cout << *screen;
-    std::string line;
-    std::cin >> line;
-    std::cout << "\033[1A\033[0K";
-    screen->addLog(line);
-    std::cin >> line;
-    std::cout << "\033[1A\033[0K";
-    screen->addLog(line);
-    std::cin >> line;
-    std::cout << "\033[1A\033[0K";
-    screen->addLog(line);
-    std::cout << backup.size();
+    screen->getGame()->addApartment(screen->getGame()->getApartments()[0]->splitHorizontally("apt 2",5,backup));
+    screen->getGame()->addApartment(screen->getGame()->getApartments()[0]->splitVertically("apt 2",6,backup));
+    for (int i = 0; i<screen->getGame()->getApartments().size();++i) {
+        screen->setSelectedApartment(i);
+        std::cout << *screen;
+    }
+    // std::string line;
+    // std::cin >> line;
+    // std::cout << "\033[1A\033[0K";
+    // screen->addLog(line);
+    // std::cin >> line;
+    // std::cout << "\033[1A\033[0K";
+    // screen->addLog(line);
+    // std::cin >> line;
+    // std::cout << "\033[1A\033[0K";
+    // screen->addLog(line);
+    // std::cin >> line;
+    // std::cout << "\033[1A\033[0K";
+    // screen->addLog(line);
+    // std::cin >> line;
+    // std::cout << "\033[1A\033[0K";
+    // screen->addLog(line);
+    // std::cin >> line;
+    // std::cout << "\033[1A\033[0K";
+    // screen->addLog(line);
     //std::cout << *bob;
+    delete screen;
     return 0;
 }
 
-//TO DO : fix splitting rooms, probably make class time, write class market, generating utilities, (!) finish saving and loading files, class game, unit tests, make room state relevant
+//TO DO : probably make class time, write class market, generating utilities, (!) finish saving and loading files, class game, unit tests, make room state relevant
