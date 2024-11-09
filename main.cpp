@@ -2,6 +2,7 @@
 #include "headers/display/color.h"
 #include "headers/game/saveReader.h"
 #include "headers/display/screen.h"
+#include "headers/display/display.h"
 #include <vector>
 #include <unistd.h>
 
@@ -12,16 +13,16 @@ int main() {
     screen->getGame()->addLease(lol);
     std::vector<std::shared_ptr<furniture::Furniture>> backup;
     std::cout << *screen;
-    screen->getGame()->addApartment(screen->getGame()->getApartments()[0]->splitHorizontally("apt 2",5,backup));
-    screen->getGame()->addApartment(screen->getGame()->getApartments()[0]->splitVertically("apt 2",6,backup));
-    for (int i = 0; i<screen->getGame()->getApartments().size();++i) {
-        screen->setSelectedApartment(i);
-        std::cout << *screen;
+    display::Display *d = new display::Display("D1",20,2,display::displayType::furniture,screen->getGame(),point::Point(0,0));
+    for (std::string line:d->getDisplay()) {
+        std::cout<<line<<std::endl;
     }
-    std::shared_ptr<furniture::Storage> furn(new furniture::Storage);
-    std::cout << *furn;
-    std::cout << screen->getGame()->getFurnitureStore()->sell(furn) << std::endl;
-    std::cout << *screen->getGame()->getFurnitureStore();
+    d->scrollDown(3);
+    d->scrollUp(3);
+    std::cout<<std::endl;
+    for (std::string line:d->getDisplay()) {
+        std::cout<<line<<std::endl;
+    }
     // std::string line;
     // std::cin >> line;
     // std::cout << "\033[1A\033[0K";
@@ -45,4 +46,4 @@ int main() {
     return 0;
 }
 
-//TO DO : probably make class time, write class market, (!) finish saving and loading files, class game, unit tests, make room state relevant
+//TO DO : probably make class time, (!) finish saving and loading files, class game, unit tests, make room state relevant

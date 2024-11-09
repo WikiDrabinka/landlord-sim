@@ -3,11 +3,10 @@ namespace screen {
     Screen::Screen() {
         game = std::shared_ptr<game::Game>(new game::Game());
         selectedApartment = 0;
-        display = sideDisplay::rooms;
         selectedSideDisplay = {0};
         apartmentWidth = 24;
-        sideDisplayWidth = 48;
-        totalWidth = apartmentWidth+sideDisplayWidth;
+        sideDisplayWidth = 24;
+        totalWidth = apartmentWidth+sideDisplayWidth*4;
         topHeight = 10;
         logBoxHeight = 5;
         logBoxMemory = 20;
@@ -25,19 +24,6 @@ namespace screen {
         }
         selectedApartment = idx;
         update();
-    }
-    void Screen::setSideDisplay(sideDisplay newDisplay) {
-        display = newDisplay;
-        update();
-    }
-    void Screen::setSelectedSideDisplay(int idx) {
-        if (display==rooms) {
-            if (idx>=game->getApartments().size()) {
-                addLog("Invalid apartment index.");
-                return;
-            }
-            selectedSideDisplay = {idx};
-        }
     }
     void Screen::addLog(std::string newLog) {
         logBox.push_back(newLog);
@@ -66,7 +52,16 @@ namespace screen {
     std::ostream& operator<<(std::ostream& os, Screen screen) {
         os << "╔═";
         for (int i=0; i<screen.totalWidth;++i) {
-            if (i==screen.apartmentWidth+1) {
+            if (i%(screen.apartmentWidth+1)==0) {
+                os << "╦";
+            } else {
+                os << "═";
+            }
+        }
+        os << "═╗" << std::endl << "║ "<< std::endl;
+        os << "╠═";
+        for (int i=0; i<screen.totalWidth;++i) {
+            if (i%(screen.apartmentWidth+1)==0) {
                 os << "╦";
             } else {
                 os << "═";
@@ -93,6 +88,35 @@ namespace screen {
             drawingSize = (screen.getDisplayedApartment()->maxY()+1)*2;
         }
         std::string line = "Total rent: " + std::to_string(screen.getGame()->totalRent());
+        while (line.length()<screen.apartmentWidth){
+            line = line + " ";
+        }
+        os << "║ " << line << " ║" << std::endl;
+        line = "Average hapiness: " + std::to_string(screen.getGame()->averageHapiness());
+        while (line.length()<screen.apartmentWidth){
+            line = line + " ";
+        }
+        os << "║ " << line << " ║" << std::endl;
+        os << "╠═";
+        for (int i=0; i<screen.totalWidth;++i) {
+            if (i==screen.apartmentWidth+1) {
+                os << "╩";
+            } else {
+                os << "═";
+            }
+        }
+        os << "═╣" << std::endl;
+        os << "║ " << "\033[1m" << name << "\033[22m" << " ║" << std::endl;
+        for (int i=0; i<drawing->getX(); ++i) {
+            line = drawing->getLine(i);
+            while (drawingSize<screen.apartmentWidth){
+                line = line + " ";
+                ++drawingSize;
+            }
+            os << "║ " << line << " ║" << std::endl;
+            drawingSize = (screen.getDisplayedApartment()->maxY()+1)*2;
+        }
+        line = "Total rent: " + std::to_string(screen.getGame()->totalRent());
         while (line.length()<screen.apartmentWidth){
             line = line + " ";
         }
