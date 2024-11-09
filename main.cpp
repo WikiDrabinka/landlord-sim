@@ -6,7 +6,7 @@
 #include <unistd.h>
 
 int main() {
-    screen::Screen *screen = new screen::Screen();
+    std::shared_ptr<screen::Screen> screen(new screen::Screen());
     std::shared_ptr<tenant::Tenant> bob(new tenant::Tenant());
     std::shared_ptr<lease::Lease> lol(new lease::Lease(bob,screen->getDisplayedApartment(),600,30,false));
     screen->getGame()->addLease(lol);
@@ -38,8 +38,7 @@ int main() {
     // std::cout << "\033[1A\033[0K";
     // screen->addLog(line);
     //std::cout << *bob;
-    delete screen;
     return 0;
 }
 
-//TO DO : probably make class time, write class market, generating utilities, (!) finish saving and loading files, class game, unit tests, make room state relevant
+//TO DO : probably make class time, write class market, (!) finish saving and loading files, class game, unit tests, make room state relevant

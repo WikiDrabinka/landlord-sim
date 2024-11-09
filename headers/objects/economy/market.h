@@ -6,7 +6,7 @@
 namespace market {
     class RealEstate {
         private:
-        int averagePrice;
+        int averagePricePerMeter;
         std::vector<std::shared_ptr<apartment::Apartment>> apartments;
         public:
         RealEstate();
