@@ -25,6 +25,12 @@ namespace furniture {
     std::string Utility::getString() const {
         return "3 '" + name + "' " + std::to_string(price) + " " + std::to_string(condition) + " " + std::to_string(sizeX) + " " + std::to_string(sizeY) + " " + position.getString() + " " + std::to_string(type);
     }
+    int Utility::getPriceMean() const {
+        return 300*(condition)/50;
+    }
+    int Utility::getPriceSD() const {
+        return 50*(condition)/50;
+    }
     std::ostream& operator<<(std::ostream& os, Utility utility) {
         os << (Furniture) utility;
         return os;

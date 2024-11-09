@@ -28,6 +28,8 @@ namespace furniture {
         point::Point getPosition();
         virtual color::ForegroundColor getColor() const;
         virtual std::string getString() const;
+        virtual int getPriceMean() const;
+        virtual int getPriceSD() const;
         void rotate();
         void claimFurniture(std::shared_ptr<tenant::Tenant> newClaim);
         void setCondition(int new_condition);

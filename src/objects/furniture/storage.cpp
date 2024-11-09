@@ -42,6 +42,12 @@ namespace furniture {
         }
         return line;
     }
+    int Storage::getPriceMean() const {
+        return 300*(condition+capacity)/100;
+    }
+    int Storage::getPriceSD() const {
+        return 50*(condition+capacity)/100;
+    }
     std::shared_ptr<item::Item> Storage::popItem() { 
         std::shared_ptr<item::Item> lastItem = items[items.size()-1];
         items.resize(items.size()-1);

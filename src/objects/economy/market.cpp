@@ -47,8 +47,15 @@ namespace market {
         furniture.erase(furniture.begin()+idx);
     }
     int Furniture::sell(std::shared_ptr<furniture::Furniture> oldFurniture) {
+        std::random_device dev;
+        std::mt19937 gen(dev());
+        std::normal_distribution<> priceDistr(oldFurniture->getPriceMean(),oldFurniture->getPriceSD());
+        int price = 0;
+        while (price<=0) {
+            price = priceDistr(gen);
+        }
         furniture.push_back(oldFurniture);
-        return 300;
+        return price;
     }
     std::ostream& operator<<(std::ostream& os, Furniture furniture) {
         for (int i = 0; i<furniture.getFurniture().size(); ++i) {

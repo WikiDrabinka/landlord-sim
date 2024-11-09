@@ -12,5 +12,7 @@ namespace furniture {
         utilityType getType();
         color::ForegroundColor getColor() const;
         std::string getString() const;
+        int getPriceMean() const;
+        int getPriceSD() const;
     };
 }

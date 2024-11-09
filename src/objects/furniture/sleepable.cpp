@@ -30,6 +30,12 @@ namespace furniture {
     std::string Sleepable::getString() const {
         return "1 '" + name + "' " + std::to_string(price) + " " + std::to_string(condition) + " " + std::to_string(sizeX) + " " + std::to_string(sizeY) + " " + position.getString() + " " + std::to_string(comfortability) + " " + std::to_string(capacity);
     }
+    int Sleepable::getPriceMean() const {
+        return 300*(condition+comfortability)/100;
+    }
+    int Sleepable::getPriceSD() const {
+        return 50*(condition+comfortability)/100;
+    }
     std::vector<std::string> Sleepable::generatedNames = {"Bed", "Couch", "Hammock", "Armchair", "Chair"};
     std::ostream& operator<<(std::ostream& os, Sleepable sleepable) {
         os << (Furniture) sleepable;

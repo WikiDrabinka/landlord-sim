@@ -18,6 +18,9 @@ int main() {
         screen->setSelectedApartment(i);
         std::cout << *screen;
     }
+    std::shared_ptr<furniture::Storage> furn(new furniture::Storage);
+    std::cout << *furn;
+    std::cout << screen->getGame()->getFurnitureStore()->sell(furn) << std::endl;
     std::cout << *screen->getGame()->getFurnitureStore();
     // std::string line;
     // std::cin >> line;

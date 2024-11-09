@@ -13,6 +13,8 @@ namespace furniture {
         int getComfortability();
         color::ForegroundColor getColor() const;
         std::string getString() const;
+        int getPriceMean() const;
+        int getPriceSD() const;
     };
     std::ostream& operator<<(std::ostream& os, Sleepable sleepable);
 }
