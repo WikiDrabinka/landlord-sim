@@ -18,6 +18,7 @@ int main() {
         screen->setSelectedApartment(i);
         std::cout << *screen;
     }
+    std::cout << *screen->getGame()->getFurnitureStore();
     // std::string line;
     // std::cin >> line;
     // std::cout << "\033[1A\033[0K";
