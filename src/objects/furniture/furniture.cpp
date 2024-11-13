@@ -18,6 +18,7 @@ namespace furniture {
     point::Point Furniture::getPosition() { return position; }
     color::ForegroundColor Furniture::getColor() const { return color::ForegroundColor(0,0,0); }
     std::string Furniture::getString() const { return  ""; }
+    std::vector<std::string> Furniture::getDisplay() const { return  {}; }
     int Furniture::getPriceMean() const { return 0; }
     int Furniture::getPriceSD() const { return 0; }
     void Furniture::rotate() {

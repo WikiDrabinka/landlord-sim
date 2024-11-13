@@ -28,6 +28,7 @@ namespace furniture {
         point::Point getPosition();
         virtual color::ForegroundColor getColor() const;
         virtual std::string getString() const;
+        virtual std::vector<std::string> getDisplay() const;
         virtual int getPriceMean() const;
         virtual int getPriceSD() const;
         void rotate();

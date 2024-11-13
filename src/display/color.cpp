@@ -6,6 +6,8 @@ namespace color {
         blue = b;
     }
     std::string Color::reset = "\033[0m";
+    std::string ForegroundColor::reset = "\033[39m";
+    std::string BackgroundColor::reset = "\033[49m";
     std::string ForegroundColor::getString() { return "\033[38;2;" + std::to_string(red) + ";" + std::to_string(green) + ";" + std::to_string(blue) + "m"; }
     std::string BackgroundColor::getString() { return "\033[48;2;" + std::to_string(red) + ";" + std::to_string(green) + ";" + std::to_string(blue) + "m"; }
     BackgroundColor::BackgroundColor(int r, int g, int b) : Color(r,g,b) {};

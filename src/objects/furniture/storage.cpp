@@ -42,6 +42,14 @@ namespace furniture {
         }
         return line;
     }
+    std::vector<std::string> Storage::getDisplay() const {
+        std::vector<std::string> display;
+        display.push_back(name);
+        display.push_back("Price: "+std::to_string(price)+", Size: "+std::to_string(sizeX)+"x"+std::to_string(sizeY));
+        display.push_back("Condition: "+std::to_string(condition));
+        display.push_back("Capacity: "+std::to_string(capacity)+", Occupied: "+std::to_string(occupied));
+        return display;
+    }
     int Storage::getPriceMean() const {
         return 300*(condition+capacity)/100;
     }

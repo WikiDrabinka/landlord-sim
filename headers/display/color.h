@@ -12,12 +12,14 @@ namespace color {
     };
     class BackgroundColor: public Color {
         public:
+        static std::string reset;
         BackgroundColor(int r, int g, int b);
         BackgroundColor();
         std::string getString();
     };
     class ForegroundColor: public Color {
         public:
+        static std::string reset;
         ForegroundColor(int r, int g, int b);
         ForegroundColor();
         std::string getString();
