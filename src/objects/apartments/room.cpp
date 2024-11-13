@@ -28,6 +28,19 @@ namespace room {
         rectangles.push_back(newRectangle);
         newRectangle->setColor(color);
     }
+    std::vector<format::FormattedString> Room::getDisplay() {
+        std::vector<format::FormattedString> display;
+        display.push_back(format::FormattedString(name,std::nullopt,color,true,false,false,false));
+        if (occupancyState==livingSpace::shared) {
+            display.push_back(format::FormattedString("Shared"));
+        } else if (occupancyState==livingSpace::unclaimed) {
+            display.push_back(format::FormattedString("Unclaimed"));
+        } else {
+            display.push_back("Claimed by "+claim->getName());
+        }
+        return display;
+    }
+    std::shared_ptr<tenant::Tenant> Room::getClaim() { return claim; }
     bool Room::containsPoint(point::Point point) {
         for (std::shared_ptr<rectangle::Rectangle> rectangle: rectangles) {
             if (rectangle->containsPoint(point)) {
@@ -48,6 +61,15 @@ namespace room {
         for (std::shared_ptr<rectangle::Rectangle> rect: otherRoom->getRectangles()) {
             rect->setColor(color);
             rectangles.push_back(rect);
+        }
+    }
+    void Room::setClaim(std::shared_ptr<tenant::Tenant> newTenant) {
+        if (newTenant==nullptr) {
+            claim = nullptr;
+            occupancyState = livingSpace::unclaimed;
+        } else {
+            claim = newTenant;
+            occupancyState = livingSpace::claimed;
         }
     }
     std::shared_ptr<Room> Room::split(std::string newName, std::set<int> rectIndices) {

@@ -42,9 +42,9 @@ namespace furniture {
         }
         return line;
     }
-    std::vector<std::string> Storage::getDisplay() const {
-        std::vector<std::string> display;
-        display.push_back(name);
+    std::vector<format::FormattedString> Storage::getDisplay() const {
+        std::vector<format::FormattedString> display;
+        display.push_back(format::FormattedString(name,true,false,false,false));
         display.push_back("Price: "+std::to_string(price)+", Size: "+std::to_string(sizeX)+"x"+std::to_string(sizeY));
         display.push_back("Condition: "+std::to_string(condition));
         display.push_back("Capacity: "+std::to_string(capacity)+", Occupied: "+std::to_string(occupied));

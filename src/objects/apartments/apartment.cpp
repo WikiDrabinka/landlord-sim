@@ -4,13 +4,28 @@ namespace apartment {
     Apartment::Apartment(std::string apartmentName) {
         name = apartmentName;
         occupancyState = livingSpace::shared;
+        marketPrice = 0;
+        tenantsNo = 0;
     }
     Apartment::Apartment(std::string apartmentName, std::vector<std::shared_ptr<room::Room>> apartmentRooms) {
         name = apartmentName;
         occupancyState = livingSpace::shared;
         rooms = apartmentRooms;
+        marketPrice = 0;
+        tenantsNo = 0;
     }
     std::vector<std::shared_ptr<room::Room>> Apartment::getRooms() { return rooms; }
+    std::vector<format::FormattedString> Apartment::getDisplay() {
+        std::vector<format::FormattedString> display;
+        display.push_back(format::FormattedString(name,true,false,false,false));
+        display.push_back("Tenants: "+std::to_string(tenantsNo)+", Size: "+std::to_string(area())+"m2");
+        if (marketPrice) {
+            display.push_back("Market: Yes, Price: "+std::to_string(marketPrice));
+        } else {
+            display.push_back(format::FormattedString("Market: No"));
+        }
+        return display;
+    }
     void Apartment::addRoom(std::shared_ptr<room::Room> newRoom) { rooms.push_back(newRoom); }
     bool Apartment::containsPoint(point::Point point) {
         for (std::shared_ptr<room::Room> room: rooms) {

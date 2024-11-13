@@ -25,7 +25,14 @@ namespace furniture {
     std::string Utility::getString() const {
         return "3 '" + name + "' " + std::to_string(price) + " " + std::to_string(condition) + " " + std::to_string(sizeX) + " " + std::to_string(sizeY) + " " + position.getString() + " " + std::to_string(type);
     }
-    std::vector<std::string> Utility::getDisplay() const { return  {}; }
+    std::vector<format::FormattedString> Utility::getDisplay() const {
+        std::vector<format::FormattedString> display;
+        display.push_back(format::FormattedString(name,true,false,false,false));
+        display.push_back("Price: "+std::to_string(price)+", Size: "+std::to_string(sizeX)+"x"+std::to_string(sizeY));
+        display.push_back("Condition: "+std::to_string(condition));
+        display.push_back("Average monthly cost: "+std::to_string(averageMonthlyCost));
+        return display;
+    }
     int Utility::getPriceMean() const {
         return 300*(condition)/50;
     }

@@ -6,6 +6,7 @@
 #include "../people/tenant.h"
 #include "../../geometry/point.h"
 #include "../../display/color.h"
+#include "../../display/format.h"
 namespace furniture {
     class Furniture {
         protected:
@@ -28,7 +29,7 @@ namespace furniture {
         point::Point getPosition();
         virtual color::ForegroundColor getColor() const;
         virtual std::string getString() const;
-        virtual std::vector<std::string> getDisplay() const;
+        virtual std::vector<format::FormattedString> getDisplay() const;
         virtual int getPriceMean() const;
         virtual int getPriceSD() const;
         void rotate();

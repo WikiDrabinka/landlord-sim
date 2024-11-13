@@ -55,6 +55,7 @@ namespace game {
     }
     int Game::getMoney() { return money; }
     int Game::getTime() { return time; }
+    std::vector<std::shared_ptr<lease::Lease>> Game::getLeases() { return leases; }
     std::vector<std::shared_ptr<apartment::Apartment>> Game::getApartments() { return apartments; }
     std::shared_ptr<market::RealEstate> Game::getRealEstateMarket() { return realEstateMarket; }
     std::shared_ptr<market::Furniture> Game::getFurnitureStore() { return FurnitureStore; }

@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include "IStorage.h"
+#include "../../display/format.h"
 
 namespace tenant {
     class Tenant: public storage::IStorage {
@@ -26,6 +27,7 @@ namespace tenant {
         int getHappiness();
         std::string getName();
         std::string getNickname();
+        std::vector<format::FormattedString> getDisplay();
         void setNickname(std::string newNickname);
     };
     std::ostream& operator<< (std::ostream& os, Tenant ten);

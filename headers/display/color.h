@@ -15,14 +15,14 @@ namespace color {
         static std::string reset;
         BackgroundColor(int r, int g, int b);
         BackgroundColor();
-        std::string getString();
+        std::string getString() const;
     };
     class ForegroundColor: public Color {
         public:
         static std::string reset;
         ForegroundColor(int r, int g, int b);
         ForegroundColor();
-        std::string getString();
+        std::string getString() const;
     };
     std::ostream& operator<<(std::ostream& os, BackgroundColor c);
     std::ostream& operator<<(std::ostream& os, ForegroundColor c);

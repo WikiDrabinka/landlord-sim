@@ -30,9 +30,9 @@ namespace furniture {
     std::string Sleepable::getString() const {
         return "1 '" + name + "' " + std::to_string(price) + " " + std::to_string(condition) + " " + std::to_string(sizeX) + " " + std::to_string(sizeY) + " " + position.getString() + " " + std::to_string(comfortability) + " " + std::to_string(capacity);
     }
-    std::vector<std::string> Sleepable::getDisplay() const {
-        std::vector<std::string> display;
-        display.push_back(name);
+    std::vector<format::FormattedString> Sleepable::getDisplay() const {
+        std::vector<format::FormattedString> display;
+        display.push_back(format::FormattedString(name,true,false,false,false));
         display.push_back("Price: "+std::to_string(price)+", Size: "+std::to_string(sizeX)+"x"+std::to_string(sizeY));
         display.push_back("Condition: "+std::to_string(condition));
         display.push_back("Comfort: "+std::to_string(comfortability)+", Capacity: "+std::to_string(capacity));

@@ -1,19 +1,21 @@
 #pragma once
 #include "../people/tenant.h"
 #include "../apartments/apartment.h"
+#include "../../display/format.h"
 namespace lease {
     class Lease {
         private:
         std::shared_ptr<tenant::Tenant> tenant;
-        std::shared_ptr<livingSpace::LivingSpace> livingSpace;
+        std::shared_ptr<apartment::Apartment> apartment;
         int time;
         int rent;
         bool utilitiesIncluded;
         public:
-        Lease(std::shared_ptr<tenant::Tenant> newTenant,std::shared_ptr<livingSpace::LivingSpace> newLivingSpace, int leaseRent, int leaseTime, bool utilitiesIncluded);
+        Lease(std::shared_ptr<tenant::Tenant> newTenant,std::shared_ptr<apartment::Apartment> newApartment, int leaseRent, int leaseTime, bool utilitiesIncluded);
         std::shared_ptr<tenant::Tenant> getTenant();
-        std::shared_ptr<livingSpace::LivingSpace> getLivingSpace();
+        std::shared_ptr<apartment::Apartment> getApartment();
         int getRent();
+        std::vector<format::FormattedString> getDisplay();
         void renew(int newTime);
         void switchUtilities();
         void setRent(int newRent);

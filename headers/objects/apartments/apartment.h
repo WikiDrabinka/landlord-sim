@@ -11,9 +11,12 @@ namespace apartment {
         private:
         std::vector<std::shared_ptr<room::Room>> rooms;
         public:
+        int marketPrice;
+        int tenantsNo;
         Apartment(std::string apartmentName);
         Apartment(std::string apartmentName, std::vector<std::shared_ptr<room::Room>> apartmentRooms);
         std::vector<std::shared_ptr<room::Room>> getRooms();
+        std::vector<format::FormattedString> getDisplay();
         void addRoom(std::shared_ptr<room::Room> newRoom);
         bool containsPoint(point::Point point);
         void merge(std::shared_ptr<Apartment> otherApartment);

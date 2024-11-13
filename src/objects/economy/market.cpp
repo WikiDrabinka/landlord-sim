@@ -15,7 +15,7 @@ namespace market {
         averagePricePerMeter = averagePrice;
     }
     int RealEstate::getAveragePrice() { return averagePricePerMeter; }
-    void RealEstate::addApartment(std::shared_ptr<apartment::Apartment> newApartment, int rent) { apartments.push_back({newApartment,rent}); }
+    void RealEstate::addApartment(std::shared_ptr<apartment::Apartment> newApartment, int rent) { apartments.push_back({newApartment,rent}); newApartment->marketPrice = rent;}
     void RealEstate::setAveragePrice(int newAveragePrice) { averagePricePerMeter = newAveragePrice; }
     void RealEstate::changeRent(std::shared_ptr<apartment::Apartment> changedApartment, int newRent) {
         std::replace_if(apartments.begin(),apartments.end(),[changedApartment](std::tuple<std::shared_ptr<apartment::Apartment>,int> apt) {return std::get<0>(apt)==changedApartment;},std::tuple {changedApartment,newRent});
