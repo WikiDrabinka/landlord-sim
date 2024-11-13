@@ -1,5 +1,5 @@
 #include "headers/objects/apartments/apartment.h"
-#include "headers/display/color.h"
+#include "headers/display/format.h"
 #include "headers/game/saveReader.h"
 #include "headers/display/screen.h"
 #include "headers/display/display.h"
@@ -19,9 +19,10 @@ int main() {
     //     std::cout<<line<<std::endl;
     // }
     // d->scrollDown(3);
-    std::cout <<"Hello!!"<<std::endl;
-    std::string line;
-    std::cin >>line;
+    format::FormattedString *line = new format::FormattedString("Hello!",true,true,true,false);
+    std::cout <<line->getDisplay()<<std::endl;
+    std::string outline;
+    std::cin >>outline;
     std::cout << "\033[?47l";
     return 0;
 }
