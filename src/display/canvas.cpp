@@ -1,13 +1,13 @@
 #include "../../headers/display/canvas.h"
 #include <algorithm>
 namespace canvas {
-    Canvas::Canvas(int x, int y) {
+    Canvas::Canvas(int x, int y,std::string def) {
         sizeX = x;
         sizeY = y;
         for (int i = 0; i < x; ++i) {
             std::vector<std::string> line;
             for (int j = 0; j < y; ++j) {
-                line.push_back("  ");
+                line.push_back(def);
             }
             drawing.push_back(line);
         }

@@ -14,6 +14,12 @@ namespace color {
     BackgroundColor::BackgroundColor() : Color(255,255,255) {};
     ForegroundColor::ForegroundColor(int r, int g, int b) : Color(r,g,b) {};
     ForegroundColor::ForegroundColor() : Color(255,255,255) {};
+    bool Color::operator==(Color &otherColor) {
+        return (red == otherColor.red && green == otherColor.green && blue == otherColor.blue);
+    }
+    bool Color::operator!=(Color &otherColor) {
+        return (red != otherColor.red || green != otherColor.green || blue != otherColor.blue);
+    }
     std::ostream& operator<<(std::ostream& os, BackgroundColor c) {
         os << "\033[48;2;" << c.red << ";" << c.green << ";" << c.blue << "m";
         return os;

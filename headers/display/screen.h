@@ -1,5 +1,6 @@
 #pragma once
 #include "../game/game.h"
+#include "display.h"
 #include <memory>
 #include <deque>
 #include <string>
@@ -8,26 +9,20 @@ namespace screen {
     class Screen {
         private:
         std::shared_ptr<game::Game> game;
-        int selectedApartment;
-        std::vector<int> selectedSideDisplay;
-        std::deque<std::string> logBox;
         int logBoxMemory;
-        std::vector<std::string> displayActions;
-        std::vector<std::string> actionActions;
         public:
-        int apartmentWidth;
-        int sideDisplayWidth;
-        int totalWidth;
-        int topHeight;
+        std::vector<std::shared_ptr<display::Display>> displays;
+        std::deque<std::string> logBox;
+        std::vector<int> displayWidths;
+        std::vector<int> displayHeights;
         int logBoxHeight;
+        int displaysX;
+        int displaysY;
         Screen();
-        std::shared_ptr<apartment::Apartment> getDisplayedApartment();
+        Screen(std::shared_ptr<game::Game> screenGame);
         std::shared_ptr<game::Game> getGame();
         std::deque<std::string> getLogBox();
-        void setSelectedApartment(int idx);
-        void setSelectedSideDisplay(int idx);
         void addLog(std::string newLog);
-        void updateLine(int idx);
         void updateLogBoxDisplay();
         void update();
     };

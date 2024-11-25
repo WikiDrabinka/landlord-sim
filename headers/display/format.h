@@ -30,6 +30,8 @@ namespace format {
         FormattedString(std::string stringText,bool bold=false,bool italic=false,bool underline=false,bool strikethrough=false);
         MultiFormattedString operator+(FormattedString &otherString);
         FormattedString operator+(const std::string &otherString);
+        FormattedString split(int idx);
+        void operator+=(const std::string &otherString);
         std::string getDisplay() const ;
         int length() const;
         int textLength()const;

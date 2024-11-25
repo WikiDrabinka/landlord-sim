@@ -9,6 +9,8 @@ namespace color {
         int green;
         int blue;
         Color(int r, int g, int b);
+        bool operator==(Color &other);
+        bool operator!=(Color &other);
     };
     class BackgroundColor: public Color {
         public:

@@ -79,7 +79,7 @@ namespace apartment {
         return newApartment;
     }
     std::shared_ptr<canvas::Canvas> Apartment::draw(int sizeX, int sizeY) {
-        std::shared_ptr<canvas::Canvas> drawing(new canvas::Canvas(sizeX,sizeY));
+        std::shared_ptr<canvas::Canvas> drawing(new canvas::Canvas(sizeX,sizeY,"  "));
         for (int i = 0; i<rooms.size(); ++i) {
             rooms[i]->draw(drawing);
         }
@@ -97,7 +97,7 @@ namespace apartment {
     }
 
     std::ostream& operator<<(std::ostream& os, Apartment apartment) {
-        os << *(apartment.draw());
+        os << *apartment.draw();
         return os;
     }
 }

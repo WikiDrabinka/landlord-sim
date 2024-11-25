@@ -10,7 +10,7 @@ namespace canvas {
         int sizeY;
         std::vector<std::vector<std::string>> drawing;
         public:
-        Canvas(int x, int y);
+        Canvas(int x, int y,std::string def=" ");
         int getX();
         int getY();
         std::vector<std::vector<std::string>> getDrawing();

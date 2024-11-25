@@ -85,6 +85,14 @@ namespace format {
     FormattedString operator+(const std::string &firstString, const FormattedString &secondString) {
         return FormattedString(firstString+secondString.text,secondString.foregroundColor,secondString.backgroundColor,secondString.bold,secondString.italic,secondString.underline,secondString.strikethrough);
     }
+    FormattedString FormattedString::split(int idx) {
+        FormattedString newString = FormattedString(text.substr(idx, text.size()),foregroundColor,backgroundColor,bold,italic,underline,strikethrough);
+        text = text.substr(0,idx);
+        return newString;
+    }
+    void FormattedString::operator+=(const std::string &otherString) {
+        text += otherString;
+    }
     MultiFormattedString::MultiFormattedString() {
         whitespaceLeft = 0;
         whitespaceRight = 0;

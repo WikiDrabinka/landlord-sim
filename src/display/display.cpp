@@ -1,12 +1,11 @@
 #include "../../headers/display/display.h"
 namespace display {
-    Display::Display(std::string displayName, int displayWidth, int displayHeight, displayType displayType, std::shared_ptr<game::Game> displayGame, point::Point displayPosition): width(displayWidth), height(displayHeight) {
+    Display::Display(std::string displayName, int displayWidth, int displayHeight, displayType displayType, std::shared_ptr<game::Game> displayGame): width(displayWidth), height(displayHeight) {
         name = format::FormattedString(displayName,true,false,true,false);
         name.center(displayWidth);
         type = displayType;
         game = displayGame;
         displayStart = 0;
-        position = displayPosition;
         idx = {};
         if (type==furniture) {
             idx.push_back(0);
@@ -15,7 +14,22 @@ namespace display {
             name += format::FormattedString(game->getApartments()[idx[0]]->getRooms()[idx[1]]->getName());
             name.text[2].backgroundColor = game->getApartments()[idx[0]]->getRooms()[idx[1]]->getColor();
             name += ")";
-            name.center(displayWidth);
+        }
+        if (type==rooms) {
+            idx.push_back(0);
+            name += " (";
+            name += format::FormattedString(game->getApartments()[idx[0]]->getName());
+            name += ")";
+        }
+        if (type==apartment) {
+            idx.push_back(0);
+        }
+        name.center(width);
+        updateDisplay();
+    }
+    void Display::updateDisplay() {
+        text.clear();
+        if (type==furniture) {
             int i = 1;
             for (std::shared_ptr<furniture::Furniture> furn: game->getApartments()[idx[0]]->getRooms()[idx[1]]->getFurniture()){
                 bool n = true;
@@ -24,18 +38,13 @@ namespace display {
                         line = std::to_string(i)+") "+line;
                         n = false;
                     }
-                    line.left(displayWidth);
+                    line.left(width);
                     text.push_back(format::FormattedString(line));
                 }
                 ++i;
             }
         }
         if (type==rooms) {
-            idx.push_back(0);
-            name += " (";
-            name += format::FormattedString(game->getApartments()[idx[0]]->getName());
-            name += ")";
-            name.center(displayWidth);
             int i = 1;
             for (std::shared_ptr<room::Room> room: game->getApartments()[idx[0]]->getRooms()){
                 bool n = true;
@@ -44,14 +53,13 @@ namespace display {
                         line = std::to_string(i)+") "+line;
                         n = false;
                     }
-                    line.left(displayWidth);
+                    line.left(width);
                     text.push_back(format::FormattedString(line));
                 }
                 ++i;
             }
         }
         if (type==tenants) {
-            name.center(displayWidth);
             int i = 1;
             for (std::shared_ptr<lease::Lease> lease: game->getLeases()){
                 bool n = true;
@@ -60,14 +68,13 @@ namespace display {
                         line = std::to_string(i)+") "+line;
                         n = false;
                     }
-                    line.left(displayWidth);
+                    line.left(width);
                     text.push_back(format::FormattedString(line));
                 }
                 ++i;
             }
         }
         if (type==apartments) {
-            name.center(displayWidth);
             int i = 1;
             for (std::shared_ptr<apartment::Apartment> apartment: game->getApartments()){
                 bool n = true;
@@ -76,14 +83,41 @@ namespace display {
                         line = std::to_string(i)+") "+line;
                         n = false;
                     }
-                    line.left(displayWidth);
+                    line.left(width);
                     text.push_back(format::FormattedString(line));
                 }
                 ++i;
             }
         }
+        if (type==apartment) {
+            for (std::vector<std::string> str: game->getApartments()[idx[0]]->draw()->getDrawing()) {
+                format::FormattedString line;
+                for (int i=0;i<(width-(game->getApartments()[idx[0]]->maxY()*2-1))/2-1;++i) {
+                    line += " ";
+                }
+                for (std::string c: str) {
+                    line += c;
+                }
+                for (int i=0;i<(width-(game->getApartments()[idx[0]]->maxY()*2-1))/2-2;++i) {
+                    line += " ";
+                }
+                if (width%2==0) {
+                    line+=" ";
+                }
+                text.push_back(line);
+            }
+            format::FormattedString rent;
+            rent += "Total rent: " + std::to_string(game->totalRent());
+            rent.left(width);
+            text.push_back(rent);
+            format::FormattedString happiness;
+            happiness += "Average happiness: " + std::to_string(game->averageHapiness());
+            happiness.left(width);
+            text.push_back(happiness);
+        }
     }
     std::vector<std::string> Display::getDisplay() {
+        updateDisplay();
         std::vector<std::string> display;
         display.push_back(name.getDisplay());
         if (displayStart>0) {
@@ -117,5 +151,27 @@ namespace display {
     }
     void Display::scrollDown(int i) {
         displayStart = std::max(std::min(displayStart+i,(int) text.size()-height),0);
+    }
+    void Display::changeDisplay(displayType newType, std::string newName) {
+        type=newType;
+        name=format::FormattedString(newName,true,false,true,false);
+        updateDisplay();
+    }
+    void Display::changeDisplay(std::vector<int> newIdx) {
+        idx = newIdx;
+        if (type==furniture) {
+            name = name.text[0];
+            name += " (";
+            name += format::FormattedString(game->getApartments()[idx[0]]->getRooms()[idx[1]]->getName());
+            name.text[2].backgroundColor = game->getApartments()[idx[0]]->getRooms()[idx[1]]->getColor();
+            name += ")";
+        }
+        if (type==rooms) {
+            name += " (";
+            name += format::FormattedString(game->getApartments()[idx[0]]->getName());
+            name += ")";
+        }
+        name.center(width);
+        updateDisplay();
     }
 }

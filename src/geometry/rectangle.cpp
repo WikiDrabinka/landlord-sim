@@ -50,13 +50,27 @@ namespace rectangle {
             }
         }
     }
-    std::shared_ptr<canvas::Canvas> Rectangle::draw() {
-        std::shared_ptr<canvas::Canvas> drawing(new canvas::Canvas(point2.x+1,point2.y+1));
-        draw(drawing);
+    std::vector<format::FormattedString> Rectangle::draw(int sizeX) {
+        std::vector<format::FormattedString> drawing;
+        for (int i = 0; i<point1.x;++i) {
+            drawing.push_back(format::FormattedString());
+        }
+        for (int i = point1.x; i<=point2.x; ++i) {
+            format::FormattedString line("",std::nullopt,color);
+            for (int j = point1.y; j<=point2.y; ++j) {
+                line += "  ";
+            }
+            drawing.push_back(line);
+        }
+        for (int i = point2.x+1; i<=sizeX; ++i) {
+            drawing.push_back(format::FormattedString());
+        }
         return drawing;
     }
     std::ostream& operator<<(std::ostream& os, Rectangle rec) {
-        os << *(rec.draw());
+        for (format::FormattedString line: rec.draw(rec.getPoint2().x)) {
+            os << line.getDisplay() << std::endl;
+        }
         return os;
     }
 }

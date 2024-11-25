@@ -1,5 +1,6 @@
 #pragma once
 #include "ISplittable.h"
+#include "../display/canvas.h"
 #include <memory>
 #include <iostream>
 namespace rectangle {
@@ -20,7 +21,7 @@ namespace rectangle {
         int area();
         std::shared_ptr<Rectangle> splitVertically(int y);
         std::shared_ptr<Rectangle> splitHorizontally(int x);
-        std::shared_ptr<canvas::Canvas> draw();
+        std::vector<format::FormattedString> draw(int sizeX);
         void draw(std::shared_ptr<canvas::Canvas> drawing);
     };
     std::ostream& operator<<(std::ostream& os, Rectangle rec);

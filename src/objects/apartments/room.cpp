@@ -192,11 +192,6 @@ namespace room {
                     drawing->changeDrawing(furn->getPosition()+point::Point(0,i),furn->getColor().getString()+"══");
                     drawing->changeDrawing(furn->getPosition()+point::Point(furn->getSizeX()-1,i),furn->getColor().getString()+"══");
                 }
-                // for (int i = 1; i<furn->getSizeX()-1; ++i) {
-                //     for (int j = 1; j<furn->getSizeY()-1; ++j) {
-                //         drawing->changeDrawing(furn->getPosition()+point::Point(i,j),furn->getColor().getString()+"╬");
-                //     }
-                // }
             }
         }
         for (std::shared_ptr<rectangle::Rectangle> rect: rectangles) {
@@ -204,11 +199,11 @@ namespace room {
         }
     }
     std::ostream& operator<<(std::ostream& os, Room room) {
-        os << *(room.draw());
+        os << *room.draw();
         return os;
     }
     std::shared_ptr<canvas::Canvas> Room::draw() {
-        std::shared_ptr<canvas::Canvas> drawing(new canvas::Canvas(maxX()+1,maxY()+1));
+        std::shared_ptr<canvas::Canvas> drawing(new canvas::Canvas(maxX()+1,maxY()+1,"  "));
         draw(drawing);
         return drawing;
     }
