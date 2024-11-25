@@ -17,7 +17,7 @@ namespace screen {
         std::vector<int> displayHeights;
         int logBoxHeight;
         int displaysX;
-        int displaysY;
+        std::vector<int> displaysY;
         Screen();
         Screen(std::shared_ptr<game::Game> screenGame);
         std::shared_ptr<game::Game> getGame();
@@ -25,6 +25,8 @@ namespace screen {
         void addLog(std::string newLog);
         void updateLogBoxDisplay();
         void update();
+        void updateLine(int idx);
+        std::vector<std::string> getScreen();
     };
     std::ostream& operator<<(std::ostream& os, Screen screen);
 }

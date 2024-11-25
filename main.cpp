@@ -30,6 +30,10 @@ int main() {
     std::cout << *screen;
     std::string outline;
     std::cin >>outline;
+    screen->displays[4]->changeDisplay({0,3});
+    screen->update();
+    std::cout<<"\033[1A\033[2K";
+    std::cin >>outline;
     std::cout << "\033[?47l";
     // delete line;
     return 0;

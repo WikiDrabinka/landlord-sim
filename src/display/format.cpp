@@ -102,6 +102,11 @@ namespace format {
         whitespaceRight = 0;
         text.push_back(stringText);
     }
+    MultiFormattedString::MultiFormattedString(std::string stringText) {
+        whitespaceLeft = 0;
+        whitespaceRight = 0;
+        text.push_back(stringText);
+    }
     MultiFormattedString::MultiFormattedString(std::vector<FormattedString> stringTexts) {
         whitespaceLeft = 0;
         whitespaceRight = 0;

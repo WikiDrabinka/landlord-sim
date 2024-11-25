@@ -41,6 +41,7 @@ namespace format {
         std::vector<FormattedString> text;
         MultiFormattedString();
         MultiFormattedString(FormattedString stringText);
+        MultiFormattedString(std::string stringText);
         MultiFormattedString(std::vector<FormattedString> stringTexts);
         MultiFormattedString operator+(const MultiFormattedString &otherString);
         MultiFormattedString operator+(const FormattedString &otherString);
