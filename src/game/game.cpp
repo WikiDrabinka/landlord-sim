@@ -1,9 +1,13 @@
 #include "../../headers/game/game.h"
+#include <random>
 namespace game {
-    Game::Game() {
+    Game::Game(bool empty) {
+        if (empty) {
+            return;
+        }
         money = 1000;
+        time = 0;
         realEstateMarket = std::shared_ptr<market::RealEstate>(new market::RealEstate(70));
-        FurnitureStore = std::shared_ptr<market::Furniture>(new market::Furniture);
         apartments.push_back(std::shared_ptr<apartment::Apartment>(new apartment::Apartment("33 Harms Way")));
         apartments[0]->addRoom(std::shared_ptr<room::Room>(new room::Room("Bedroom",livingSpace::unclaimed,color::BackgroundColor(128,72,184))));
         apartments[0]->addRoom(std::shared_ptr<room::Room>(new room::Room("Master bathroom",livingSpace::unclaimed,color::BackgroundColor(72,128,184))));
@@ -52,30 +56,56 @@ namespace game {
         apartments[0]->getRooms()[4]->addFurniture(std::shared_ptr<furniture::Storage>(new furniture::Storage("Default Cabinet",200,75,1,2,50)),point::Point(7,4));
         apartments[0]->getRooms()[4]->addFurniture(std::shared_ptr<furniture::Utility>(new furniture::Utility("Default Desk",250,75,3,1,furniture::utilityType::entertaiment)),point::Point(8,7));
         apartments[0]->getRooms()[4]->addFurniture(std::shared_ptr<furniture::Sleepable>(new furniture::Sleepable("Default Chair",100,75,1,1,10,1)),point::Point(9,6));
+        std::random_device dev;
+        std::mt19937 gen(dev());
+        std::uniform_int_distribution typeDistr(1,3);
+        for (int i = 0; i<10; ++i) {
+            int type = typeDistr(gen);
+            switch (type)
+            {
+            case 1:
+                furnitureStore.push_back(std::shared_ptr<furniture::Sleepable>(new furniture::Sleepable()));
+                break;
+            case 2: 
+                furnitureStore.push_back(std::shared_ptr<furniture::Storage>(new furniture::Storage()));
+                break;
+            case 3:
+                furnitureStore.push_back(std::shared_ptr<furniture::Utility>(new furniture::Utility()));
+                break;
+            default:
+                break;
+            }
+        }
+        furnitureStorage.clear();
     }
     int Game::getMoney() { return money; }
     int Game::getTime() { return time; }
     std::vector<std::shared_ptr<lease::Lease>> Game::getLeases() { return leases; }
     std::vector<std::shared_ptr<apartment::Apartment>> Game::getApartments() { return apartments; }
     std::shared_ptr<market::RealEstate> Game::getRealEstateMarket() { return realEstateMarket; }
-    std::shared_ptr<market::Furniture> Game::getFurnitureStore() { return FurnitureStore; }
+    std::vector<std::shared_ptr<furniture::Furniture>>& Game::getFurnitureStore() { return furnitureStore; }
+    std::vector<std::shared_ptr<furniture::Furniture>>& Game::getFurnitureStorage() { return furnitureStorage; }
     void Game::setMoney(int newMoney) { money = newMoney; }
     void Game::setTime(int newTime) { time = newTime; }
     void Game::addApartment(std::shared_ptr<apartment::Apartment> newApartment) { apartments.push_back(newApartment); }
     void Game::addLease(std::shared_ptr<lease::Lease> newLease) { leases.push_back(newLease); }
-    int Game::totalRent() {
+    int Game::totalRent(std::shared_ptr<apartment::Apartment> apartment) {
         int sum = 0;
         for (std::shared_ptr<lease::Lease> lease: leases) {
-            sum += lease->getRent();
+            if (lease->getApartment()==apartment){
+                sum += lease->getRent();
+            }
         }
         return sum;
     }
-    int Game::averageHapiness() {
+    int Game::averageHapiness(std::shared_ptr<apartment::Apartment> apartment) {
         int sum = 0;
         int size = 0;
         for (std::shared_ptr<lease::Lease> lease: leases) {
-            sum += lease->getTenant()->getHappiness();
-            size += 1;
+            if (lease->getApartment()==apartment) {
+                sum += lease->getTenant()->getHappiness();
+                size += 1;
+            }
         }
         if (size==0) {
             return 0;

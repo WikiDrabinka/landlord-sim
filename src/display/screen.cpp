@@ -4,19 +4,21 @@ namespace screen {
     Screen::Screen() {
         game = std::shared_ptr<game::Game>(new game::Game);
         logBoxMemory = 20;
-        displaysX = 2;
-        displaysY = {5,3};
-        displayWidths = {30,30,30,30,30,63,30,63};
-        displayHeights = {16,16,16,16,16,16,16,16};
+        displaysX = 3;
+        displaysY = {1,5,3};
+        displayWidths = {162,30,30,30,30,30,63,30,63};
+        displayHeights = {2,16,16,16,16,16,16,16,16};
         logBoxHeight = 5;
-        displays.push_back(std::shared_ptr<display::Display>(new display::Display(game->getApartments()[0]->getName(),displayWidths[0],displayHeights[0],display::displayType::apartment,game)));
-        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Apartments",displayWidths[1],displayHeights[1],display::displayType::apartments,game)));
-        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Tenants",displayWidths[2],displayHeights[2],display::displayType::tenants,game)));
-        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Rooms",displayWidths[3],displayHeights[3],display::displayType::rooms,game)));
-        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Furniture",displayWidths[4],displayHeights[4],display::displayType::furniture,game)));
-        displays.push_back(std::shared_ptr<display::Display>(new display::Display(game->getApartments()[0]->getName(),displayWidths[5],displayHeights[5],display::displayType::apartment,game)));
-        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Apartments",displayWidths[6],displayHeights[6],display::displayType::apartments,game)));
-        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Tenants",displayWidths[7],displayHeights[7],display::displayType::tenants,game)));
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Game",displayWidths[0],displayHeights[0],display::displayType::other,game)));
+        displays[0]->updateDisplay("hello");
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display(game->getApartments()[0]->getName(),displayWidths[1],displayHeights[1],display::displayType::apartment,game)));
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Apartments",displayWidths[2],displayHeights[2],display::displayType::apartments,game)));
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Tenants",displayWidths[3],displayHeights[3],display::displayType::tenants,game)));
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Rooms",displayWidths[4],displayHeights[4],display::displayType::rooms,game)));
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Furniture",displayWidths[5],displayHeights[5],display::displayType::furniture,game)));
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Store",displayWidths[6],displayHeights[6],display::displayType::store,game)));
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Apartments",displayWidths[7],displayHeights[7],display::displayType::apartments,game)));
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Tenants",displayWidths[8],displayHeights[8],display::displayType::tenants,game)));
     }
     std::shared_ptr<game::Game> Screen::getGame() { return game; }
     std::deque<std::string> getLogBox();
@@ -24,28 +26,25 @@ namespace screen {
     void updateLogBoxDisplay();
     void Screen::update() {
         std::vector<std::string> screen = getScreen();
-        std::cout<<"\033[s";
+        std::cout<<"\033[s\033[1F";
         for (int i=0;i<screen.size();++i){
-            std::cout<<"\033[1F\033[2K"<<screen[screen.size()-i];
+            std::cout<<"\033[1F\033[2K"<<screen[screen.size()-1-i];
         }
         std::cout<<"\033[u";
     }
     void Screen::updateLine(int idx) {
         std::vector<std::string> screen = getScreen();
-        std::cout<<"\033[s\033["<<idx<<"A\033[2K"<<screen[screen.size()-idx+1]<<"\033[u";
+        std::cout<<"\033[s\033["<<idx+1<<"A\033[2K"<<screen[screen.size()-idx+1]<<"\033[u";
+    }
+    void Screen::updateDisplays() {
+        for (std::shared_ptr<display::Display> display: displays) {
+            display->updateDisplay();
+        }
     }
     std::vector<std::string> Screen::getScreen() {
         std::vector<std::string> screen;
-        std::string currentLine("╔══");
-        for (int i=0;i<displaysY[0];++i){
-            for (int j=0;j<displayWidths[i]+2;++j) {
-                currentLine+="═";
-            }
-        }
-        currentLine+="══╗";
-        screen.push_back(currentLine);
-        currentLine="";
-        currentLine+="╠";
+        std::string currentLine("");
+        currentLine+="╔";
         for (int i=0;i<displaysY[0]-1;++i){
             for (int j=0;j<displayWidths[i]+1;++j) {
                 currentLine+="═";
@@ -55,7 +54,7 @@ namespace screen {
         for (int j=0;j<displayWidths[displaysY[0]-1]+1;++j) {
             currentLine+="═";
         }
-        currentLine+="═╣";
+        currentLine+="═╗";
         screen.push_back(currentLine);
         currentLine="";
         int row = 0;

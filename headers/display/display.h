@@ -23,7 +23,7 @@ namespace display {
         std::string getBottomFrame(bool left, bool right, bool bottom);
         void scrollUp(int i=1);
         void scrollDown(int i=1);
-        void updateDisplay();
+        void updateDisplay(std::string newText="");
         void changeDisplay(displayType newType, std::string newName);
         void changeDisplay(std::vector<int> newIdx);
     };

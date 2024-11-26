@@ -13,22 +13,24 @@ namespace game {
         std::vector<std::shared_ptr<apartment::Apartment>> apartments;
         std::vector<std::shared_ptr<lease::Lease>> leases;
         std::shared_ptr<market::RealEstate> realEstateMarket;
-        std::shared_ptr<market::Furniture> FurnitureStore;
+        std::vector<std::shared_ptr<furniture::Furniture>> furnitureStore;
+        std::vector<std::shared_ptr<furniture::Furniture>> furnitureStorage;
         int money;
         int time;
         public:
-        Game();
+        Game(bool empty=false);
         int getMoney();
         int getTime();
         std::vector<std::shared_ptr<apartment::Apartment>> getApartments();
         std::vector<std::shared_ptr<lease::Lease>> getLeases();
         std::shared_ptr<market::RealEstate> getRealEstateMarket();
-        std::shared_ptr<market::Furniture> getFurnitureStore();
+        std::vector<std::shared_ptr<furniture::Furniture>>& getFurnitureStore();
+        std::vector<std::shared_ptr<furniture::Furniture>>& getFurnitureStorage();
         void setMoney(int newMoney);
         void setTime(int newTime);
         void addApartment(std::shared_ptr<apartment::Apartment> newApartment);
         void addLease(std::shared_ptr<lease::Lease> newLease);
-        int totalRent();
-        int averageHapiness();
+        int totalRent(std::shared_ptr<apartment::Apartment> apartment);
+        int averageHapiness(std::shared_ptr<apartment::Apartment> apartment);
     };
 }

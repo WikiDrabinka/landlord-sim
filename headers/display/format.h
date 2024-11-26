@@ -32,7 +32,7 @@ namespace format {
         FormattedString operator+(const std::string &otherString);
         FormattedString split(int idx);
         void operator+=(const std::string &otherString);
-        std::string getDisplay() const ;
+        std::string getDisplay() const;
         int length() const;
         int textLength()const;
     };

@@ -26,6 +26,7 @@ namespace screen {
         void updateLogBoxDisplay();
         void update();
         void updateLine(int idx);
+        void updateDisplays();
         std::vector<std::string> getScreen();
     };
     std::ostream& operator<<(std::ostream& os, Screen screen);

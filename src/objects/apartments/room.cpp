@@ -120,7 +120,13 @@ namespace room {
         std::copy_if(furniture.begin(),furniture.end(),std::back_inserter(bottomFurniture),[x](std::shared_ptr<furniture::Furniture> furn) {return furn->getPosition().x>x;});
         std::copy_if(furniture.begin(),furniture.end(),std::back_inserter(storage),[x](std::shared_ptr<furniture::Furniture> furn) {return furn->getPosition().x<=x && furn->getPosition().x+furn->getSizeX()-1>x;});
         furniture.erase(std::remove_if(furniture.begin(),furniture.end(),[x](std::shared_ptr<furniture::Furniture> furn) {return furn->getPosition().x+furn->getSizeX()-1>x;}),furniture.end());
-        std::shared_ptr<Room> newRoom(new Room(newName,occupancyState,bottomRectangles,color));
+        livingSpace::state newState;
+        if (occupancyState==livingSpace::shared) {
+            newState = livingSpace::shared;
+        } else {
+            newState = livingSpace::unclaimed;
+        }
+        std::shared_ptr<Room> newRoom(new Room(newName,newState,bottomRectangles,color));
         for (std::shared_ptr<furniture::Furniture> furn: bottomFurniture) {
             newRoom->addFurniture(furn,furn->getPosition());
         }

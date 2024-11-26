@@ -11,6 +11,7 @@ int main() {
     std::shared_ptr<tenant::Tenant> bob(new tenant::Tenant());
     std::shared_ptr<lease::Lease> lol(new lease::Lease(bob,screen->getGame()->getApartments()[0],600,30,false));
     screen->getGame()->addLease(lol);
+    screen->updateDisplays();
     std::vector<std::shared_ptr<furniture::Furniture>> backup;
     std::cout<<"\033[?47h\033[2J";
     // canvas::Canvas *titlescreen = new canvas::Canvas(8*5+1,(15*5-4)*2," ");
@@ -30,7 +31,33 @@ int main() {
     std::cout << *screen;
     std::string outline;
     std::cin >>outline;
-    screen->displays[4]->changeDisplay({0,3});
+    screen->getGame()->addApartment(screen->getGame()->getApartments()[0]->splitHorizontally("new apt",3,screen->getGame()->getFurnitureStorage()));
+    screen->update();
+    std::cout<<"\033[1A\033[2K";
+    std::cin >>outline;
+    screen->displays[1]->changeDisplay({1});
+    screen->displays[4]->changeDisplay({1});
+    screen->displays[5]->changeDisplay({1,0});
+    screen->update();
+    std::cout<<"\033[1A\033[2K";
+    std::cin >>outline;
+    screen->displays[5]->scrollDown(1);
+    screen->updateDisplays();
+    screen->update();
+    std::cout<<"\033[1A\033[2K";
+    std::cin >>outline;
+    screen->displays[5]->scrollDown(1);
+    screen->updateDisplays();
+    screen->update();
+    std::cout<<"\033[1A\033[2K";
+    std::cin >>outline;
+    screen->displays[5]->scrollUp(1);
+    screen->updateDisplays();
+    screen->update();
+    std::cout<<"\033[1A\033[2K";
+    std::cin >>outline;
+    screen->displays[6]->changeDisplay(display::displayType::storage,"Storage");
+    screen->updateDisplays();
     screen->update();
     std::cout<<"\033[1A\033[2K";
     std::cin >>outline;
@@ -39,4 +66,4 @@ int main() {
     return 0;
 }
 
-//TO DO : display furniture again,change canvas and get display functions to formatted string, probably make class time, (!) finish saving and loading files, unit tests, make room state relevant
+//TO DO : add logbox, probably make class time, (!) finish saving and loading files, unit tests, make room state relevant
