@@ -36,19 +36,9 @@ namespace screen {
             logBox.push_back(line);
             ++j;
         }
-        updateLogBoxDisplay();
         while (logBox.size()>logBoxMemory) {
             logBox.pop_front();
         }
-    }
-    void Screen::updateLogBoxDisplay() {
-        std::cout << "\033[1F";
-        for (int i=1;i<=logBoxHeight;++i) {
-            format::FormattedString line(logBox[logBox.size()-i]);
-            line.left(logBoxWidth);
-            std::cout <<  "\033[1F\033[0K" << "║ " << line.getDisplay()  << " ║";
-        }
-        std::cout << "\033[" + std::to_string(logBoxHeight+1) + "E";
     }
     void Screen::update() {
         std::vector<std::string> screen = getScreen();
@@ -130,9 +120,9 @@ namespace screen {
             currentLine="";
         }
         for (int i = 0; i<logBoxHeight; ++i) {
-            format::FormattedString text(logBox[logBox.size()-1-i]);
-            text.left(logBoxWidth);
-            screen.push_back("║ "+text.getDisplay()+" ║");
+            format::FormattedString line(logBox[logBox.size()-logBoxHeight+i]);
+            line.left(logBoxWidth);
+            screen.push_back("║ "+line.getDisplay()+" ║");
         }
         currentLine+="╚";
         for (int i = 0; i<logBoxWidth+2; ++i) {

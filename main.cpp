@@ -90,4 +90,4 @@ int main() {
     return 0;
 }
 
-//TO DO : add logbox, actions, (!) finish saving and loading files, unit tests, make room state relevant (never)
+//TO DO : add actions, (!) finish saving and loading files, unit tests, make room state relevant (never)
