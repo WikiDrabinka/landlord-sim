@@ -17,14 +17,17 @@ namespace tenant {
         int spending;
         int patience;
         int happiness;
+        int needs[4];
         public:
-        Tenant(std::string tenantName, int tenantIncome, int tenantSavings, int tenantSpending, int tenantPatience, int tenantHappiness);
+        int owing;
+        Tenant(std::string tenantName, int tenantIncome, int tenantSavings, int tenantSpending, int tenantPatience, int tenantHappiness,int needs[4]);
         Tenant();
         int getIncome();
         int getSavings();
         int getSpending();
         int getPatience();
         int getHappiness();
+        int* getNeeds();
         std::string getName();
         std::string getNickname();
         std::vector<format::FormattedString> getDisplay();

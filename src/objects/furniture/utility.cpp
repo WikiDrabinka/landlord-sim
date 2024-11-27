@@ -1,8 +1,9 @@
 #include "../../../headers/objects/furniture/utility.h"
 #include <random>
 namespace furniture {
-    Utility::Utility(std::string furnitureName, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY, utilityType newType): Furniture(furnitureName, furniturePrice, furnitureCondition, furnitureSizeX, furnitureSizeY) {
+    Utility::Utility(std::string furnitureName, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY, utilityType newType, int utilityHourlyCost): Furniture(furnitureName, furniturePrice, furnitureCondition, furnitureSizeX, furnitureSizeY) {
         type = newType;
+        averageHourlyCost = utilityHourlyCost;
     }
     Utility::Utility() {
         std::random_device dev;
@@ -19,6 +20,14 @@ namespace furniture {
         condition = conditionDistr(gen);
         std::normal_distribution<> priceDistr(300*(condition)/50,50*(condition)/50);
         price = priceDistr(gen);
+        while (price<=0) {
+            price = priceDistr(gen);
+        }
+        std::normal_distribution<> hourlyDistr(2*(double)price/100,(double)price/200);
+        averageHourlyCost = hourlyDistr(gen);
+        while (averageHourlyCost<0) {
+            averageHourlyCost = hourlyDistr(gen);
+        }
     }
     furniture::utilityType Utility::getType() { return type; }
     color::ForegroundColor Utility::getColor() const { return color::ForegroundColor(0,50,50); }
@@ -30,7 +39,7 @@ namespace furniture {
         display.push_back(format::FormattedString(name,true,false,false,false));
         display.push_back("Price: "+std::to_string(price)+", Size: "+std::to_string(sizeX)+"x"+std::to_string(sizeY));
         display.push_back("Condition: "+std::to_string(condition));
-        display.push_back("Average monthly cost: "+std::to_string(averageMonthlyCost));
+        display.push_back("Average hourly cost: "+std::to_string(averageHourlyCost));
         return display;
     }
     int Utility::getPriceMean() const {

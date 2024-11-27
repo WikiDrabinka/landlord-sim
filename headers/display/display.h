@@ -5,7 +5,7 @@
 #include "../game/game.h"
 #include "format.h"
 namespace display {
-    enum displayType {apartment,apartments,tenants,rooms,furniture,messages,utilities,store,storage,other};
+    enum displayType {apartment,apartments,tenants,rooms,furniture,messages,conversation,utilities,store,storage,other};
     class Display {
         private:
         format::MultiFormattedString name;

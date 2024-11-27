@@ -6,9 +6,9 @@ namespace furniture {
         private:
         utilityType type;
         static std::vector<std::vector<std::string>> generatedNames;
-        int averageMonthlyCost;
+        int averageHourlyCost;
         public:
-        Utility(std::string furnitureName, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY, utilityType type);
+        Utility(std::string furnitureName, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY, utilityType type, int utilityHourlyCost);
         Utility();
         utilityType getType();
         color::ForegroundColor getColor() const;

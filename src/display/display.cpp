@@ -7,22 +7,35 @@ namespace display {
         game = displayGame;
         displayStart = 0;
         idx = {};
-        if (type==furniture) {
+        switch (type) {
+        case furniture:
+        {
             idx.push_back(0);
             idx.push_back(0);
             name += " (";
             name += format::FormattedString(game->getApartments()[idx[0]]->getRooms()[idx[1]]->getName());
             name.text[2].backgroundColor = game->getApartments()[idx[0]]->getRooms()[idx[1]]->getColor();
             name += ")";
+            break;
         }
-        if (type==rooms) {
+        case rooms:
+        {
             idx.push_back(0);
             name += " (";
             name += format::FormattedString(game->getApartments()[idx[0]]->getName());
             name += ")";
+            break;
         }
-        if (type==apartment) {
+        case apartment:
+        {
             idx.push_back(0);
+            break;
+        }
+        case conversation:
+        {
+            idx.push_back(0);
+            break;
+        }
         }
         name.center(width);
         text.clear();
@@ -218,6 +231,20 @@ namespace display {
                 }
             }
             break;
+        }
+        case messages:
+        {
+            for (std::shared_ptr<messages::Conversation> conversation: game->getMessages()) {
+                format::FormattedString line("",!conversation->read);
+                line += conversation->getSender()->getName() + ": ";
+                line += conversation->getMessages().back();
+                if (line.textLength()>width) {
+                    line.text.resize(width-4);
+                    line += "...";
+                }
+                line.left(width);
+                text.push_back(line);
+            }
         }
         default:
         {

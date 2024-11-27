@@ -30,33 +30,31 @@ int main() {
     screen->getGame()->getApartments()[0]->getRooms()[0]->setClaim(bob);
     std::cout << *screen;
     std::string outline;
-    std::cin >>outline;
-    screen->getGame()->addApartment(screen->getGame()->getApartments()[0]->splitHorizontally("new apt",3,screen->getGame()->getFurnitureStorage()));
-    screen->update();
+    int furn;
+    std::cout<<"pick furniture to buy: ";
+    std::cin >>furn;
+    int room;
     std::cout<<"\033[1A\033[2K";
-    std::cin >>outline;
-    screen->displays[1]->changeDisplay({1});
-    screen->displays[4]->changeDisplay({1});
-    screen->displays[5]->changeDisplay({1,0});
-    screen->update();
+    std::cout<<"pick room: ";
+    std::cin >>room;
     std::cout<<"\033[1A\033[2K";
-    std::cin >>outline;
-    screen->displays[5]->scrollDown(1);
+    int x,y;
+    std::cout<<"give coordinates: ";
+    std::cin >>x>>y;
+    screen->getGame()->getApartments()[0]->getRooms()[room-1]->addFurniture(screen->getGame()->getFurnitureStore()[furn-1],point::Point(x,y));
+    // could throw and catch exceptions here
     screen->updateDisplays();
     screen->update();
     std::cout<<"\033[1A\033[2K";
+    std::cout<<"write a message from "<<screen->getGame()->getLeases()[0]->getTenant()->getName()<<": ";
     std::cin >>outline;
-    screen->displays[5]->scrollDown(1);
+    screen->getGame()->getMessages().push_back(std::shared_ptr<messages::Conversation>(new messages::Conversation(screen->getGame()->getLeases()[0]->getTenant(),outline,0)));
     screen->updateDisplays();
     screen->update();
     std::cout<<"\033[1A\033[2K";
+    std::cout<<"write a message from "<<screen->getGame()->getLeases()[0]->getTenant()->getName()<<": ";
     std::cin >>outline;
-    screen->displays[5]->scrollUp(1);
-    screen->updateDisplays();
-    screen->update();
-    std::cout<<"\033[1A\033[2K";
-    std::cin >>outline;
-    screen->displays[6]->changeDisplay(display::displayType::storage,"Storage");
+    screen->getGame()->getMessages()[0]->sendMessage(outline,1);
     screen->updateDisplays();
     screen->update();
     std::cout<<"\033[1A\033[2K";
@@ -66,4 +64,4 @@ int main() {
     return 0;
 }
 
-//TO DO : add logbox, probably make class time, (!) finish saving and loading files, unit tests, make room state relevant
+//TO DO : add logbox, add messages and utilities displays, actions, (!) finish saving and loading files, unit tests, make room state relevant (never)

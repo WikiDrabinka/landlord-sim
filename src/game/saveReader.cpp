@@ -126,7 +126,7 @@ namespace saveReader {
                     {
                         getline(fs,line);
                         furniture::utilityType type = (furniture::utilityType) stoi(line);
-                        newRoom->addFurniture(std::shared_ptr<furniture::Utility>(new furniture::Utility(furnitureName,price,condition,sizeX,sizeY,type)),point::Point(posX,posY));
+                        newRoom->addFurniture(std::shared_ptr<furniture::Utility>(new furniture::Utility(furnitureName,price,condition,sizeX,sizeY,type,0)),point::Point(posX,posY));
                         break;
                     }
                     default:
