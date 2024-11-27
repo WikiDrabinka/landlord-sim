@@ -16,6 +16,7 @@ namespace screen {
         std::vector<int> displayWidths;
         std::vector<int> displayHeights;
         int logBoxHeight;
+        int logBoxWidth;
         int displaysX;
         std::vector<int> displaysY;
         Screen();

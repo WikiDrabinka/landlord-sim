@@ -52,29 +52,34 @@ int main() {
     //std::cout<<"\033[1A\033[2K";
     std::cout<<"write a message from "<<screen->getGame()->getLeases()[0]->getTenant()->getName()<<": ";
     std::cin >>outline;
+    screen->addLog(outline);
     screen->getGame()->getMessages().push_back(std::shared_ptr<messages::Conversation>(new messages::Conversation(screen->getGame()->getLeases()[0]->getTenant(),outline,0)));
     screen->updateDisplay(8);
     screen->update();
     std::cout<<"\033[1A\033[2K";
     std::cout<<"write a message from "<<screen->getGame()->getLeases()[0]->getTenant()->getName()<<": ";
     std::cin >>outline;
+    screen->addLog(outline);
     screen->getGame()->getMessages()[0]->sendMessage(outline,1);
     screen->updateDisplay(8);
     screen->update();
     std::cout<<"\033[1A\033[2K";
     std::cout<<"respond to "<<screen->getGame()->getLeases()[0]->getTenant()->getName()<<": ";
     std::cin >>outline;
+    screen->addLog(outline);
     screen->getGame()->getMessages()[0]->sendMessage(outline,1,true);
     screen->updateDisplay(8);
     screen->update();
     std::cout<<"\033[1A\033[2K";
     std::cout<<"write a message from "<<screen->getGame()->getLeases()[0]->getTenant()->getName()<<": ";
     std::cin >>outline;
+    screen->addLog(outline);
     screen->getGame()->getMessages()[0]->sendMessage(outline,1);
     screen->updateDisplay(8);
     screen->update();
     std::cout<<"\033[1A\033[2K";
     std::cin >>outline;
+    screen->addLog(outline);
     screen->displays[8]->changeDisplay(display::displayType::conversation,"Convo");
     screen->updateDisplay(8);
     screen->update();
@@ -85,4 +90,4 @@ int main() {
     return 0;
 }
 
-//TO DO : add logbox, add messages and utilities displays, actions, (!) finish saving and loading files, unit tests, make room state relevant (never)
+//TO DO : add logbox, actions, (!) finish saving and loading files, unit tests, make room state relevant (never)

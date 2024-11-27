@@ -9,6 +9,8 @@ namespace screen {
         displayWidths = {162,30,30,30,30,30,63,30,63};
         displayHeights = {2,16,16,16,16,16,16,16,16};
         logBoxHeight = 5;
+        logBoxWidth = 162;
+        logBox = {"","","","",""};
         displays.push_back(std::shared_ptr<display::Display>(new display::Display("Game",displayWidths[0],displayHeights[0],display::displayType::other,game)));
         displays[0]->updateDisplay("Week 1, Day 1, 12:00");
         displays.push_back(std::shared_ptr<display::Display>(new display::Display(game->getApartments()[0]->getName(),displayWidths[1],displayHeights[1],display::displayType::apartment,game)));
@@ -21,9 +23,33 @@ namespace screen {
         displays.push_back(std::shared_ptr<display::Display>(new display::Display("Messages",displayWidths[8],displayHeights[8],display::displayType::messages,game)));
     }
     std::shared_ptr<game::Game> Screen::getGame() { return game; }
-    std::deque<std::string> getLogBox();
-    void addLog(std::string newLog);
-    void updateLogBoxDisplay();
+    std::deque<std::string> Screen::getLogBox() { return logBox; }
+    void Screen::addLog(std::string newLog) {
+        int j = 0;
+        while (j*logBoxWidth<newLog.size()) {
+            std::string line;
+            if ((j+1)*logBoxWidth<newLog.size()-1)    { 
+                line = newLog.substr(j*logBoxWidth,logBoxWidth);
+            } else {
+                line = newLog.substr(j*logBoxWidth);
+            }
+            logBox.push_back(line);
+            ++j;
+        }
+        updateLogBoxDisplay();
+        while (logBox.size()>logBoxMemory) {
+            logBox.pop_front();
+        }
+    }
+    void Screen::updateLogBoxDisplay() {
+        std::cout << "\033[1F";
+        for (int i=1;i<=logBoxHeight;++i) {
+            format::FormattedString line(logBox[logBox.size()-i]);
+            line.left(logBoxWidth);
+            std::cout <<  "\033[1F\033[0K" << "║ " << line.getDisplay()  << " ║";
+        }
+        std::cout << "\033[" + std::to_string(logBoxHeight+1) + "E";
+    }
     void Screen::update() {
         std::vector<std::string> screen = getScreen();
         std::cout<<"\033[s\033[1F";
@@ -103,6 +129,17 @@ namespace screen {
             screen.push_back(currentLine);
             currentLine="";
         }
+        for (int i = 0; i<logBoxHeight; ++i) {
+            format::FormattedString text(logBox[logBox.size()-1-i]);
+            text.left(logBoxWidth);
+            screen.push_back("║ "+text.getDisplay()+" ║");
+        }
+        currentLine+="╚";
+        for (int i = 0; i<logBoxWidth+2; ++i) {
+            currentLine+="═";
+        }
+        currentLine+="╝";
+        screen.push_back(currentLine);
         return screen;
     }
     std::ostream& operator<<(std::ostream& os, Screen screen) {
