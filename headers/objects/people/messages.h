@@ -9,8 +9,9 @@ namespace messages {
         public:
         bool read;
         int time;
+        std::vector<int> responses;
         Conversation(std::shared_ptr<tenant::Tenant> messageSender, std::string message, int messageTime);
-        void sendMessage(std::string message, int messageTime);
+        void sendMessage(std::string message, int messageTime,bool response=false);
         std::shared_ptr<tenant::Tenant> getSender();
         std::vector<std::string> getMessages();
     };

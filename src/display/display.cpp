@@ -1,4 +1,6 @@
 #include "../../headers/display/display.h"
+#include <algorithm>
+
 namespace display {
     Display::Display(std::string displayName, int displayWidth, int displayHeight, displayType displayType, std::shared_ptr<game::Game> displayGame): width(displayWidth), height(displayHeight) {
         name = format::FormattedString(displayName,true,false,true,false);
@@ -235,8 +237,16 @@ namespace display {
         case messages:
         {
             for (std::shared_ptr<messages::Conversation> conversation: game->getMessages()) {
-                format::FormattedString line("",!conversation->read);
-                line += conversation->getSender()->getName() + ": ";
+                format::FormattedString line("",false,false,true,false);
+                line += conversation->getSender()->getName();
+                line.left(width);
+                text.push_back(line);
+                line = format::FormattedString("",!conversation->read);
+                if (conversation->responses.size() && conversation->responses.back()==conversation->getMessages().size()-1) {
+                    line += "You: ";
+                } else {
+                    line += conversation->getSender()->getName()+": ";
+                }
                 line += conversation->getMessages().back();
                 if (line.textLength()>width) {
                     line.text.resize(width-4);
@@ -245,6 +255,47 @@ namespace display {
                 line.left(width);
                 text.push_back(line);
             }
+            break;
+        }
+        case conversation:
+        {
+            int i = 0;
+            for (std::string message: game->getMessages()[idx[0]]->getMessages()) {
+                if (std::find(game->getMessages()[idx[0]]->responses.begin(),game->getMessages()[idx[0]]->responses.end(),i)!=game->getMessages()[idx[0]]->responses.end()) {
+                    int lineSize = width*3/4;
+                    int j=0;
+                    while (j*lineSize<message.size()) {
+                        format::FormattedString line;
+                        if ((j+1)*lineSize<message.size()-1)    { 
+                            line = message.substr(j*lineSize,lineSize);
+                        } else {
+                            line = message.substr(j*lineSize);
+                        }
+                        line.right(width);
+                        text.push_back(line);
+                        ++j;
+                    }
+                } else {
+                    int lineSize = width*3/4;
+                    int j=0;
+                    while (j*lineSize<message.size()) {
+                        format::FormattedString line;
+                        if ((j+1)*lineSize<message.size()-1)    { 
+                            line = message.substr(j*lineSize,lineSize);
+                        } else {
+                            line = message.substr(j*lineSize);
+                        }
+                        line.left(width);
+                        text.push_back(line);
+                        ++j;
+                    }
+                }
+                format::FormattedString line("");
+                line.left(width);
+                text.push_back(line);
+                ++i;
+            }
+            break;
         }
         default:
         {
@@ -296,6 +347,29 @@ namespace display {
         type=newType;
         name=format::FormattedString(newName,true,false,true,false);
         name.center(width);
+        switch (type) {
+        case furniture:
+        {
+            idx.push_back(0);
+            idx.push_back(0);
+        }
+        case rooms:
+        {
+            idx.push_back(0);
+            break;
+        }
+        case apartment:
+        {
+            idx.push_back(0);
+            break;
+        }
+        case conversation:
+        {
+            idx.push_back(0);
+            break;
+        }
+        }
+        text.clear();
         updateDisplay();
     }
     void Display::changeDisplay(std::vector<int> newIdx) {
@@ -317,6 +391,7 @@ namespace display {
             name = format::MultiFormattedString(format::FormattedString(game->getApartments()[idx[0]]->getName(),true,false,true,false));
         }
         name.center(width);
+        text.clear();
         updateDisplay();
     }
 }
