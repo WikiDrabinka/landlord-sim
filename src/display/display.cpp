@@ -44,9 +44,7 @@ namespace display {
         updateDisplay();
     }
     void Display::updateDisplay(std::string newText) {
-        if (type!=other) {
-            text.clear();
-        }
+        text.clear();
         switch (type) {
         case furniture:
         {
@@ -333,6 +331,17 @@ namespace display {
             line1.left(width*2/3);
             line2.left(width/3);
             text.push_back(line1.getDisplay()+line2.getDisplay());
+            break;
+        }
+        case other:
+        {
+            format::FormattedString line1 = game->getTimeStr();
+            line1.left(width/3);
+            format::FormattedString line2("Account balance: " + std::to_string(game->getMoney()));
+            line2.center(width/3);
+            format::FormattedString line3("Market price per m2: " + std::to_string(game->getRealEstateMarket()->getAveragePrice()));
+            line3.right(width/3);
+            text.push_back(line1.getDisplay()+line2.getDisplay()+line3.getDisplay());
             break;
         }
         default:

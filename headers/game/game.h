@@ -27,6 +27,7 @@ namespace game {
         Game(bool empty=false);
         int getMoney();
         int getTime();
+        std::string getTimeStr();
         std::vector<std::shared_ptr<apartment::Apartment>> getApartments();
         std::vector<std::shared_ptr<messages::Conversation>>& getMessages();
         std::vector<std::shared_ptr<lease::Lease>> getLeases();
@@ -35,6 +36,7 @@ namespace game {
         std::vector<std::shared_ptr<furniture::Furniture>>& getFurnitureStorage();
         void setMoney(int newMoney);
         void setTime(int newTime);
+        void addTime(int newTime);
         void addApartment(std::shared_ptr<apartment::Apartment> newApartment);
         void addLease(std::shared_ptr<lease::Lease> newLease);
         int totalRent(std::shared_ptr<apartment::Apartment> apartment);

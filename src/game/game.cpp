@@ -80,6 +80,16 @@ namespace game {
     }
     int Game::getMoney() { return money; }
     int Game::getTime() { return time; }
+    std::string Game::getTimeStr() {
+        std::string line = "Week " + std::to_string((time+60*12)/(60*24*7)+1) + ", Day " + std::to_string(((time+60*12)/(60*24))%7+1) + ", " + std::to_string((time/60+12)%24) + ":";
+        if (time%60<10) {
+            line += "0";
+            line += std::to_string(time%60);
+        } else {
+            line += std::to_string(time%60);
+        }
+        return line;
+    }
     std::vector<std::shared_ptr<lease::Lease>> Game::getLeases() { return leases; }
     std::vector<std::shared_ptr<apartment::Apartment>> Game::getApartments() { return apartments; }
     std::vector<std::shared_ptr<messages::Conversation>>& Game::getMessages() { return messages; }
@@ -88,6 +98,7 @@ namespace game {
     std::vector<std::shared_ptr<furniture::Furniture>>& Game::getFurnitureStorage() { return furnitureStorage; }
     void Game::setMoney(int newMoney) { money = newMoney; }
     void Game::setTime(int newTime) { time = newTime; }
+    void Game::addTime(int newTime) { time += newTime; }
     void Game::addApartment(std::shared_ptr<apartment::Apartment> newApartment) { apartments.push_back(newApartment); }
     void Game::addLease(std::shared_ptr<lease::Lease> newLease) { leases.push_back(newLease); }
     int Game::totalRent(std::shared_ptr<apartment::Apartment> apartment) {

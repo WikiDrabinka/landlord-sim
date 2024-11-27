@@ -12,7 +12,6 @@ namespace screen {
         logBoxWidth = 162;
         logBox = {"","","","",""};
         displays.push_back(std::shared_ptr<display::Display>(new display::Display("Game",displayWidths[0],displayHeights[0],display::displayType::other,game)));
-        displays[0]->updateDisplay("Week 1, Day 1, 12:00");
         displays.push_back(std::shared_ptr<display::Display>(new display::Display(game->getApartments()[0]->getName(),displayWidths[1],displayHeights[1],display::displayType::apartment,game)));
         displays.push_back(std::shared_ptr<display::Display>(new display::Display("Apartments",displayWidths[2],displayHeights[2],display::displayType::apartments,game)));
         displays.push_back(std::shared_ptr<display::Display>(new display::Display("Tenants",displayWidths[3],displayHeights[3],display::displayType::tenants,game)));
