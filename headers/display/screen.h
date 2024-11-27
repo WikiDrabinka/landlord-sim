@@ -27,6 +27,7 @@ namespace screen {
         void update();
         void updateLine(int idx);
         void updateDisplays();
+        void updateDisplay(int idx);
         std::vector<std::string> getScreen();
     };
     std::ostream& operator<<(std::ostream& os, Screen screen);

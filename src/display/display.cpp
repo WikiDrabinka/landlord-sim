@@ -44,7 +44,9 @@ namespace display {
         updateDisplay();
     }
     void Display::updateDisplay(std::string newText) {
-        text.clear();
+        if (type!=other) {
+            text.clear();
+        }
         switch (type) {
         case furniture:
         {
@@ -297,10 +299,48 @@ namespace display {
             }
             break;
         }
+        case utilities:
+        {
+            format::FormattedString line1("Included in rent:");
+            format::FormattedString line2(std::to_string(game->included));
+            format::FormattedString emptyline("");
+            emptyline.left(width);
+            text.push_back(emptyline);
+            line1.left(width*2/3);
+            line2.left(width/3);
+            text.push_back(line1.getDisplay()+line2.getDisplay());
+            text.push_back(emptyline);
+            line1 = format::FormattedString("Electricity:",color::ForegroundColor(200,150,0),std::nullopt);
+            line2 = format::FormattedString(std::to_string(game->usedElectricity));
+            line1.left(width*2/3);
+            line2.left(width/3);
+            text.push_back(line1.getDisplay()+line2.getDisplay());
+            text.push_back(emptyline);
+            line1 = format::FormattedString("Water:",color::ForegroundColor(0,150,200),std::nullopt);
+            line2 = format::FormattedString(std::to_string(game->usedWater));
+            line1.left(width*2/3);
+            line2.left(width/3);
+            text.push_back(line1.getDisplay()+line2.getDisplay());
+            text.push_back(emptyline);
+            line1 = format::FormattedString("Other:",color::ForegroundColor(0,200,150),std::nullopt);
+            line2 = format::FormattedString(std::to_string(game->usedOther));
+            line1.left(width*2/3);
+            line2.left(width/3);
+            text.push_back(line1.getDisplay()+line2.getDisplay());
+            text.push_back(emptyline);
+            line1 = format::FormattedString("Total:",false,false,true,false);
+            line2 = format::FormattedString(std::to_string(game->usedElectricity+game->usedWater+game->usedOther-game->included),true);
+            line1.left(width*2/3);
+            line2.left(width/3);
+            text.push_back(line1.getDisplay()+line2.getDisplay());
+            break;
+        }
         default:
         {
-            text.push_back(newText);
-            text[text.size()-1].left(width);
+            if (newText!="") {
+                text.push_back(newText);
+                text.back().left(width);
+            }
             break;
         }
         }
@@ -346,16 +386,22 @@ namespace display {
     void Display::changeDisplay(displayType newType, std::string newName) {
         type=newType;
         name=format::FormattedString(newName,true,false,true,false);
-        name.center(width);
         switch (type) {
         case furniture:
         {
             idx.push_back(0);
             idx.push_back(0);
+            name += " (";
+            name += format::FormattedString(game->getApartments()[idx[0]]->getRooms()[idx[1]]->getName());
+            name.text[2].backgroundColor = game->getApartments()[idx[0]]->getRooms()[idx[1]]->getColor();
+            name += ")";
         }
         case rooms:
         {
             idx.push_back(0);
+            name += " (";
+            name += format::FormattedString(game->getApartments()[idx[0]]->getName());
+            name += ")";
             break;
         }
         case apartment:
@@ -366,29 +412,45 @@ namespace display {
         case conversation:
         {
             idx.push_back(0);
+            name += " (";
+            name += format::FormattedString(game->getMessages()[idx[0]]->getSender()->getName());
+            name += ")";
             break;
         }
         }
+        name.center(width);
         text.clear();
         updateDisplay();
     }
     void Display::changeDisplay(std::vector<int> newIdx) {
         idx = newIdx;
-        if (type==furniture) {
+        switch (type) {
+        case furniture:
+        {
             name = name.text[0];
             name += " (";
             name += format::FormattedString(game->getApartments()[idx[0]]->getRooms()[idx[1]]->getName());
             name.text[2].backgroundColor = game->getApartments()[idx[0]]->getRooms()[idx[1]]->getColor();
             name += ")";
         }
-        if (type==rooms) {
+        case rooms:
+        {
             name = name.text[0];
             name += " (";
             name += format::FormattedString(game->getApartments()[idx[0]]->getName());
             name += ")";
         }
-        if (type==apartment) {
+        case apartment:
+        {
             name = format::MultiFormattedString(format::FormattedString(game->getApartments()[idx[0]]->getName(),true,false,true,false));
+        }
+        case conversation:
+        {
+            name = name.text[0];
+            name += " (";
+            name += format::FormattedString(game->getMessages()[idx[0]]->getSender()->getName());
+            name += ")";
+        }
         }
         name.center(width);
         text.clear();

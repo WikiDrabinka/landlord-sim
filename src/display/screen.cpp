@@ -10,14 +10,14 @@ namespace screen {
         displayHeights = {2,16,16,16,16,16,16,16,16};
         logBoxHeight = 5;
         displays.push_back(std::shared_ptr<display::Display>(new display::Display("Game",displayWidths[0],displayHeights[0],display::displayType::other,game)));
-        displays[0]->updateDisplay("hello");
+        displays[0]->updateDisplay("Week 1, Day 1, 12:00");
         displays.push_back(std::shared_ptr<display::Display>(new display::Display(game->getApartments()[0]->getName(),displayWidths[1],displayHeights[1],display::displayType::apartment,game)));
         displays.push_back(std::shared_ptr<display::Display>(new display::Display("Apartments",displayWidths[2],displayHeights[2],display::displayType::apartments,game)));
         displays.push_back(std::shared_ptr<display::Display>(new display::Display("Tenants",displayWidths[3],displayHeights[3],display::displayType::tenants,game)));
         displays.push_back(std::shared_ptr<display::Display>(new display::Display("Rooms",displayWidths[4],displayHeights[4],display::displayType::rooms,game)));
         displays.push_back(std::shared_ptr<display::Display>(new display::Display("Furniture",displayWidths[5],displayHeights[5],display::displayType::furniture,game)));
         displays.push_back(std::shared_ptr<display::Display>(new display::Display("Store",displayWidths[6],displayHeights[6],display::displayType::store,game)));
-        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Apartments",displayWidths[7],displayHeights[7],display::displayType::apartments,game)));
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Utilities",displayWidths[7],displayHeights[7],display::displayType::utilities,game)));
         displays.push_back(std::shared_ptr<display::Display>(new display::Display("Messages",displayWidths[8],displayHeights[8],display::displayType::messages,game)));
     }
     std::shared_ptr<game::Game> Screen::getGame() { return game; }
@@ -40,6 +40,9 @@ namespace screen {
         for (std::shared_ptr<display::Display> display: displays) {
             display->updateDisplay();
         }
+    }
+    void Screen::updateDisplay(int idx) {
+        displays[idx]->updateDisplay();
     }
     std::vector<std::string> Screen::getScreen() {
         std::vector<std::string> screen;
