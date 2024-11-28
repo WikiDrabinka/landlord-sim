@@ -8,6 +8,7 @@
 #include "../objects/people/messages.h"
 #include <vector>
 #include <memory>
+
 namespace game {
     class Game {
         private:

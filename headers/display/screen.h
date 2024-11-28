@@ -19,6 +19,7 @@ namespace screen {
         int logBoxWidth;
         int displaysX;
         std::vector<int> displaysY;
+        //std::tuple<std::vector<action::Action<display::Display>>,std::vector<action::Action<apartment::Apartment>>,std::vector<action::Action<room::Room>>,std::vector<action::Action<tenant::Tenant>>> actions;
         Screen();
         Screen(std::shared_ptr<game::Game> screenGame);
         std::shared_ptr<game::Game> getGame();

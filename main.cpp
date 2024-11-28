@@ -3,6 +3,7 @@
 #include "headers/game/saveReader.h"
 #include "headers/display/screen.h"
 #include "headers/display/display.h"
+#include "headers/game/action.h"
 #include <vector>
 #include <unistd.h>
 
@@ -32,66 +33,28 @@ int main() {
     //std::cout << *screen;
     //std::cout<<std::shared_ptr<display::Display>(new display::Display("Tenants",30,18,display::displayType::tenants,screen->getGame()))->getDisplay()[0]<<std::endl<<screen->displays.size();
     screen->getGame()->getApartments()[0]->getRooms()[0]->setClaim(bob);
+    std::function<void(std::shared_ptr<game::Game>,std::shared_ptr<display::Display>)> switchToRooms([](std::shared_ptr<game::Game> gamePtr, std::shared_ptr<display::Display> displayPtr){
+        displayPtr->changeDisplay(display::displayType::rooms,"Bruh");
+    });
+    action::Action<display::Display> newAction("name",501,13,switchToRooms);
     std::cout << *screen;
     std::string outline;
-    // int furn;
-    // std::cout<<"pick furniture to buy: ";
-    // std::cin >>furn;
-    // int room;
-    // std::cout<<"\033[1A\033[2K";
-    // std::cout<<"pick room: ";
-    // std::cin >>room;
-    // std::cout<<"\033[1A\033[2K";
-    // int x,y;
-    // std::cout<<"give coordinates: ";
-    // std::cin >>x>>y;
-    // screen->getGame()->getApartments()[0]->getRooms()[room-1]->addFurniture(screen->getGame()->getFurnitureStore()[furn-1],point::Point(x,y));
-    // // could throw and catch exceptions here
-    // screen->updateDisplays();
-    // screen->update();
-    //std::cout<<"\033[1A\033[2K";
-    std::cout<<"write a message from "<<screen->getGame()->getLeases()[0]->getTenant()->getName()<<": ";
     std::cin >>outline;
-    screen->addLog(outline);
-    screen->getGame()->addTime(24*60*6+12*60-10);
-    screen->getGame()->getMessages().push_back(std::shared_ptr<messages::Conversation>(new messages::Conversation(screen->getGame()->getLeases()[0]->getTenant(),outline,screen->getGame()->getTime())));
-    screen->updateDisplays();
-    screen->update();
-    std::cout<<"\033[1A\033[2K";
-    std::cout<<"write a message from "<<screen->getGame()->getLeases()[0]->getTenant()->getName()<<": ";
-    std::cin >>outline;
-    screen->addLog(outline);
-    screen->getGame()->addTime(5);
-    screen->getGame()->getMessages()[0]->sendMessage(outline,screen->getGame()->getTime());
-    screen->updateDisplays();
-    screen->update();
-    std::cout<<"\033[1A\033[2K";
-    std::cout<<"respond to "<<screen->getGame()->getLeases()[0]->getTenant()->getName()<<": ";
-    std::cin >>outline;
-    screen->addLog(outline);
-    screen->getGame()->addTime(5);
-    screen->getGame()->getMessages()[0]->sendMessage(outline,screen->getGame()->getTime(),true);
-    screen->updateDisplays();
-    screen->update();
-    std::cout<<"\033[1A\033[2K";
-    std::cout<<"write a message from "<<screen->getGame()->getLeases()[0]->getTenant()->getName()<<": ";
-    std::cin >>outline;
-    screen->addLog(outline);
-    screen->getGame()->addTime(5);
-    screen->getGame()->getMessages()[0]->sendMessage(outline,screen->getGame()->getTime());
-    screen->updateDisplays();
+    newAction.execute(screen->getGame(),screen->displays[2]);
+    screen->addLog("HIII");
     screen->update();
     std::cout<<"\033[1A\033[2K";
     std::cin >>outline;
-    screen->addLog(outline);
-    screen->getGame()->addTime(5);
-    screen->displays[8]->changeDisplay(display::displayType::conversation,"Convo");
-    screen->updateDisplays();
+    if (newAction.execute(screen->getGame(),screen->displays[3])){
+        screen->addLog("Insufficient funds");
+    }
+    screen->addLog("HIII");
     screen->update();
+    std::cout<<"\033[1A\033[2K";
+    std::cin >>outline;
     std::cout<<"\033[1A\033[2K";
     std::cin >>outline;
     std::cout << "\033[?47l";
-    // delete line;
     return 0;
 }
 
