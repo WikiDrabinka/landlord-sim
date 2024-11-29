@@ -25,7 +25,7 @@ namespace screen {
         std::shared_ptr<game::Game> getGame();
         std::deque<std::string> getLogBox();
         void addLog(std::string newLog);
-        void update();
+        void update(int sleep=0);
         void updateLine(int idx);
         void updateDisplays();
         void updateDisplay(int idx);

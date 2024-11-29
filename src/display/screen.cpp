@@ -1,5 +1,6 @@
 #include "../../headers/display/screen.h"
 #include <algorithm>
+#include <unistd.h>
 namespace screen {
     Screen::Screen() {
         game = std::shared_ptr<game::Game>(new game::Game);
@@ -39,13 +40,14 @@ namespace screen {
             logBox.pop_front();
         }
     }
-    void Screen::update() {
+    void Screen::update(int sleep) {
         std::vector<std::string> screen = getScreen();
-        std::cout<<"\033[s\033[1F";
+        std::cout<<"\033[s\033[?25l\033[1F";
         for (int i=0;i<screen.size();++i){
+            usleep(sleep);
             std::cout<<"\033[1F\033[2K"<<screen[screen.size()-1-i];
         }
-        std::cout<<"\033[u";
+        std::cout<<"\033[u\033[?25h";
     }
     void Screen::updateLine(int idx) {
         std::vector<std::string> screen = getScreen();
