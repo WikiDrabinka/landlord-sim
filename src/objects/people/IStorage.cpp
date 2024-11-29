@@ -1,6 +1,5 @@
 #include "../../../headers/objects/people/IStorage.h"
 namespace storage {
-    int IStorage::getNoOfItems () { return items.size(); }
     std::vector<std::shared_ptr<item::Item>> IStorage::getItems() { return items; }
     std::shared_ptr<item::Item> IStorage::getItem(int idx) { return items[idx]; }
     std::shared_ptr<item::Item> IStorage::popItem() { 
@@ -12,7 +11,7 @@ namespace storage {
     void IStorage::clear() { items.clear(); }
     std::ostream& operator<<(std::ostream& os, IStorage storage) {
         os << "Items:" << std::endl;
-        for (int i=0; i<storage.getNoOfItems(); ++i) {
+        for (int i=0; i<storage.getItems().size(); ++i) {
             os << i+1 << ") " << *(storage.getItem(i));
         }
         return os;

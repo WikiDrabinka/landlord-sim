@@ -9,7 +9,6 @@ namespace item {
         std::string name;
         int size;
         int value;
-
         public:
         Item(std::string itemName, int itemSize, int itemValue);
         Item();

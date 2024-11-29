@@ -8,7 +8,6 @@ namespace storage {
         protected:
         std::vector<std::shared_ptr<item::Item>> items;
         public:
-        int getNoOfItems();
         std::vector<std::shared_ptr<item::Item>> getItems();
         std::shared_ptr<item::Item> getItem(int idx);
         std::shared_ptr<item::Item> popItem();

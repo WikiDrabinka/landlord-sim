@@ -36,7 +36,7 @@ namespace furniture {
         void claimFurniture(std::shared_ptr<tenant::Tenant> newClaim);
         void setCondition(int new_condition);
         void setPosition(point::Point newPosition);
-        float repairPrice();
+        int repairPrice();
     };
 
     std::ostream& operator<<(std::ostream& os, Furniture furniture);

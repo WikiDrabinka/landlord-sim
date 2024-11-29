@@ -37,7 +37,7 @@ namespace furniture {
     void Furniture::setPosition(point::Point newPosition) {
         position = newPosition;
     }
-    float Furniture::repairPrice() {
+    int Furniture::repairPrice() {
         return price*condition/100;
     }
     

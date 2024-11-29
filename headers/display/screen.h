@@ -9,12 +9,12 @@ namespace screen {
     class Screen {
         private:
         std::shared_ptr<game::Game> game;
-        int logBoxMemory;
         public:
         std::vector<std::shared_ptr<display::Display>> displays;
         std::deque<std::string> logBox;
         std::vector<int> displayWidths;
         std::vector<int> displayHeights;
+        int logBoxMemory;
         int logBoxHeight;
         int logBoxWidth;
         int displaysX;

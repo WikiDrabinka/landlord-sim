@@ -33,20 +33,25 @@ int main() {
     //std::cout << *screen;
     //std::cout<<std::shared_ptr<display::Display>(new display::Display("Tenants",30,18,display::displayType::tenants,screen->getGame()))->getDisplay()[0]<<std::endl<<screen->displays.size();
     screen->getGame()->getApartments()[0]->getRooms()[0]->setClaim(bob);
-    std::function<void(std::shared_ptr<game::Game>,std::shared_ptr<display::Display>)> switchToRooms([](std::shared_ptr<game::Game> gamePtr, std::shared_ptr<display::Display> displayPtr){
-        displayPtr->changeDisplay(display::displayType::rooms,"Bruh");
+    std::function<void(std::shared_ptr<game::Game>,std::shared_ptr<screen::Screen>)> switchToRooms([](std::shared_ptr<game::Game> gamePtr, std::shared_ptr<screen::Screen> screenPtr){
+        int displayChoice, typeChoice;
+        std::string name;
+        std::cin >> displayChoice >> typeChoice >> name;
+        screenPtr->displays[displayChoice]->changeDisplay((display::displayType) typeChoice, name);
     });
-    action::Action<display::Display> newAction("name",501,13,switchToRooms);
+    action::Action<screen::Screen> newAction("name",50,13,switchToRooms);
     std::cout << *screen;
     std::string outline;
     std::cin >>outline;
-    newAction.execute(screen->getGame(),screen->displays[2]);
+    newAction.execute(screen->getGame(),screen);
     screen->addLog("HIII");
     screen->update();
     std::cout<<"\033[1A\033[2K";
     std::cin >>outline;
-    if (newAction.execute(screen->getGame(),screen->displays[3])){
-        screen->addLog("Insufficient funds");
+    if (outline=="uwu") {
+        if (newAction.execute(screen->getGame(),screen)){
+            screen->addLog("Insufficient funds");
+        }
     }
     screen->addLog("HIII");
     screen->update();

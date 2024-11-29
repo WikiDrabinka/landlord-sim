@@ -7,7 +7,7 @@ namespace furniture {
         int capacity;
         static std::vector<std::string> generatedNames;
         public:
-        Sleepable(std::string furnitureName, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY, int aleepableComfortability, int sleepableCapacity);
+        Sleepable(std::string furnitureName, int furniturePrice, int furnitureCondition, int furnitureSizeX, int furnitureSizeY, int sleepableComfortability, int sleepableCapacity);
         Sleepable();
         int getCapacity();
         int getComfortability();

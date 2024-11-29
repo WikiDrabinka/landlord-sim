@@ -1,5 +1,5 @@
 #include "../../headers/game/action.h"
-#include "../../headers/display/display.h"
+#include "../../headers/display/screen.h"
 
 namespace action {
     template<typename T>
@@ -21,4 +21,5 @@ namespace action {
         return 1;
     }
     template class Action<display::Display>;
+    template class Action<screen::Screen>;
 }
