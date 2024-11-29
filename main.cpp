@@ -29,14 +29,14 @@ int main() {
         int x,y;
         color::BackgroundColor color(150-x,30,150-y);
         title>>x>>y;
-        titlescreen->changeDrawing(x,y+20,color.getString()+fcolor.getString()+"┼"+color::Color::reset);
+        titlescreen->changeDrawing(x-5,y+20,color.getString()+fcolor.getString()+"┼"+color::Color::reset);
     }
     title >> num;
     for (int i = 0; i<=num; ++i) {
         std::string line;
         getline(title,line);
         for (int j=0; j<line.size();++j) {
-            titlescreen->changeDrawing(22+i,60+j,line.substr(j,1));
+            titlescreen->changeDrawing(17+i,60+j,line.substr(j,1));
         }
     }
     title.close();
@@ -45,12 +45,40 @@ int main() {
         std::cout<<"═";
     }
     std::cout<<"╗"<<std::endl;
+    int i = 0;
     for (std::vector<std::string> line: titlescreen->getDrawing()) {
         std::cout << "║ ";
-        for (std::string c: line) {
-            std::cout<<c;
+        switch (i) {
+        case 28:
+        {
+            format::FormattedString button("1) New Game",true);
+            button.center(162);
+            std::cout << button.getDisplay();
+            break;
+        }
+        case 30:
+        {
+            format::FormattedString button("2) Load Game",true);
+            button.center(162);
+            std::cout << button.getDisplay();
+            break;
+        }
+        case 32:
+        {
+            format::FormattedString button("3) Exit",true);
+            button.center(162);
+            std::cout << button.getDisplay();
+            break;
+        }
+        default:
+        {
+            for (std::string c: line) {
+                std::cout<<c;
+            }
+        }
         }
         std::cout << " ║" << std::endl;
+        ++i;
     }
     std::cout<<"╚";
     for (int i = 0; i<164; ++i) {
@@ -67,7 +95,7 @@ int main() {
         screenPtr->displays[displayChoice]->changeDisplay((display::displayType) typeChoice, name);
     });
     action::Action<screen::Screen> newAction("name",50,13,switchToRooms);
-    screen->update(3000);
+    screen->update(5000);
     std::cout<<"\033[1A\033[2K";
     std::cin >> outline;
     if (outline=="uwu") {
@@ -92,4 +120,4 @@ int main() {
     return 0;
 }
 
-//TO DO : add actions, (!) finish saving and loading files, unit tests, make room state relevant (never)
+//TO DO : adding empty game and loading, saving, add actions, (!) finish saving and loading files, unit tests, make room state relevant (never)
