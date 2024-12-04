@@ -1,45 +1,16 @@
 #include "headers/objects/apartments/apartment.h"
 #include "headers/display/format.h"
-#include "headers/game/saveReader.h"
+#include "headers/game/fileReader.h"
 #include "headers/display/screen.h"
 #include "headers/display/display.h"
 #include "headers/game/action.h"
 #include <vector>
-#include <unistd.h>
 #include <fstream>
 
 int main() {
-    std::shared_ptr<screen::Screen> screen(new screen::Screen());
-    std::shared_ptr<tenant::Tenant> bob(new tenant::Tenant());
-    std::shared_ptr<lease::Lease> lol(new lease::Lease(bob,screen->getGame()->getApartments()[0],600,30,false));
-    screen->getGame()->addLease(lol);
-    screen->getGame()->included=100;
-    screen->getGame()->usedElectricity=60;
-    screen->getGame()->usedWater=50;
-    screen->getGame()->usedOther=30;
-    screen->updateDisplays();
-    std::vector<std::shared_ptr<furniture::Furniture>> backup;
     std::cout<<"\033[?47h\033[2J";
-    canvas::Canvas *titlescreen = new canvas::Canvas(42,162," ");
-    std::fstream title("titlescreen.txt");
-    int num;
-    title >> num;
-    color::ForegroundColor fcolor(50,0,50);
-    for (int i=0;i<num;++i){
-        int x,y;
-        color::BackgroundColor color(150-x,30,150-y);
-        title>>x>>y;
-        titlescreen->changeDrawing(x-5,y+20,color.getString()+fcolor.getString()+"┼"+color::Color::reset);
-    }
-    title >> num;
-    for (int i = 0; i<=num; ++i) {
-        std::string line;
-        getline(title,line);
-        for (int j=0; j<line.size();++j) {
-            titlescreen->changeDrawing(17+i,60+j,line.substr(j,1));
-        }
-    }
-    title.close();
+    fileReader::FileReader reader;
+    std::shared_ptr<canvas::Canvas> titlescreen = reader.loadTitleScreeen();
     std::cout<<"╔";
     for (int i = 0; i<164; ++i) {
         std::cout<<"═";
@@ -48,34 +19,12 @@ int main() {
     int i = 0;
     for (std::vector<std::string> line: titlescreen->getDrawing()) {
         std::cout << "║ ";
-        switch (i) {
-        case 28:
-        {
-            format::FormattedString button("1) New Game",true);
-            button.center(162);
-            std::cout << button.getDisplay();
-            break;
-        }
-        case 30:
-        {
-            format::FormattedString button("2) Load Game",true);
-            button.center(162);
-            std::cout << button.getDisplay();
-            break;
-        }
-        case 32:
-        {
-            format::FormattedString button("3) Exit",true);
-            button.center(162);
-            std::cout << button.getDisplay();
-            break;
-        }
-        default:
-        {
-            for (std::string c: line) {
+        for (std::string c: line) {
+            if (i==26 || i==28 || i==30){
+                std::cout<<"\033[1m"<<c<<"\033[22m";
+            } else {
                 std::cout<<c;
             }
-        }
         }
         std::cout << " ║" << std::endl;
         ++i;
@@ -87,6 +36,20 @@ int main() {
     std::cout<<"╝"<<std::endl<<std::endl<<"\033[1A";
     std::string outline;
     std::cin >>outline;
+    if (outline=="3"){
+        std::cout << "\033[?47l";
+        exit(0);
+    }
+    std::shared_ptr<screen::Screen> screen(new screen::Screen());
+    std::shared_ptr<tenant::Tenant> bob(new tenant::Tenant());
+    std::shared_ptr<lease::Lease> lol(new lease::Lease(bob,screen->getGame()->getApartments()[0],600,30,false));
+    screen->getGame()->addLease(lol);
+    screen->getGame()->included=100;
+    screen->getGame()->usedElectricity=60;
+    screen->getGame()->usedWater=50;
+    screen->getGame()->usedOther=30;
+    screen->updateDisplays();
+    std::vector<std::shared_ptr<furniture::Furniture>> backup;
     screen->getGame()->getApartments()[0]->getRooms()[0]->setClaim(bob);
     std::function<void(std::shared_ptr<game::Game>,std::shared_ptr<screen::Screen>)> switchToRooms([](std::shared_ptr<game::Game> gamePtr, std::shared_ptr<screen::Screen> screenPtr){
         int displayChoice, typeChoice;
