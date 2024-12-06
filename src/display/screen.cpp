@@ -9,6 +9,8 @@ namespace screen {
         displaysY = {1,5,3};
         displayWidths = {162,30,30,30,30,30,63,30,63};
         displayHeights = {2,16,16,16,16,16,16,16,16};
+        totalWidth = 162;
+        totalHeight = 2+16+16+5+3*3;
         logBoxHeight = 5;
         logBoxWidth = 162;
         logBox = {"","","","",""};
@@ -132,6 +134,43 @@ namespace screen {
         currentLine+="╝";
         screen.push_back(currentLine);
         return screen;
+    }
+    void Screen::popUp(std::vector<format::FormattedString> text, std::optional<format::FormattedString> title) {
+        int sizeX = text.size();
+        int sizeY = 0;
+        if (title.has_value()) {
+            ++sizeX;
+            sizeY = title->textLength();
+        }
+        for (format::FormattedString line : text) {
+            sizeY = std::max(sizeY,line.textLength());
+        }
+        ++sizeY;
+        if (sizeY%2==1) {
+            ++sizeY;
+        }
+        int x = (totalHeight+sizeX)/2;
+        int y = (totalWidth-sizeY+2)/2;
+        color::ForegroundColor outline(200,200,255);
+        std::cout << "\033[s";
+        std::cout << "\033[" << x+1 << "F\033[" << y - 2 << "C" << outline.getString() << " ╔═";
+        for (int i=0; i<sizeY; ++i) {
+            std::cout << "═";
+        }
+        std::cout << "═╗ " <<  outline.reset;
+        if (title.has_value()) {
+            title->center(sizeY);
+            std::cout << "\033[1E\033["<< y - 2 << "C" << outline.getString() << " ║ " << outline.reset << title->getDisplay() << outline.getString() << " ║ " << outline.reset;
+        }
+        for (int i=0; i<text.size(); ++i) {
+            text[i].left(sizeY);
+            std::cout << "\033[1E\033["<< y - 2 << "C" << outline.getString() << " ║ " << outline.reset << text[i].getDisplay() << outline.getString() << " ║ " << outline.reset;
+        }
+        std::cout << "\033[1E\033[" << y - 2 << "C" << outline.getString() << " ╚═";
+        for (int i=0; i<sizeY; ++i) {
+            std::cout << "═";
+        }
+        std::cout << "═╝ " << outline.reset << "\033[u";
     }
     std::ostream& operator<<(std::ostream& os, Screen screen) {
         std::vector<std::string> display = screen.getScreen();

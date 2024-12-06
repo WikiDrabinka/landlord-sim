@@ -38,12 +38,29 @@ namespace canvas {
     }
     std::ostream& operator<<(std::ostream& os, Canvas canvas) {
         std::vector<std::vector<std::string>> drawing = canvas.getDrawing();
-        for (int i=0; i<canvas.getX(); ++i) {
-            for (int j=0; j<canvas.getY(); ++j) {
-                os << drawing[i][j];
-            }
-            os << std::endl;
+        os<<"╔";
+        for (int i = 0; i<canvas.getY(); ++i) {
+            os<<"═";
         }
+        std::cout<<"╗"<<std::endl;
+        int i = 0;
+        for (std::vector<std::string> line: drawing) {
+            std::cout << "║ ";
+            for (std::string c: line) {
+                if (i==26 || i==28 || i==30){
+                    std::cout<<"\033[1m"<<c<<"\033[22m";
+                } else {
+                    std::cout<<c;
+                }
+            }
+            std::cout << " ║" << std::endl;
+            ++i;
+        }
+        std::cout<<"╚";
+        for (int i = 0; i<164; ++i) {
+            std::cout<<"═";
+        }
+        std::cout<<"╝"<<std::endl<<std::endl<<"\033[1A";
         return os;
     }
 }

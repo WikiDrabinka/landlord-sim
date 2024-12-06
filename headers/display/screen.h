@@ -14,6 +14,8 @@ namespace screen {
         std::deque<std::string> logBox;
         std::vector<int> displayWidths;
         std::vector<int> displayHeights;
+        int totalWidth;
+        int totalHeight;
         int logBoxMemory;
         int logBoxHeight;
         int logBoxWidth;
@@ -29,6 +31,7 @@ namespace screen {
         void updateLine(int idx);
         void updateDisplays();
         void updateDisplay(int idx);
+        void popUp(std::vector<format::FormattedString> text, std::optional<format::FormattedString> title=std::nullopt);
         std::vector<std::string> getScreen();
     };
     std::ostream& operator<<(std::ostream& os, Screen screen);

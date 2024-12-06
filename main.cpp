@@ -11,29 +11,7 @@ int main() {
     std::cout<<"\033[?47h\033[2J";
     fileReader::FileReader reader;
     std::shared_ptr<canvas::Canvas> titlescreen = reader.loadTitleScreeen();
-    std::cout<<"╔";
-    for (int i = 0; i<164; ++i) {
-        std::cout<<"═";
-    }
-    std::cout<<"╗"<<std::endl;
-    int i = 0;
-    for (std::vector<std::string> line: titlescreen->getDrawing()) {
-        std::cout << "║ ";
-        for (std::string c: line) {
-            if (i==26 || i==28 || i==30){
-                std::cout<<"\033[1m"<<c<<"\033[22m";
-            } else {
-                std::cout<<c;
-            }
-        }
-        std::cout << " ║" << std::endl;
-        ++i;
-    }
-    std::cout<<"╚";
-    for (int i = 0; i<164; ++i) {
-        std::cout<<"═";
-    }
-    std::cout<<"╝"<<std::endl<<std::endl<<"\033[1A";
+    std::cout<<*titlescreen;
     std::string outline;
     std::cin >>outline;
     if (outline=="3"){
@@ -57,7 +35,7 @@ int main() {
         std::cin >> displayChoice >> typeChoice >> name;
         screenPtr->displays[displayChoice]->changeDisplay((display::displayType) typeChoice, name);
     });
-    action::Action<screen::Screen> newAction("name",50,13,switchToRooms);
+    action::Action<screen::Screen> newAction("name",50,13,switchToRooms,{});
     screen->update(5000);
     std::cout<<"\033[1A\033[2K";
     std::cin >> outline;
@@ -67,7 +45,9 @@ int main() {
     screen->addLog("HIII");
     screen->update();
     std::cout<<"\033[1A\033[2K";
+    screen->popUp({format::FormattedString("hi"),format::FormattedString("thanks for trying out my game!"),format::FormattedString("1) Save Game"),format::FormattedString("2) Exit")},format::FormattedString("Omg hello :)",true));
     std::cin >>outline;
+    screen->update();
     if (outline=="uwu") {
         if (newAction.execute(screen->getGame(),screen)){
             screen->addLog("Insufficient funds");
