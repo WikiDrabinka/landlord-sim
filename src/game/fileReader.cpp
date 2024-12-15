@@ -1,12 +1,13 @@
 #include "../../headers/game/fileReader.h"
 #include <fstream>
+#include <algorithm>
 
 namespace fileReader {
     FileReader::FileReader(){
-        save1 = "resources/save1";
-        save2 = "resources/save2";
-        save3 = "resources/save3";
-        save4 = "resources/save4";
+        saves[0] = "resources/save1";
+        saves[1] = "resources/save2";
+        saves[2] = "resources/save3";
+        saves[3] = "resources/save4";
     }
     std::shared_ptr<canvas::Canvas> FileReader::loadTitleScreeen() {
         std::fstream title("resources/titlescreen.txt");
@@ -57,5 +58,114 @@ namespace fileReader {
         }
         title.close();
         return titlescreen;
+    }
+    void FileReader::saveGame(int idx, std::shared_ptr<game::Game> game) {
+        std::fstream save;
+        save.open(saves[idx],std::ios::out);
+        save << game->getTime() << std::endl;
+        save << game->getMoney() << std::endl;
+        save << game->usedElectricity << " " << game->usedWater << " " << game->usedOther << " " << game->included << std::endl;
+        save << game->getFurnitureStore().size() << std::endl;
+        for (std::shared_ptr<furniture::Furniture> furn : game->getFurnitureStore()) {
+            save << furn->getString() << std::endl;
+        }
+        save << game->getFurnitureStorage().size() << std::endl;
+        for (std::shared_ptr<furniture::Furniture> furn : game->getFurnitureStorage()) {
+            save << furn->getString() << std::endl;
+        }
+        // tenants
+        std::vector<std::shared_ptr<tenant::Tenant>> tenants;
+        save << game->getLeases().size() << std::endl;
+        for (std::shared_ptr<lease::Lease> lease : game->getLeases()) {
+            tenants.push_back(lease->getTenant());
+            save << "\'" << tenants.back()->getName() << "\'" << std::endl;
+            save << "\'" << tenants.back()->getNickname() << "\'" << std::endl;
+            save << tenants.back()->getIncome() << " " << tenants.back()->getSavings() << " " << tenants.back()->getSpending() << " " << tenants.back()->owing << std::endl;
+            save << tenants.back()->getPatience() << " " << tenants.back()->getHappiness() << std::endl;
+        }
+        // apartments
+        save << game->getApartments().size() << std::endl;
+        for (std::shared_ptr<apartment::Apartment> apt : game->getApartments()) {
+            save << "\'" << apt->getName() << "\'" << std::endl;
+            save << apt->marketPrice << " " << apt->tenantsNo << std::endl;
+            save << apt->getRooms().size() << std::endl;
+            for (std::shared_ptr<room::Room> room : apt->getRooms()) {
+                save << "\'" << room->getName() << "\'"<< std::endl;
+                save << (int) room->getState() << " ";
+                if (room->getState()==livingSpace::claimed) {
+                    save << std::distance(tenants.begin(),std::find(tenants.begin(),tenants.end(),room->getClaim())) << std::endl;
+                } else {
+                    save << -1 << std::endl;
+                }
+                save << room->getColor().red << " " << room->getColor().green << " " << room->getColor().blue << std::endl;
+                save << room->getRectangles().size() << std::endl;
+                for (std::shared_ptr<rectangle::Rectangle> rect : room->getRectangles()) {
+                    save << rect->getPoint1().x << " " << rect->getPoint1().y << " " << rect->getPoint2().x << " " << rect->getPoint2().y << std::endl;
+                }
+                save << room->getFurniture().size() << std::endl;
+                for (std::shared_ptr<furniture::Furniture> furn : room->getFurniture()) {
+                    save << furn->getString() << std::endl;
+                }
+            }
+        }
+        // real estate
+        save << game->getRealEstateMarket()->getAveragePrice() << std::endl;
+        save << game->getRealEstateMarket()->getApartments().size() << std::endl;
+        for (std::pair<std::shared_ptr<apartment::Apartment>,int> entry : game->getRealEstateMarket()->getApartments()) {
+            save << std::distance(game->getApartments().begin(),std::find(game->getApartments().begin(),game->getApartments().end(),entry.first)) << " " << entry.second << std::endl;
+        }
+        // leases
+        for (int i=0; i<game->getLeases().size(); ++i) {
+            std::shared_ptr<lease::Lease> lease = game->getLeases()[i];
+            save << lease->getRent() << " " << lease->getTime() << " " << lease->getUtilities() << std::endl;
+            save << i << " " << std::distance(game->getApartments().begin(),std::find(game->getApartments().begin(),game->getApartments().end(),lease->getApartment())) << std::endl;
+        }
+        // messages
+        save << game->getMessages().size() << std::endl;
+        for (std::shared_ptr<messages::Conversation> convo : game->getMessages()) {
+            save << convo->read << " " << convo->time << std::endl;
+            if (std::find(tenants.begin(),tenants.end(),convo->getSender())!=tenants.end()) {
+                save << std::distance(tenants.begin(),std::find(tenants.begin(),tenants.end(),convo->getSender())) << std::endl;
+            } else {
+                save << -1 << std::endl;
+                save << "\'" << convo->getSender()->getName() << "\'" << std::endl;
+                save << "\'" << convo->getSender()->getNickname() << "\'" << std::endl;
+                save << convo->getSender()->getIncome() << " " << convo->getSender()->getSavings() << " " << convo->getSender()->getSpending() << " " << convo->getSender()->owing << std::endl;
+                save << convo->getSender()->getPatience() << " " << convo->getSender()->getHappiness() << std::endl;
+            }
+            save << convo->getMessages().size() << std::endl;
+            for (std::string message : convo->getMessages()) {
+                save << message << std::endl;
+            }
+            save << convo->responses.size() << std::endl;
+            for (int resp : convo->responses) {
+                save << resp << " ";
+            }
+        }
+        save.close();
+    }
+    std::shared_ptr<game::Game> FileReader::loadGame(int idx) {
+        std::fstream save;
+        save.open(saves[idx],std::ios::in);
+        if (!save.is_open()) {
+            std::cerr << "Failed to open file: " << saves[idx] << std::endl;
+            return nullptr;
+        }
+        std::shared_ptr<game::Game> game(new game::Game(true));
+        std::string line;
+        try {
+            save >> line;
+            game->setTime(stoi(line));
+            save >> line;
+            game->setMoney(stoi(line));
+            save >> game->usedElectricity >> game->usedWater >> game->usedOther >> game->included;
+            
+        } catch (std::invalid_argument) {
+            std::cerr << "Cannot convert line \"" << line << "\" to integer "<<std::current_exception().__cxa_exception_type()->name() << std::endl;
+            save.close();
+            return nullptr;
+        }
+        save.close();
+        return game;
     }
 }

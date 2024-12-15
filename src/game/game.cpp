@@ -90,8 +90,8 @@ namespace game {
         }
         return line;
     }
-    std::vector<std::shared_ptr<lease::Lease>> Game::getLeases() { return leases; }
-    std::vector<std::shared_ptr<apartment::Apartment>> Game::getApartments() { return apartments; }
+    std::vector<std::shared_ptr<lease::Lease>>& Game::getLeases() { return leases; }
+    std::vector<std::shared_ptr<apartment::Apartment>>& Game::getApartments() { return apartments; }
     std::vector<std::shared_ptr<messages::Conversation>>& Game::getMessages() { return messages; }
     std::shared_ptr<market::RealEstate> Game::getRealEstateMarket() { return realEstateMarket; }
     std::vector<std::shared_ptr<furniture::Furniture>>& Game::getFurnitureStore() { return furnitureStore; }

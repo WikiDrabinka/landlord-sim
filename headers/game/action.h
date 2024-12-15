@@ -3,7 +3,7 @@
 #include "game.h"
 
 namespace action {
-    //display,tenant,apartment,room,furniture,message
+    //screen, apartment, message
     template<typename T>
     class Action {
         public:

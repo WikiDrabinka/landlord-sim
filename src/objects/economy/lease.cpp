@@ -11,6 +11,8 @@ namespace lease {
     std::shared_ptr<tenant::Tenant> Lease::getTenant() { return tenant; }
     std::shared_ptr<apartment::Apartment> Lease::getApartment() { return apartment; }
     int Lease::getRent() { return rent; }
+    int Lease::getTime() { return time; }
+    bool Lease::getUtilities() { return utilitiesIncluded; }
     std::vector<format::FormattedString> Lease::getDisplay() {
         std::vector<format::FormattedString> display;
         display.push_back(format::FormattedString(tenant->getName(),true,false,false,false));

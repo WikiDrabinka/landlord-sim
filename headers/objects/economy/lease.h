@@ -15,6 +15,8 @@ namespace lease {
         std::shared_ptr<tenant::Tenant> getTenant();
         std::shared_ptr<apartment::Apartment> getApartment();
         int getRent();
+        int getTime();
+        bool getUtilities();
         std::vector<format::FormattedString> getDisplay();
         void renew(int newTime);
         void switchUtilities();

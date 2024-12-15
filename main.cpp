@@ -29,36 +29,29 @@ int main() {
     screen->updateDisplays();
     std::vector<std::shared_ptr<furniture::Furniture>> backup;
     screen->getGame()->getApartments()[0]->getRooms()[0]->setClaim(bob);
-    std::function<void(std::shared_ptr<game::Game>,std::shared_ptr<screen::Screen>)> switchToRooms([](std::shared_ptr<game::Game> gamePtr, std::shared_ptr<screen::Screen> screenPtr){
-        int displayChoice, typeChoice;
-        std::string name;
-        std::cin >> displayChoice >> typeChoice >> name;
-        screenPtr->displays[displayChoice]->changeDisplay((display::displayType) typeChoice, name);
-    });
-    action::Action<screen::Screen> newAction("name",50,13,switchToRooms,{});
+    screen->getGame()->getMessages().push_back(std::shared_ptr<messages::Conversation>(new messages::Conversation(bob,"uwu hey bro give me some money",5)));
+    screen->getGame()->getMessages().back()->sendMessage("bruh no", 10, true);
+    screen->getGame()->getMessages().back()->sendMessage("why", 15);
+    screen->getGame()->getMessages().back()->sendMessage("I dont like you", 20, true);
+    reader.saveGame(0,screen->getGame());
+    reader.loadGame(0);
     screen->update(5000);
     std::cout<<"\033[1A\033[2K";
-    std::cin >> outline;
-    if (outline=="uwu") {
-        newAction.execute(screen->getGame(),screen);
-    }
-    screen->addLog("HIII");
-    screen->update();
+    std::cin >>outline;
     std::cout<<"\033[1A\033[2K";
     screen->popUp({format::FormattedString("hi"),format::FormattedString("thanks for trying out my game!"),format::FormattedString("1) Save Game"),format::FormattedString("2) Exit")},format::FormattedString("Omg hello :)",true));
     std::cin >>outline;
     screen->update();
-    if (outline=="uwu") {
-        if (newAction.execute(screen->getGame(),screen)){
-            screen->addLog("Insufficient funds");
+    std::cout<<"\033[1A\033[2K";
+    while (true) {
+        std::cin >>outline;
+        if (outline=="exit") {
+            break;
         }
+        screen->addLog(outline);
+        screen->update();
+        std::cout<<"\033[1A\033[2K";
     }
-    screen->addLog("HIII");
-    screen->update();
-    std::cout<<"\033[1A\033[2K";
-    std::cin >>outline;
-    std::cout<<"\033[1A\033[2K";
-    std::cin >>outline;
     std::cout << "\033[?47l";
     return 0;
 }

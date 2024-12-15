@@ -28,6 +28,7 @@ namespace furniture {
         while (averageHourlyCost<0) {
             averageHourlyCost = hourlyDistr(gen);
         }
+        position = point::Point(-1,-1);
     }
     furniture::utilityType Utility::getType() { return type; }
     color::ForegroundColor Utility::getColor() const { return color::ForegroundColor(0,50,50); }

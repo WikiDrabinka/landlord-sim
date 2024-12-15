@@ -29,9 +29,9 @@ namespace game {
         int getMoney();
         int getTime();
         std::string getTimeStr();
-        std::vector<std::shared_ptr<apartment::Apartment>> getApartments();
+        std::vector<std::shared_ptr<apartment::Apartment>>& getApartments();
         std::vector<std::shared_ptr<messages::Conversation>>& getMessages();
-        std::vector<std::shared_ptr<lease::Lease>> getLeases();
+        std::vector<std::shared_ptr<lease::Lease>>& getLeases();
         std::shared_ptr<market::RealEstate> getRealEstateMarket();
         std::vector<std::shared_ptr<furniture::Furniture>>& getFurnitureStore();
         std::vector<std::shared_ptr<furniture::Furniture>>& getFurnitureStorage();

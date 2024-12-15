@@ -39,7 +39,7 @@ namespace canvas {
     std::ostream& operator<<(std::ostream& os, Canvas canvas) {
         std::vector<std::vector<std::string>> drawing = canvas.getDrawing();
         os<<"╔";
-        for (int i = 0; i<canvas.getY(); ++i) {
+        for (int i = 0; i<canvas.getY()+2; ++i) {
             os<<"═";
         }
         std::cout<<"╗"<<std::endl;
@@ -57,7 +57,7 @@ namespace canvas {
             ++i;
         }
         std::cout<<"╚";
-        for (int i = 0; i<164; ++i) {
+        for (int i = 0; i<canvas.getY()+2; ++i) {
             std::cout<<"═";
         }
         std::cout<<"╝"<<std::endl<<std::endl<<"\033[1A";
