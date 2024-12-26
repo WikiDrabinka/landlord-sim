@@ -3,7 +3,7 @@
 #include "headers/game/fileReader.h"
 #include "headers/display/screen.h"
 #include "headers/display/display.h"
-#include "headers/game/action.h"
+#include "headers/game/actionHandler.h"
 #include <vector>
 #include <fstream>
 
@@ -19,6 +19,7 @@ int main() {
         exit(0);
     }
     std::shared_ptr<screen::Screen> screen(new screen::Screen());
+    action::ActionHandler actionHandler;
     std::shared_ptr<tenant::Tenant> bob(new tenant::Tenant());
     std::shared_ptr<lease::Lease> lol(new lease::Lease(bob,screen->getGame()->getApartments()[0],600,30,false));
     screen->getGame()->addLease(lol);
@@ -47,6 +48,12 @@ int main() {
         std::cin >>outline;
         if (outline=="exit") {
             break;
+        } else if (outline=="switch") {
+            for (std::shared_ptr<display::Display> display : screen->displays) {
+                if (actionHandler.displayActions[0].checkRequirements(screen,display)) {
+                    actionHandler.displayActions[0].execute(screen,display);
+                }
+            }
         }
         screen->addLog(outline);
         screen->update();

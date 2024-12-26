@@ -11,14 +11,15 @@ namespace display {
         format::MultiFormattedString name;
         const int width;
         const int height;
-        displayType type;
         std::vector<int> idx;
         std::shared_ptr<game::Game> game;
         std::vector<format::FormattedString> text;
         int displayStart;
+        displayType type;
         public:
         Display(std::string displayName, int displayWidth, int displayHeight, displayType displayType, std::shared_ptr<game::Game> displayGame);
         std::vector<std::string> getDisplay();
+        displayType getType();
         void scrollUp(int i=1);
         void scrollDown(int i=1);
         void updateDisplay(std::string newText="");

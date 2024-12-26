@@ -386,6 +386,7 @@ namespace display {
         }
         return display;
     }
+    displayType Display::getType() { return type; }
     void Display::scrollUp(int i) {
         displayStart = std::max(0,displayStart-i);
     }

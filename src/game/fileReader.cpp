@@ -159,7 +159,8 @@ namespace fileReader {
             save >> line;
             game->setMoney(stoi(line));
             save >> game->usedElectricity >> game->usedWater >> game->usedOther >> game->included;
-            
+            int furnitureNum;
+            save >> furnitureNum;
         } catch (std::invalid_argument) {
             std::cerr << "Cannot convert line \"" << line << "\" to integer "<<std::current_exception().__cxa_exception_type()->name() << std::endl;
             save.close();

@@ -1,6 +1,6 @@
 #pragma once
 #include <functional>
-#include "game.h"
+#include "../display/screen.h"
 
 namespace action {
     //screen, apartment, message
@@ -10,31 +10,48 @@ namespace action {
         std::string name;
         int cost;
         int time;
-        std::function<void(std::shared_ptr<game::Game>,std::shared_ptr<T>)> function;
-        std::vector<std::function<bool(std::shared_ptr<game::Game>)>> requirements;
-        Action(std::string actionName, int actionCost, int actionTime, std::function<void(std::shared_ptr<game::Game>,std::shared_ptr<T>)> actionFunction,std::vector<std::function<bool(std::shared_ptr<game::Game>)>> actionRequirements) {
+        std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<T>)> function;
+        std::vector<std::function<bool(std::shared_ptr<game::Game>)>> gameRequirements;
+        std::vector<std::function<bool(std::shared_ptr<T>)>> objectRequirements;
+        Action(std::string actionName, int actionCost, int actionTime, std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<T>)> actionFunction,std::vector<std::function<bool(std::shared_ptr<screen::Screen>)>> actionGameRequirements={},std::vector<std::function<bool(std::shared_ptr<T>)>> actionObjectRequirements={}) {
             name = actionName;
             cost = actionCost;
             time = actionTime;
             function = actionFunction;
-            requirements = actionRequirements;
+            gameRequirements = actionGameRequirements;
+            objectRequirements = actionObjectRequirements;
         }
-        int execute(std::shared_ptr<game::Game> game,std::shared_ptr<T> object) {
-            if (game->getMoney()>=cost) {
-                game->setMoney(game->getMoney()-cost);
-                game->addTime(time);
-                function(game, object);
+        Action(std::string actionName, int actionCost, int actionTime, std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<T>)> actionFunction,std::vector<std::function<bool(std::shared_ptr<T>)>> actionObjectRequirements) {
+            name = actionName;
+            cost = actionCost;
+            time = actionTime;
+            function = actionFunction;
+            objectRequirements = actionObjectRequirements;
+        }
+        int execute(std::shared_ptr<screen::Screen> screen,std::shared_ptr<T> object) {
+            if (screen->getGame()->getMoney()>=cost) {
+                screen->getGame()->setMoney(screen->getGame()->getMoney()-cost);
+                screen->getGame()->addTime(time);
+                function(screen, object);
                 return 0;
             }
             // insufficient balance
             return 1;
         }
         void addRequirement(std::function<bool(std::shared_ptr<game::Game>)> newRequirement) {
-            requirements.push_back(newRequirement);
+            gameRequirements.push_back(newRequirement);
         }
-        bool checkRequirements(std::shared_ptr<game::Game> game) {
-            for (std::function<bool(std::shared_ptr<game::Game>)> requirement : requirements) {
-                if (!requirement(game)) {
+        void addRequirement(std::function<bool(std::shared_ptr<T>)> newRequirement) {
+            objectRequirements.push_back(newRequirement);
+        }
+        bool checkRequirements(std::shared_ptr<screen::Screen> screen, std::shared_ptr<T> object) {
+            for (std::function<bool(std::shared_ptr<game::Game>)> requirement : gameRequirements) {
+                if (!requirement(screen->getGame())) {
+                    return false;
+                }
+            }
+            for (std::function<bool(std::shared_ptr<T>)> requirement : objectRequirements) {
+                if (!requirement(object)) {
                     return false;
                 }
             }
