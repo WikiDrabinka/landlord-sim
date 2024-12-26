@@ -34,6 +34,7 @@ int main() {
     screen->getGame()->getMessages().back()->sendMessage("bruh no", 10, true);
     screen->getGame()->getMessages().back()->sendMessage("why", 15);
     screen->getGame()->getMessages().back()->sendMessage("I dont like you", 20, true);
+    screen->getGame()->getMessages().back()->sendMessage(":((",20);
     reader.saveGame(0,screen->getGame());
     reader.loadGame(0);
     screen->update(5000);
@@ -52,6 +53,18 @@ int main() {
             for (std::shared_ptr<display::Display> display : screen->displays) {
                 if (actionHandler.displayActions[0].checkRequirements(screen,display)) {
                     actionHandler.displayActions[0].execute(screen,display);
+                }
+            }
+        } else if (outline=="msg") {
+            for (std::shared_ptr<display::Display> display : screen->displays) {
+                if (actionHandler.displayActions[1].checkRequirements(screen,display)) {
+                    actionHandler.displayActions[1].execute(screen,display);
+                }
+            }
+        } else if (outline=="uwu") {
+            for (std::shared_ptr<display::Display> display : screen->displays) {
+                if (actionHandler.displayActions[2].checkRequirements(screen,display)) {
+                    actionHandler.displayActions[2].execute(screen,display);
                 }
             }
         }

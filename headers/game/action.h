@@ -13,7 +13,7 @@ namespace action {
         std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<T>)> function;
         std::vector<std::function<bool(std::shared_ptr<game::Game>)>> gameRequirements;
         std::vector<std::function<bool(std::shared_ptr<T>)>> objectRequirements;
-        Action(std::string actionName, int actionCost, int actionTime, std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<T>)> actionFunction,std::vector<std::function<bool(std::shared_ptr<screen::Screen>)>> actionGameRequirements={},std::vector<std::function<bool(std::shared_ptr<T>)>> actionObjectRequirements={}) {
+        Action(std::string actionName, int actionCost, int actionTime, std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<T>)> actionFunction,std::vector<std::function<bool(std::shared_ptr<game::Game>)>> actionGameRequirements,std::vector<std::function<bool(std::shared_ptr<T>)>> actionObjectRequirements) {
             name = actionName;
             cost = actionCost;
             time = actionTime;
@@ -27,6 +27,13 @@ namespace action {
             time = actionTime;
             function = actionFunction;
             objectRequirements = actionObjectRequirements;
+        }
+        Action(std::string actionName, int actionCost, int actionTime, std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<T>)> actionFunction,std::vector<std::function<bool(std::shared_ptr<game::Game>)>> actionGameRequirements) {
+            name = actionName;
+            cost = actionCost;
+            time = actionTime;
+            function = actionFunction;
+            gameRequirements = actionGameRequirements;
         }
         int execute(std::shared_ptr<screen::Screen> screen,std::shared_ptr<T> object) {
             if (screen->getGame()->getMoney()>=cost) {
