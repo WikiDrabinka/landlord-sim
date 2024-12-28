@@ -1,0 +1,28 @@
+SwitchStorage
+Usage: SwitchStorage
+Switches the display between furniture store
+and personal storage.
+---
+OpenMessage
+Usage: OpenMessage [index]
+Opens a conversation indicated by index
+(in the order of appearance in display).
+---
+CloseMessage
+Usage: CloseMessage
+Closes the opened conversation.
+---
+SplitRoomVertically
+Usage: SplitRoomVertically [aptIdx] [roomIdx] [y]
+Splits the indicated room into two on the given
+y axis.
+---
+SplitRoomHorizontally
+Usage: SplitRoomHorizontally [aptIdx] [roomIdx] [x]
+Splits the indicated room into two on the given
+x axis.
+---
+ChangeRoomColor
+Usage: ChangeRoomColor [aptIdx] [roomIdx] [r] [g] [b]
+Changes the room color to a certain rgb value
+---
