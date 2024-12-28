@@ -8,9 +8,11 @@ namespace fileReader {
         saves[1] = "resources/save2";
         saves[2] = "resources/save3";
         saves[3] = "resources/save4";
+        help = "resources/help";
+        titlescreen = "resources/titlescreen";
     }
     std::shared_ptr<canvas::Canvas> FileReader::loadTitleScreeen() {
-        std::fstream title("resources/titlescreen.txt");
+        std::fstream title(titlescreen);
         int sizeX,sizeY;
         title >> sizeX >> sizeY;
         std::shared_ptr<canvas::Canvas> titlescreen(new canvas::Canvas(sizeX,sizeY," "));
@@ -58,6 +60,24 @@ namespace fileReader {
         }
         title.close();
         return titlescreen;
+    }
+    std::vector<format::FormattedString> FileReader::loadHelp(std::string actionName) {  
+        std::fstream fileHelp(help);
+        std::string buffer;
+        while (getline(fileHelp,buffer) && buffer!=actionName) {
+            continue;
+        }
+        if (!getline(fileHelp,buffer)) {
+            fileHelp.close();
+            throw std::invalid_argument("Action not found");
+        }
+        std::vector<format::FormattedString> info;
+        info.push_back(format::FormattedString(buffer,false,true));
+        while (getline(fileHelp,buffer) && buffer!="---") {
+            info.push_back(buffer);
+        }
+        fileHelp.close();
+        return info;
     }
     void FileReader::saveGame(int idx, std::shared_ptr<game::Game> game) {
         std::fstream save;
@@ -148,8 +168,7 @@ namespace fileReader {
         std::fstream save;
         save.open(saves[idx],std::ios::in);
         if (!save.is_open()) {
-            std::cerr << "Failed to open file: " << saves[idx] << std::endl;
-            return nullptr;
+            throw std::runtime_error("Failed to open file: " + saves[idx]);
         }
         std::shared_ptr<game::Game> game(new game::Game(true));
         std::string line;
@@ -162,9 +181,8 @@ namespace fileReader {
             int furnitureNum;
             save >> furnitureNum;
         } catch (std::invalid_argument) {
-            std::cerr << "Cannot convert line \"" << line << "\" to integer "<<std::current_exception().__cxa_exception_type()->name() << std::endl;
             save.close();
-            return nullptr;
+            throw std::runtime_error("Corrupted save file: " + saves[idx]);
         }
         save.close();
         return game;

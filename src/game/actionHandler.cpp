@@ -72,7 +72,7 @@ namespace action {
             return (display->getType()==display::store || display->getType()==display::storage);
         })}));
         displayActions.push_back(Action<display::Display>("OpenMessage",0,0,1,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<display::Display>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<display::Display> display,std::vector<int> arguments = {0}){
-            int messageIdx = arguments[0];
+            int messageIdx = arguments[0]-1;
             if (messageIdx<0 || messageIdx>=screen->getGame()->getMessages().size()) {
                 throw std::out_of_range("Incorrect message index.");
             } else {
@@ -103,6 +103,18 @@ namespace action {
             std::string newName;
             getline(std::cin, newName);
             apartment->addRoom(apartment->getRooms()[roomIdx]->splitVertically(newName,y,screen->getGame()->getFurnitureStorage()));
+        })));
+        apartmentActions.push_back(Action<apartment::Apartment>("SplitRoomHorizontally",50,10,2,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<apartment::Apartment>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<apartment::Apartment> apartment,std::vector<int> arguments={0,0}){
+            int roomIdx = arguments[0]-1;
+            int x = arguments[1];
+            if (apartment->getRooms().size()<=roomIdx) {
+                throw std::out_of_range("Incorrect room index.");
+            }
+            screen->addLog("Enter the name of the new room.");
+            std::cout<<"\033[1A\033[2K";
+            std::string newName;
+            getline(std::cin, newName);
+            apartment->addRoom(apartment->getRooms()[roomIdx]->splitHorizontally(newName,x,screen->getGame()->getFurnitureStorage()));
         })));
         apartmentActions.push_back(Action<apartment::Apartment>("ChangeRoomColor",0,0,4,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<apartment::Apartment>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<apartment::Apartment> apartment,std::vector<int> arguments={0,0}){
             int roomIdx = arguments[0]-1;

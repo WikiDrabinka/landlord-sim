@@ -3,6 +3,7 @@
 #include <unistd.h>
 namespace screen {
     Screen::Screen() {
+        popUpOpened = false;
         game = std::shared_ptr<game::Game>(new game::Game);
         logBoxMemory = 20;
         displaysX = 3;
@@ -51,6 +52,7 @@ namespace screen {
             std::cout<<"\033[1F\033[2K"<<screen[screen.size()-1-i];
         }
         std::cout<<"\033[u\033[?25h";
+        popUpOpened = false;
     }
     void Screen::updateLine(int idx) {
         std::vector<std::string> screen = getScreen();
@@ -172,6 +174,7 @@ namespace screen {
             std::cout << "═";
         }
         std::cout << "═╝ " << outline.reset << "\033[u";
+        popUpOpened = true;
     }
     std::ostream& operator<<(std::ostream& os, Screen screen) {
         std::vector<std::string> display = screen.getScreen();

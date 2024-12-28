@@ -6,6 +6,7 @@
 #include "headers/game/actionHandler.h"
 #include <vector>
 #include <fstream>
+#include <sstream>
 
 int main() {
     std::cout<<"\033[?47h\033[2J";
@@ -47,13 +48,24 @@ int main() {
     screen->update();
     while (true) {
         getline(std::cin,outline);
-        if (outline=="exit") {
+        std::stringstream outs(outline);
+        std::string first;
+        getline(outs,first,' ');
+        if (outline=="Exit") {
             break;
+        } else if (first=="Help") {
+            if (getline(outs,first)){
+                try {
+                    std::vector<format::FormattedString> help = reader.loadHelp(first);
+                    screen->popUp(help,format::FormattedString(first,true));
+                } catch (std::invalid_argument e) {
+                    screen->addLog(e.what());
+                }
+            }
         } else {
-            screen->addLog(std::to_string(actionHandler.execute(outline,screen)));
+            actionHandler.execute(outline,screen);
+            screen->update();
         }
-        screen->addLog(outline);
-        screen->update();
         std::cout<<"\033[1A\033[2K";
     }
     std::cout << "\033[?47l";
