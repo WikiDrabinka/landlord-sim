@@ -33,7 +33,7 @@ namespace furniture {
     furniture::utilityType Utility::getType() { return type; }
     color::ForegroundColor Utility::getColor() const { return color::ForegroundColor(0,50,50); }
     std::string Utility::getString() const {
-        return "3 '" + name + "' " + std::to_string(price) + " " + std::to_string(condition) + " " + std::to_string(sizeX) + " " + std::to_string(sizeY) + " " + position.getString() + " " + std::to_string(type);
+        return name + "\n3 " + std::to_string(price) + " " + std::to_string(condition) + " " + std::to_string(sizeX) + " " + std::to_string(sizeY) + " " + position.getString() + " " + std::to_string(type);
     }
     std::vector<format::FormattedString> Utility::getDisplay() const {
         std::vector<format::FormattedString> display;

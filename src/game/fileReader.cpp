@@ -98,19 +98,19 @@ namespace fileReader {
         save << game->getLeases().size() << std::endl;
         for (std::shared_ptr<lease::Lease> lease : game->getLeases()) {
             tenants.push_back(lease->getTenant());
-            save << "\'" << tenants.back()->getName() << "\'" << std::endl;
-            save << "\'" << tenants.back()->getNickname() << "\'" << std::endl;
+            save << tenants.back()->getName() << std::endl;
+            save << tenants.back()->getNickname() << std::endl;
             save << tenants.back()->getIncome() << " " << tenants.back()->getSavings() << " " << tenants.back()->getSpending() << " " << tenants.back()->owing << std::endl;
             save << tenants.back()->getPatience() << " " << tenants.back()->getHappiness() << std::endl;
         }
         // apartments
         save << game->getApartments().size() << std::endl;
         for (std::shared_ptr<apartment::Apartment> apt : game->getApartments()) {
-            save << "\'" << apt->getName() << "\'" << std::endl;
+            save << apt->getName() << std::endl;
             save << apt->marketPrice << " " << apt->tenantsNo << std::endl;
             save << apt->getRooms().size() << std::endl;
             for (std::shared_ptr<room::Room> room : apt->getRooms()) {
-                save << "\'" << room->getName() << "\'"<< std::endl;
+                save << room->getName()<< std::endl;
                 save << (int) room->getState() << " ";
                 if (room->getState()==livingSpace::claimed) {
                     save << std::distance(tenants.begin(),std::find(tenants.begin(),tenants.end(),room->getClaim())) << std::endl;
@@ -148,8 +148,8 @@ namespace fileReader {
                 save << std::distance(tenants.begin(),std::find(tenants.begin(),tenants.end(),convo->getSender())) << std::endl;
             } else {
                 save << -1 << std::endl;
-                save << "\'" << convo->getSender()->getName() << "\'" << std::endl;
-                save << "\'" << convo->getSender()->getNickname() << "\'" << std::endl;
+                save << convo->getSender()->getName() << std::endl;
+                save << convo->getSender()->getNickname() << std::endl;
                 save << convo->getSender()->getIncome() << " " << convo->getSender()->getSavings() << " " << convo->getSender()->getSpending() << " " << convo->getSender()->owing << std::endl;
                 save << convo->getSender()->getPatience() << " " << convo->getSender()->getHappiness() << std::endl;
             }

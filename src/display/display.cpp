@@ -391,9 +391,10 @@ namespace display {
         displayStart = std::max(0,displayStart-i);
     }
     void Display::scrollDown(int i) {
-        displayStart = std::max(std::min(displayStart+i,(int) text.size()-height),0);
+        displayStart = std::max(std::min(displayStart+i,(int) text.size()-height+1),0);
     }
     void Display::changeDisplay(displayType newType, std::string newName) {
+        displayStart = 0;
         type=newType;
         name=format::FormattedString(newName,true,false,true,false);
         switch (type) {
@@ -433,6 +434,7 @@ namespace display {
         updateDisplay();
     }
     void Display::changeDisplay(std::vector<int> newIdx) {
+        displayStart = 0;
         idx = newIdx;
         switch (type) {
         case furniture:

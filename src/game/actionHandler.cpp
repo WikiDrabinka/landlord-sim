@@ -20,14 +20,27 @@ namespace action {
         auto displayIt = std::find_if(displayActions.begin(),displayActions.end(),[actionName](Action<display::Display>& action){return action.name==actionName;});
         if (displayIt!=displayActions.end()) {
             Action<display::Display> action = displayActions[std::distance(displayActions.begin(),displayIt)];
+            if (arguments.size()>action.argumentsNo) {
+                std::shared_ptr<display::Display> display = screen->displays[arguments[0]];
+                arguments.erase(arguments.begin());
+                if (action.checkRequirements(screen, display)) {
+                    try {
+                        return action.execute(screen, display, arguments);
+                    } catch (std::out_of_range e) {
+                        screen->addLog(e.what());
+                        return 4;
+                    }
+                }
+                return 2;
+            }
             for (std::shared_ptr<display::Display> display : screen->displays) {
                 if (action.checkRequirements(screen, display)) {
                     try {
-                    return action.execute(screen, display, arguments);
-                } catch (std::out_of_range e) {
-                    screen->addLog(e.what());
-                    return 4;
-                }
+                        return action.execute(screen, display, arguments);
+                    } catch (std::out_of_range e) {
+                        screen->addLog(e.what());
+                        return 4;
+                    }
                 }
             }
             // requirements not met
@@ -92,6 +105,12 @@ namespace action {
         }),{std::function<bool(std::shared_ptr<display::Display>)>([](std::shared_ptr<display::Display> display){
             return (display->getType()==display::conversation);
         })}));
+        displayActions.push_back(Action<display::Display>("ScrollUp",0,0,0,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<display::Display>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<display::Display> display,std::vector<int> arguments={}){
+            display->scrollUp();
+        })));
+        displayActions.push_back(Action<display::Display>("ScrollDown",0,0,0,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<display::Display>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<display::Display> display,std::vector<int> arguments={}){
+            display->scrollDown();
+        })));
         apartmentActions.push_back(Action<apartment::Apartment>("SplitRoomVertically",50,10,2,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<apartment::Apartment>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<apartment::Apartment> apartment,std::vector<int> arguments={0,0}){
             int roomIdx = arguments[0]-1;
             int y = arguments[1];

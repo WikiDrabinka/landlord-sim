@@ -28,7 +28,7 @@ namespace furniture {
     int Sleepable::getComfortability() { return comfortability; }
     color::ForegroundColor Sleepable::getColor() const { return color::ForegroundColor(100,0,150); }
     std::string Sleepable::getString() const {
-        return "1 '" + name + "' " + std::to_string(price) + " " + std::to_string(condition) + " " + std::to_string(sizeX) + " " + std::to_string(sizeY) + " " + position.getString() + " " + std::to_string(comfortability) + " " + std::to_string(capacity);
+        return name + "\n1 " + std::to_string(price) + " " + std::to_string(condition) + " " + std::to_string(sizeX) + " " + std::to_string(sizeY) + " " + position.getString() + " " + std::to_string(comfortability) + " " + std::to_string(capacity);
     }
     std::vector<format::FormattedString> Sleepable::getDisplay() const {
         std::vector<format::FormattedString> display;

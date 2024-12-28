@@ -46,7 +46,7 @@ namespace screen {
     }
     void Screen::update(int sleep) {
         std::vector<std::string> screen = getScreen();
-        std::cout<<"\033[s\033[?25l\033[1F";
+        std::cout<<"\033[s\033[?25l";
         for (int i=0;i<screen.size();++i){
             usleep(sleep);
             std::cout<<"\033[1F\033[2K"<<screen[screen.size()-1-i];

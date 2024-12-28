@@ -12,6 +12,14 @@ CloseMessage
 Usage: CloseMessage
 Closes the opened conversation.
 ---
+ScrollDown
+usage: ScrollDown [displayIdx]
+Scrolls down the indicated display
+---
+ScrollUp
+usage: ScrollUp [displayIdx]
+Scrolls up the indicated display
+---
 SplitRoomVertically
 Usage: SplitRoomVertically [aptIdx] [roomIdx] [y]
 Splits the indicated room into two on the given
@@ -26,3 +34,4 @@ ChangeRoomColor
 Usage: ChangeRoomColor [aptIdx] [roomIdx] [r] [g] [b]
 Changes the room color to a certain rgb value
 ---
+

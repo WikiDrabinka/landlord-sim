@@ -9,14 +9,14 @@
 #include <sstream>
 
 int main() {
-    std::cout<<"\033[?47h\033[2J";
+    std::cout<<"\033[s\033[?47h\033[2J";
     fileReader::FileReader reader;
     std::shared_ptr<canvas::Canvas> titlescreen = reader.loadTitleScreeen();
     std::cout<<*titlescreen;
     std::string outline;
     std::cin >>outline;
-    if (outline=="3"){
-        std::cout << "\033[?47l";
+    if (outline=="3" || outline=="Exit"){
+        std::cout << "\033[?47l\033[u";
         exit(0);
     }
     std::shared_ptr<screen::Screen> screen(new screen::Screen());
@@ -36,18 +36,18 @@ int main() {
     screen->getGame()->getMessages().back()->sendMessage("why", 15);
     screen->getGame()->getMessages().back()->sendMessage("I dont like you", 20, true);
     screen->getGame()->getMessages().back()->sendMessage(":((",20);
-    reader.saveGame(0,screen->getGame());
-    reader.loadGame(0);
+    std::cout << "\033[1A\033[2K";
     screen->update(5000);
-    std::cout<<"\033[1A\033[2K";
-    std::cin >>outline;
-    std::cout<<"\033[1A\033[2K";
+    std::cin >> outline;
+    std::cout << "\033[1A\033[2K";
     screen->popUp({format::FormattedString("hi"),format::FormattedString("thanks for trying out my game!"),format::FormattedString("1) Save Game"),format::FormattedString("2) Exit")},format::FormattedString("Omg hello :)",true));
-    std::cin >>outline;
-    std::cout<<"\033[1A\033[2K";
+    std::cin >> outline;
+    // std::cout<<"\033[1A\033[2K";
     screen->update();
+    screen->displays[5]->scrollDown();
     while (true) {
         getline(std::cin,outline);
+        std::cout<<"\033[1A\033[2K";
         std::stringstream outs(outline);
         std::string first;
         getline(outs,first,' ');
@@ -62,13 +62,14 @@ int main() {
                     screen->addLog(e.what());
                 }
             }
+        } else if (outline=="Save") {
+            reader.saveGame(0,screen->getGame());
         } else {
             actionHandler.execute(outline,screen);
             screen->update();
         }
-        std::cout<<"\033[1A\033[2K";
     }
-    std::cout << "\033[?47l";
+    std::cout << "\033[?47l\033[u";
     return 0;
 }
 
