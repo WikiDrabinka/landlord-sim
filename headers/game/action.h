@@ -10,36 +10,43 @@ namespace action {
         std::string name;
         int cost;
         int time;
-        std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<T>)> function;
+        int argumentsNo;
+        std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<T>,std::vector<int>)> function;
         std::vector<std::function<bool(std::shared_ptr<game::Game>)>> gameRequirements;
         std::vector<std::function<bool(std::shared_ptr<T>)>> objectRequirements;
-        Action(std::string actionName, int actionCost, int actionTime, std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<T>)> actionFunction,std::vector<std::function<bool(std::shared_ptr<game::Game>)>> actionGameRequirements,std::vector<std::function<bool(std::shared_ptr<T>)>> actionObjectRequirements) {
+        Action(std::string actionName, int actionCost, int actionTime, int actionArgumentsNo, std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<T>,std::vector<int>)> actionFunction,std::vector<std::function<bool(std::shared_ptr<game::Game>)>> actionGameRequirements={},std::vector<std::function<bool(std::shared_ptr<T>)>> actionObjectRequirements={}) {
             name = actionName;
             cost = actionCost;
             time = actionTime;
+            argumentsNo = actionArgumentsNo;
             function = actionFunction;
             gameRequirements = actionGameRequirements;
             objectRequirements = actionObjectRequirements;
         }
-        Action(std::string actionName, int actionCost, int actionTime, std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<T>)> actionFunction,std::vector<std::function<bool(std::shared_ptr<T>)>> actionObjectRequirements) {
+        Action(std::string actionName, int actionCost, int actionTime, int actionArgumentsNo, std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<T>,std::vector<int>)> actionFunction,std::vector<std::function<bool(std::shared_ptr<T>)>> actionObjectRequirements) {
             name = actionName;
             cost = actionCost;
             time = actionTime;
+            argumentsNo = actionArgumentsNo;
             function = actionFunction;
             objectRequirements = actionObjectRequirements;
         }
-        Action(std::string actionName, int actionCost, int actionTime, std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<T>)> actionFunction,std::vector<std::function<bool(std::shared_ptr<game::Game>)>> actionGameRequirements) {
+        Action(std::string actionName, int actionCost, int actionTime, int actionArgumentsNo, std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<T>,std::vector<int>)> actionFunction,std::vector<std::function<bool(std::shared_ptr<game::Game>)>> actionGameRequirements) {
             name = actionName;
             cost = actionCost;
             time = actionTime;
+            argumentsNo = actionArgumentsNo;
             function = actionFunction;
             gameRequirements = actionGameRequirements;
         }
-        int execute(std::shared_ptr<screen::Screen> screen,std::shared_ptr<T> object) {
+        int execute(std::shared_ptr<screen::Screen> screen,std::shared_ptr<T> object,std::vector<int> arguments = {}) {
+            if (arguments.size()<argumentsNo) {
+                throw std::out_of_range("Not enough arguments.");
+            }
             if (screen->getGame()->getMoney()>=cost) {
                 screen->getGame()->setMoney(screen->getGame()->getMoney()-cost);
                 screen->getGame()->addTime(time);
-                function(screen, object);
+                function(screen, object, arguments);
                 return 0;
             }
             // insufficient balance

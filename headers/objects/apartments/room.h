@@ -24,6 +24,7 @@ namespace room {
         color::BackgroundColor getColor();
         std::vector<format::FormattedString> getDisplay();
         std::shared_ptr<tenant::Tenant> getClaim();
+        void setColor(color::BackgroundColor newColor);
         bool containsPoint(point::Point point);
         void addFurniture(std::shared_ptr<furniture::Furniture> newFurniture, point::Point position);
         void addRectangle(std::shared_ptr<rectangle::Rectangle> newRectangle);

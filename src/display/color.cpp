@@ -1,9 +1,9 @@
 #include "../../headers/display/color.h"
 namespace color {
     Color::Color(int r, int g, int b) {
-        red = r;
-        green = g;
-        blue = b;
+        red = r%256;
+        green = g%256;
+        blue = b%256;
     }
     std::string Color::reset = "\033[0m";
     std::string ForegroundColor::reset = "\033[39m";

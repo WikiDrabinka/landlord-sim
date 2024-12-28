@@ -41,6 +41,7 @@ namespace screen {
         while (logBox.size()>logBoxMemory) {
             logBox.pop_front();
         }
+        update();
     }
     void Screen::update(int sleep) {
         std::vector<std::string> screen = getScreen();

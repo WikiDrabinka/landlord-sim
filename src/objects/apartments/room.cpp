@@ -24,6 +24,12 @@ namespace room {
     std::vector<std::shared_ptr<rectangle::Rectangle>> Room::getRectangles() { return rectangles; }
     std::vector<std::shared_ptr<furniture::Furniture>> Room::getFurniture() { return furniture; }
     color::BackgroundColor Room::getColor() { return color; }
+    void Room::setColor(color::BackgroundColor newColor) {
+        color = newColor;
+        for (std::shared_ptr<rectangle::Rectangle> rect : rectangles) {
+            rect->setColor(newColor);
+        }
+    }
     void Room::addRectangle(std::shared_ptr<rectangle::Rectangle> newRectangle) {
         rectangles.push_back(newRectangle);
         newRectangle->setColor(color);
@@ -89,18 +95,26 @@ namespace room {
     std::shared_ptr<Room> Room::splitVertically(std::string newName, int y, std::vector<std::shared_ptr<furniture::Furniture>> &storage) {
         std::vector<std::shared_ptr<rectangle::Rectangle>> splitRectangles;
         std::vector<std::shared_ptr<rectangle::Rectangle>> rightRectangles;
+        std::cerr << "before copying\n"; 
         std::copy_if(rectangles.begin(),rectangles.end(),std::back_inserter(rightRectangles),[y](std::shared_ptr<rectangle::Rectangle> rect) {return rect->getPoint1().y>y;});
         std::copy_if(rectangles.begin(),rectangles.end(),std::back_inserter(splitRectangles),[y](std::shared_ptr<rectangle::Rectangle> rect) {return rect->getPoint1().y<=y && rect->getPoint2().y>y;});
+        std::cerr << "after copying\n"; 
         rectangles.erase(std::remove_if(rectangles.begin(),rectangles.end(),[y](std::shared_ptr<rectangle::Rectangle> rect) {return rect->getPoint1().y>y;}),rectangles.end());
         for (std::shared_ptr<rectangle::Rectangle> rect: splitRectangles) {
             rightRectangles.push_back(rect->splitVertically(y));
         }
-
+        std::cerr << "rectangles done\n"; 
         std::vector<std::shared_ptr<furniture::Furniture>> rightFurniture;
         std::copy_if(furniture.begin(),furniture.end(),std::back_inserter(rightFurniture),[y](std::shared_ptr<furniture::Furniture> furn) {return furn->getPosition().y>y;});
         std::copy_if(furniture.begin(),furniture.end(),std::back_inserter(storage),[y](std::shared_ptr<furniture::Furniture> furn) {return furn->getPosition().y<=y && furn->getPosition().y+furn->getSizeY()-1>y;});
         furniture.erase(std::remove_if(furniture.begin(),furniture.end(),[y](std::shared_ptr<furniture::Furniture> furn) {return furn->getPosition().y+furn->getSizeY()-1>y;}),furniture.end());
-        std::shared_ptr<Room> newRoom(new Room(newName,occupancyState,rightRectangles,color));
+        livingSpace::state newState;
+        if (occupancyState==livingSpace::shared) {
+            newState = livingSpace::shared;
+        } else {
+            newState = livingSpace::unclaimed;
+        }
+        std::shared_ptr<Room> newRoom(new Room(newName,newState,rightRectangles,color));
         for (std::shared_ptr<furniture::Furniture> furn: rightFurniture) {
             newRoom->addFurniture(furn,furn->getPosition());
         }

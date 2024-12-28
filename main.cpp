@@ -43,30 +43,14 @@ int main() {
     std::cout<<"\033[1A\033[2K";
     screen->popUp({format::FormattedString("hi"),format::FormattedString("thanks for trying out my game!"),format::FormattedString("1) Save Game"),format::FormattedString("2) Exit")},format::FormattedString("Omg hello :)",true));
     std::cin >>outline;
-    screen->update();
     std::cout<<"\033[1A\033[2K";
+    screen->update();
     while (true) {
-        std::cin >>outline;
+        getline(std::cin,outline);
         if (outline=="exit") {
             break;
-        } else if (outline=="switch") {
-            for (std::shared_ptr<display::Display> display : screen->displays) {
-                if (actionHandler.displayActions[0].checkRequirements(screen,display)) {
-                    actionHandler.displayActions[0].execute(screen,display);
-                }
-            }
-        } else if (outline=="msg") {
-            for (std::shared_ptr<display::Display> display : screen->displays) {
-                if (actionHandler.displayActions[1].checkRequirements(screen,display)) {
-                    actionHandler.displayActions[1].execute(screen,display);
-                }
-            }
-        } else if (outline=="uwu") {
-            for (std::shared_ptr<display::Display> display : screen->displays) {
-                if (actionHandler.displayActions[2].checkRequirements(screen,display)) {
-                    actionHandler.displayActions[2].execute(screen,display);
-                }
-            }
+        } else {
+            screen->addLog(std::to_string(actionHandler.execute(outline,screen)));
         }
         screen->addLog(outline);
         screen->update();
