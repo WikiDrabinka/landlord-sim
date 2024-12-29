@@ -6,6 +6,7 @@ namespace action {
         public:
         std::vector<Action<display::Display>> displayActions;
         std::vector<Action<apartment::Apartment>> apartmentActions;
+        std::vector<Action<furniture::Furniture>> furnitureActions;
         std::vector<Action<tenant::Tenant>> randomEvents;
         ActionHandler();
         void display(int idx);

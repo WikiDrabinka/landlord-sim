@@ -135,6 +135,23 @@ namespace action {
             getline(std::cin, newName);
             apartment->addRoom(apartment->getRooms()[roomIdx]->splitHorizontally(newName,x,screen->getGame()->getFurnitureStorage()));
         })));
+        apartmentActions.push_back(Action<apartment::Apartment>("PlaceFurniture",50,10,4,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<apartment::Apartment>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<apartment::Apartment> apartment,std::vector<int> arguments={0,0}){
+            int roomIdx = arguments[0]-1;
+            int furnIdx = arguments[1]-1;
+            int positionX = arguments[2];
+            int positionY = arguments[3];
+            if (apartment->getRooms().size()<=roomIdx) {
+                throw std::out_of_range("Incorrect room index.");
+            }
+            if (screen->getGame()->getFurnitureStorage().size()<=furnIdx) {
+                throw std::out_of_range("Incorrect furniture index.");
+            }
+            try {
+                apartment->getRooms()[roomIdx]->addFurniture(screen->getGame()->getFurnitureStorage()[furnIdx],point::Point(positionX,positionY));
+            } catch (std::invalid_argument e) {
+                throw std::out_of_range(e.what());
+            }
+        })));
         apartmentActions.push_back(Action<apartment::Apartment>("ChangeRoomColor",0,0,4,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<apartment::Apartment>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<apartment::Apartment> apartment,std::vector<int> arguments={0,0}){
             int roomIdx = arguments[0]-1;
             int r = arguments[1];

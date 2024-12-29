@@ -57,8 +57,7 @@ namespace room {
     }
     void Room::addFurniture(std::shared_ptr<furniture::Furniture> newFurniture, point::Point position) {
         if (!containsPoint(position) || !containsPoint(position+point::Point(newFurniture->getSizeX()-1,newFurniture->getSizeY()-1))) {
-            std::cerr << "Invalid position. (" << position.x << "," << position.y << ")" << std::endl;
-            return;
+            throw std::invalid_argument("Invalid position. (" + std::to_string(position.x) + "," + std::to_string(position.y) + ")");
         }
         newFurniture.get()->setPosition(position);
         furniture.push_back(newFurniture);
