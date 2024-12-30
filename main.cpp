@@ -44,7 +44,6 @@ int main() {
     std::cin >> outline;
     // std::cout<<"\033[1A\033[2K";
     screen->update();
-    screen->displays[5]->scrollDown();
     while (true) {
         getline(std::cin,outline);
         std::cout<<"\033[1A\033[2K";

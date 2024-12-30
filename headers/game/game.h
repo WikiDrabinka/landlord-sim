@@ -36,6 +36,7 @@ namespace game {
         std::vector<std::shared_ptr<furniture::Furniture>>& getFurnitureStore();
         std::vector<std::shared_ptr<furniture::Furniture>>& getFurnitureStorage();
         void setMoney(int newMoney);
+        void addMoney(int newMoney);
         void setTime(int newTime);
         void addTime(int newTime);
         void addApartment(std::shared_ptr<apartment::Apartment> newApartment);

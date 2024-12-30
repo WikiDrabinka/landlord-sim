@@ -44,13 +44,12 @@ namespace action {
                 throw std::out_of_range("Not enough arguments.");
             }
             if (screen->getGame()->getMoney()>=cost) {
-                screen->getGame()->setMoney(screen->getGame()->getMoney()-cost);
+                screen->getGame()->addMoney(-cost);
                 screen->getGame()->addTime(time);
                 function(screen, object, arguments);
                 return 0;
             }
-            // insufficient balance
-            return 1;
+            throw std::out_of_range("Insufficient balance.");
         }
         void addRequirement(std::function<bool(std::shared_ptr<game::Game>)> newRequirement) {
             gameRequirements.push_back(newRequirement);

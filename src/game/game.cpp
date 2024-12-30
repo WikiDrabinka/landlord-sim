@@ -97,6 +97,7 @@ namespace game {
     std::vector<std::shared_ptr<furniture::Furniture>>& Game::getFurnitureStore() { return furnitureStore; }
     std::vector<std::shared_ptr<furniture::Furniture>>& Game::getFurnitureStorage() { return furnitureStorage; }
     void Game::setMoney(int newMoney) { money = newMoney; }
+    void Game::addMoney(int newMoney) { money += newMoney; }
     void Game::setTime(int newTime) { time = newTime; }
     void Game::addTime(int newTime) { time += newTime; }
     void Game::addApartment(std::shared_ptr<apartment::Apartment> newApartment) { apartments.push_back(newApartment); }

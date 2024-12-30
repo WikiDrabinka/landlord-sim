@@ -34,8 +34,9 @@ namespace furniture {
         virtual int getPriceSD() const;
         void rotate();
         void claimFurniture(std::shared_ptr<tenant::Tenant> newClaim);
-        void setCondition(int new_condition);
+        void setCondition(int newCondition);
         void setPosition(point::Point newPosition);
+        void setPrice(int newPrice);
         int repairPrice();
     };
 

@@ -27,16 +27,17 @@ namespace furniture {
         sizeY = temp;
     }
     void Furniture::claimFurniture(std::shared_ptr<tenant::Tenant> newClaim) { claim = newClaim; }
-    void Furniture::setCondition(int new_condition) {
-        if (new_condition>=0 && new_condition<=100) {
-            condition=new_condition;
+    void Furniture::setCondition(int newCondition) {
+        if (newCondition>=0 && newCondition<=100) {
+            condition=newCondition;
         } else {
-            std::cerr << "Condition needs to be an integer between 0 and 100." << std::endl;
+            throw std::invalid_argument("Condition must be a integer between 0 and 100");
         }
     }
     void Furniture::setPosition(point::Point newPosition) {
         position = newPosition;
     }
+    void Furniture::setPrice(int newPrice) { price = newPrice; }
     int Furniture::repairPrice() {
         return price*condition/100;
     }

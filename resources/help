@@ -22,16 +22,29 @@ Scrolls up the indicated display
 ---
 SplitRoomVertically
 Usage: SplitRoomVertically [aptIdx] [roomIdx] [y]
+Cost: 50, Time: 20
 Splits the indicated room into two on the given
 y axis.
 ---
 SplitRoomHorizontally
 Usage: SplitRoomHorizontally [aptIdx] [roomIdx] [x]
+Cost: 50, Time: 20
 Splits the indicated room into two on the given
 x axis.
 ---
+PlaceFurniture
+Usage: PlaceFurniture [aptIdx] [roomIdx] [furnIdx] [x] [y]
+Places furniture from storage into the indicated room.
+---
 ChangeRoomColor
 Usage: ChangeRoomColor [aptIdx] [roomIdx] [r] [g] [b]
-Changes the room color to a certain rgb value
+Changes the room color to a given rgb value.
 ---
-
+RotateFurniture
+Usage: RotateFurniture [furnIdx]
+Rotates indicated furniture in storage by 90 degrees.
+---
+BuyFurniture
+Usage: BuyFurniture [furnIdx]
+Purchases indicated furniture from the store.
+---
