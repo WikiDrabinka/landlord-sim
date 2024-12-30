@@ -7,7 +7,7 @@ namespace game {
         }
         money = 1000;
         time = 0;
-        realEstateMarket = std::shared_ptr<market::RealEstate>(new market::RealEstate(70));
+        realEstateMarket = std::shared_ptr<market::RealEstate>(new market::RealEstate());
         apartments.push_back(std::shared_ptr<apartment::Apartment>(new apartment::Apartment("33 Harms Way")));
         apartments[0]->addRoom(std::shared_ptr<room::Room>(new room::Room("Bedroom",livingSpace::unclaimed,color::BackgroundColor(128,72,184))));
         apartments[0]->addRoom(std::shared_ptr<room::Room>(new room::Room("Master bathroom",livingSpace::unclaimed,color::BackgroundColor(72,128,184))));

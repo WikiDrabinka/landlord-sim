@@ -22,6 +22,7 @@ int main() {
     std::shared_ptr<screen::Screen> screen(new screen::Screen());
     action::ActionHandler actionHandler;
     std::shared_ptr<tenant::Tenant> bob(new tenant::Tenant());
+    std::shared_ptr<tenant::Tenant> bob2(new tenant::Tenant());
     std::shared_ptr<lease::Lease> lol(new lease::Lease(bob,screen->getGame()->getApartments()[0],600,30,false));
     screen->getGame()->addLease(lol);
     screen->getGame()->included=100;
@@ -31,19 +32,13 @@ int main() {
     screen->updateDisplays();
     std::vector<std::shared_ptr<furniture::Furniture>> backup;
     screen->getGame()->getApartments()[0]->getRooms()[0]->setClaim(bob);
-    screen->getGame()->getMessages().push_back(std::shared_ptr<messages::Conversation>(new messages::Conversation(bob,"uwu hey bro give me some money",5)));
+    screen->getGame()->getMessages().push_back(std::shared_ptr<messages::Conversation>(new messages::Conversation(bob2,"uwu hey bro give me some money",5)));
     screen->getGame()->getMessages().back()->sendMessage("bruh no", 10, true);
     screen->getGame()->getMessages().back()->sendMessage("why", 15);
     screen->getGame()->getMessages().back()->sendMessage("I dont like you", 20, true);
     screen->getGame()->getMessages().back()->sendMessage(":((",20);
     std::cout << "\033[1A\033[2K";
     screen->update(5000);
-    std::cin >> outline;
-    std::cout << "\033[1A\033[2K";
-    screen->popUp({format::FormattedString("hi"),format::FormattedString("thanks for trying out my game!"),format::FormattedString("1) Save Game"),format::FormattedString("2) Exit")},format::FormattedString("Omg hello :)",true));
-    std::cin >> outline;
-    // std::cout<<"\033[1A\033[2K";
-    screen->update();
     while (true) {
         getline(std::cin,outline);
         std::cout<<"\033[1A\033[2K";

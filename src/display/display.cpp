@@ -238,7 +238,7 @@ namespace display {
         {
             for (std::shared_ptr<messages::Conversation> conversation: game->getMessages()) {
                 format::FormattedString line("",false,false,true,false);
-                line += conversation->getSender()->getName();
+                line += conversation->getSender()->getName() + " (" + conversation->getTimeStr() + ")";
                 line.left(width);
                 text.push_back(line);
                 line = format::FormattedString("",!conversation->read);

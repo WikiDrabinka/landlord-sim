@@ -8,7 +8,7 @@ namespace market {
     RealEstate::RealEstate() {
         std::random_device dev;
         std::mt19937 gen(dev());
-        std::normal_distribution<> priceDistr(100,20);
+        std::normal_distribution<> priceDistr(20,5);
         averagePricePerMeter = priceDistr(gen);
     }
     RealEstate::RealEstate(int averagePrice) {

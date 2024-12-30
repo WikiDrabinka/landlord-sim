@@ -119,6 +119,30 @@ namespace action {
             // requirements not met
             return 2;
         }
+        auto leaseIt = std::find_if(leaseActions.begin(),leaseActions.end(),[actionName](Action<lease::Lease>& action){return action.name==actionName;});
+        if (leaseIt!=leaseActions.end()) {
+            Action<lease::Lease> action = leaseActions[std::distance(leaseActions.begin(),leaseIt)];
+            if (arguments.size() == 0) {
+                screen->addLog("Not enough arguments.");
+                return 4;
+            }
+            if (screen->getGame()->getApartments().size() <= arguments[0]-1) {
+                screen->addLog("Incorrect lease index.");
+                return 4;
+            }
+            std::shared_ptr<lease::Lease> lease = screen->getGame()->getLeases()[arguments[0]-1];
+            arguments.erase(arguments.begin());
+            if (action.checkRequirements(screen, lease)) {
+                try {
+                    return action.execute(screen, lease, arguments);
+                } catch (std::out_of_range e) {
+                    screen->addLog(e.what());
+                    return 4;
+                }
+            }
+            // requirements not met
+            return 2;
+        }
         // action not found
         return 3;
     }
@@ -394,11 +418,39 @@ namespace action {
         //offer lease
 
 
-        // LEASE ACTIONS
+        leaseActions.push_back(Action<lease::Lease>("ChangeRent",0,0,1,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<lease::Lease>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<lease::Lease> lease,std::vector<int> arguments){
+            int newRent = arguments[0];
+            int perMeter = newRent*lease->getApartment()->tenantsNo/lease->getApartment()->area();
+            if (perMeter==0) {
+                perMeter = 1;
+            }
+            int happinessDiff = (lease->getRent()-newRent)*100/lease->getRent();
+            if (happinessDiff>0 && (screen->getGame()->getRealEstateMarket()->getAveragePrice()/perMeter)>0) {
+                happinessDiff*=(screen->getGame()->getRealEstateMarket()->getAveragePrice()/perMeter);
+            } else if (((perMeter)/screen->getGame()->getRealEstateMarket()->getAveragePrice()) > 0){
+                happinessDiff*=((perMeter)/screen->getGame()->getRealEstateMarket()->getAveragePrice());
+            }
+            lease->setRent(newRent);
+            lease->getTenant()->addHappiness(happinessDiff);
+        })));
 
-        //change rent
-
-        //evict
+        leaseActions.push_back(Action<lease::Lease>("Renew",0,0,1,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<lease::Lease>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<lease::Lease> lease,std::vector<int> arguments){
+            int time = arguments[0];
+            std::random_device dev;
+            std::mt19937 gen(dev());
+            std::uniform_int_distribution<> renewalDistr(0,100);
+            if (renewalDistr(gen)*0.75<lease->getTenant()->getHappiness()) {
+                lease->addTime(time);
+            } else {
+                auto conversation = std::find_if(screen->getGame()->getMessages().begin(),screen->getGame()->getMessages().end(),[lease](std::shared_ptr<messages::Conversation> message){ return message->getSender()==lease->getTenant(); });
+                if (conversation!=screen->getGame()->getMessages().end()) {
+                    conversation[0]->sendMessage("No thanks, bye.",screen->getGame()->getTime());
+                } else {
+                    screen->getGame()->getMessages().push_back(std::shared_ptr<messages::Conversation>(new messages::Conversation(lease->getTenant(),"No thanks, bye.",screen->getGame()->getTime())));
+                }
+                std::sort(screen->getGame()->getMessages().begin(),screen->getGame()->getMessages().end(),[](std::shared_ptr<messages::Conversation> &lhs, std::shared_ptr<messages::Conversation> &rhs) {return lhs->time>rhs->time;});
+            }
+        })));
 
 
         furnitureActions.push_back(Action<furniture::Furniture>("RotateFurniture",0,0,0,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<furniture::Furniture>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<furniture::Furniture> furniture,std::vector<int> arguments){

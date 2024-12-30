@@ -93,6 +93,14 @@ Usage: Merge [aptIdx] [rent]
 Cost: 5, Time: 10
 Puts the indicated apartment on the market with given rent.
 ---
+ChangeRent
+Usage: ChangeRent [tenantIdx] [rent]
+Changes the rent on the lease to a new value.
+---
+Renew
+Usage: ChangeRent [tenantIdx] [time]
+Renews the rent for the indicated amount of time.
+---
 RotateFurniture
 Usage: RotateFurniture [furnIdx]
 Rotates indicated furniture in storage by 90 degrees.

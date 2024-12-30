@@ -14,5 +14,6 @@ namespace messages {
         void sendMessage(std::string message, int messageTime,bool response=false);
         std::shared_ptr<tenant::Tenant> getSender();
         std::vector<std::string> getMessages();
+        std::string getTimeStr();
     };
 }

@@ -22,5 +22,6 @@ namespace lease {
         void switchUtilities();
         void setRent(int newRent);
         void setApartment(std::shared_ptr<apartment::Apartment> newApartment);
+        void addTime(int newTime);
     };
 }

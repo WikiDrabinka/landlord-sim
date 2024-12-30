@@ -32,6 +32,8 @@ namespace tenant {
         std::string getNickname();
         std::vector<format::FormattedString> getDisplay();
         void setNickname(std::string newNickname);
+        void setHappiness(int newHappiness);
+        void addHappiness(int newHappiness);
     };
     std::ostream& operator<< (std::ostream& os, Tenant ten);
 }
