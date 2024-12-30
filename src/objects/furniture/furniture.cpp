@@ -39,7 +39,7 @@ namespace furniture {
     }
     void Furniture::setPrice(int newPrice) { price = newPrice; }
     int Furniture::repairPrice() {
-        return price*condition/100;
+        return price*(100-condition)/100;
     }
     
     std::vector<std::string> Furniture::generatedAdjectives = {"Ancient", "New", "Shiny", "Giant", "Tiny", "Hexagonal", "Bright", "Plain", "Neat", "Colorful", "Elegant", "Strange", "Stunning", "Classy", "Hideous", "Messy", "Polished", "Wacky"};

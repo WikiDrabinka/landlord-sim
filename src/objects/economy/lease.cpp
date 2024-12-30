@@ -25,4 +25,6 @@ namespace lease {
     }
     void Lease::switchUtilities() { utilitiesIncluded = !utilitiesIncluded; }
     void Lease::setRent(int newRent) { rent = newRent; }
+    void Lease::setApartment(std::shared_ptr<apartment::Apartment> newApartment) { apartment = newApartment; }
+
 }

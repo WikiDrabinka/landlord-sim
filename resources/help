@@ -28,6 +28,10 @@ ShowRooms
 Usage: ShowRooms [aptIdx]
 Switches the rooms display to the indicated apartment.
 ---
+ShowApartment
+Usage: ShowApartment [aptIdx]
+Switches the apartment display to the indicated apartment.
+---
 SplitRoomVertically
 Usage: SplitRoomVertically [aptIdx] [roomIdx] [y]
 Cost: 50, Time: 20
@@ -40,18 +44,54 @@ Cost: 50, Time: 20
 Splits the indicated room into two on the given
 x axis.
 ---
+MergeRooms
+Usage: MergeRooms [aptIdx] [roomIdx] [roomIdx]
+Cost: 50, Time: 20
+Merges the indicated rooms into one.
+---
 PlaceFurniture
 Usage: PlaceFurniture [aptIdx] [roomIdx] [furnIdx] [x] [y]
 Places furniture from storage into the indicated room.
 ---
 RemoveFurniture
-Usage: RemoveFurniture [aptIdx] [roomIdx] [furnIdx]
+Usage: RepairFurniture [aptIdx] [roomIdx] [furnIdx]
 Removes indicated furniture from the room and places
 it in storage.
+---
+RepairFurniture
+Usage: RemoveFurniture [aptIdx] [roomIdx] [furnIdx]
+Time: 30 (successful)/5 (insufficient balance)
+Repairs indicated furniture to perfect condition.
 ---
 ChangeRoomColor
 Usage: ChangeRoomColor [aptIdx] [roomIdx] [r] [g] [b]
 Changes the room color to a given rgb value.
+---
+ChangeRoomName
+Usage: ChangeRoomName [aptIdx] [roomIdx]
+Changes the room name.
+---
+SplitVertically
+Usage: SplitVertically [aptIdx] [y]
+Cost: 100, Time: 60
+Splits the indicated apartment into two on the given
+y axis.
+---
+SplitHorizontally
+Usage: SplitHorizontally [aptIdx] [x]
+Cost: 100, Time: 60
+Splits the indicated apartment into two on the given
+x axis.
+---
+Merge
+Usage: Merge [aptIdx] [aptIdx]
+Cost: 100, Time: 60
+Merges the indicated apartments into one.
+---
+Market
+Usage: Merge [aptIdx] [rent]
+Cost: 5, Time: 10
+Puts the indicated apartment on the market with given rent.
 ---
 RotateFurniture
 Usage: RotateFurniture [furnIdx]
@@ -59,6 +99,7 @@ Rotates indicated furniture in storage by 90 degrees.
 ---
 SellFurniture
 Usage: SellFurniture [furnIdx]
+Time: 5
 Sells indicated furniture to the store.
 ---
 BuyFurniture

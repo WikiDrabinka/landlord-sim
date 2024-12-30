@@ -67,6 +67,9 @@ namespace room {
             rect->setColor(color);
             rectangles.push_back(rect);
         }
+        for (std::shared_ptr<furniture::Furniture> furn: otherRoom->getFurniture()) {
+            addFurniture(furn,furn->getPosition());
+        }
     }
     void Room::setClaim(std::shared_ptr<tenant::Tenant> newTenant) {
         if (newTenant==nullptr) {
@@ -77,6 +80,7 @@ namespace room {
             occupancyState = livingSpace::claimed;
         }
     }
+    void Room::setName(std::string newName) { name = newName; }
     std::shared_ptr<Room> Room::split(std::string newName, std::set<int> rectIndices) {
         std::vector<std::shared_ptr<rectangle::Rectangle>> newRectangles;
         std::vector<std::shared_ptr<rectangle::Rectangle>> splitRectangles;
