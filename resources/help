@@ -36,6 +36,11 @@ PlaceFurniture
 Usage: PlaceFurniture [aptIdx] [roomIdx] [furnIdx] [x] [y]
 Places furniture from storage into the indicated room.
 ---
+RemoveFurniture
+Usage: RemoveFurniture [aptIdx] [roomIdx] [furnIdx]
+Removes indicated furniture from the room and places
+it in storage.
+---
 ChangeRoomColor
 Usage: ChangeRoomColor [aptIdx] [roomIdx] [r] [g] [b]
 Changes the room color to a given rgb value.
@@ -43,6 +48,10 @@ Changes the room color to a given rgb value.
 RotateFurniture
 Usage: RotateFurniture [furnIdx]
 Rotates indicated furniture in storage by 90 degrees.
+---
+SellFurniture
+Usage: SellFurniture [furnIdx]
+Sells indicated furniture to the store.
 ---
 BuyFurniture
 Usage: BuyFurniture [furnIdx]

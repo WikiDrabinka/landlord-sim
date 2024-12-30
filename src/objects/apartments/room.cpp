@@ -21,8 +21,8 @@ namespace room {
             roomRectangles[i]->setColor(roomColor);
         }
     }
-    std::vector<std::shared_ptr<rectangle::Rectangle>> Room::getRectangles() { return rectangles; }
-    std::vector<std::shared_ptr<furniture::Furniture>> Room::getFurniture() { return furniture; }
+    std::vector<std::shared_ptr<rectangle::Rectangle>>& Room::getRectangles() { return rectangles; }
+    std::vector<std::shared_ptr<furniture::Furniture>>& Room::getFurniture() { return furniture; }
     color::BackgroundColor Room::getColor() { return color; }
     void Room::setColor(color::BackgroundColor newColor) {
         color = newColor;

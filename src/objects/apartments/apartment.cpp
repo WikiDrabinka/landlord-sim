@@ -14,7 +14,7 @@ namespace apartment {
         marketPrice = 0;
         tenantsNo = 0;
     }
-    std::vector<std::shared_ptr<room::Room>> Apartment::getRooms() { return rooms; }
+    std::vector<std::shared_ptr<room::Room>>& Apartment::getRooms() { return rooms; }
     std::vector<format::FormattedString> Apartment::getDisplay() {
         std::vector<format::FormattedString> display;
         display.push_back(format::FormattedString(name,true,false,false,false));

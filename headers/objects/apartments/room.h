@@ -19,8 +19,8 @@ namespace room {
         Room(std::string roomName, livingSpace::state roomState, color::BackgroundColor roomColor);
         Room(std::string roomName, livingSpace::state roomState, std::shared_ptr<rectangle::Rectangle> roomRectangle);
         Room(std::string roomName, livingSpace::state roomState, std::vector<std::shared_ptr<rectangle::Rectangle>> roomRectangles, color::BackgroundColor roomColor);
-        std::vector<std::shared_ptr<rectangle::Rectangle>> getRectangles();
-        std::vector<std::shared_ptr<furniture::Furniture>> getFurniture();
+        std::vector<std::shared_ptr<rectangle::Rectangle>>& getRectangles();
+        std::vector<std::shared_ptr<furniture::Furniture>>& getFurniture();
         color::BackgroundColor getColor();
         std::vector<format::FormattedString> getDisplay();
         std::shared_ptr<tenant::Tenant> getClaim();
