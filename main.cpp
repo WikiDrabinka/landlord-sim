@@ -65,6 +65,7 @@ int main() {
             reader.saveGame(0,screen->getGame());
         } else {
             actionHandler.execute(outline,screen);
+            screen->updateDisplays();
             screen->update();
         }
     }

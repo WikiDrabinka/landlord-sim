@@ -10,8 +10,8 @@ namespace action {
         std::vector<Action<furniture::Furniture>> storeActions;
         std::vector<Action<tenant::Tenant>> randomEvents;
         ActionHandler();
-        void display(int idx);
+        void display(int idx=-1);
         int execute(std::string actionName, std::shared_ptr<screen::Screen> screen);
-        void randomEvent();
+        void randomEvent(std::shared_ptr<screen::Screen> screen);
     };
 }

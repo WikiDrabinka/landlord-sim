@@ -103,7 +103,6 @@ namespace screen {
             if (i!=displaysX-1) {
                 for (int x = 0; x<displaysY[i+1]; ++x) {
                     down.push_back(down[down.size()-1]+displayWidths[row+x]+3);
-                    //os << down[down.size()-1] <<std::endl;
                 }
             }
             for (int x = 0; x<up[up.size()-1];++x){

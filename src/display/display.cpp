@@ -355,7 +355,6 @@ namespace display {
         }
     }
     std::vector<std::string> Display::getDisplay() {
-        updateDisplay();
         std::vector<std::string> display;
         display.push_back(name.getDisplay());
         if (displayStart>0) {
@@ -395,8 +394,8 @@ namespace display {
     }
     void Display::changeDisplay(displayType newType, std::string newName) {
         displayStart = 0;
-        type=newType;
-        name=format::FormattedString(newName,true,false,true,false);
+        type = newType;
+        name = format::FormattedString(newName,true,false,true,false);
         switch (type) {
         case furniture:
         {
@@ -444,6 +443,7 @@ namespace display {
             name += format::FormattedString(game->getApartments()[idx[0]]->getRooms()[idx[1]]->getName());
             name.text[2].backgroundColor = game->getApartments()[idx[0]]->getRooms()[idx[1]]->getColor();
             name += ")";
+            break;
         }
         case rooms:
         {
@@ -451,10 +451,13 @@ namespace display {
             name += " (";
             name += format::FormattedString(game->getApartments()[idx[0]]->getName());
             name += ")";
+            break;
+
         }
         case apartment:
         {
             name = format::MultiFormattedString(format::FormattedString(game->getApartments()[idx[0]]->getName(),true,false,true,false));
+            break;
         }
         case conversation:
         {
@@ -462,6 +465,7 @@ namespace display {
             name += " (";
             name += format::FormattedString(game->getMessages()[idx[0]]->getSender()->getName());
             name += ")";
+            break;
         }
         }
         name.center(width);

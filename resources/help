@@ -17,8 +17,16 @@ usage: ScrollDown [displayIdx]
 Scrolls down the indicated display
 ---
 ScrollUp
-usage: ScrollUp [displayIdx]
+Usage: ScrollUp [displayIdx]
 Scrolls up the indicated display
+---
+ShowFurniture
+Usage: ShowFurniture [aptIdx] [roomIdx]
+Switches the furniture display to the indicated room.
+---
+ShowRooms
+Usage: ShowRooms [aptIdx]
+Switches the rooms display to the indicated apartment.
 ---
 SplitRoomVertically
 Usage: SplitRoomVertically [aptIdx] [roomIdx] [y]

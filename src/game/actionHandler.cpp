@@ -133,6 +133,7 @@ namespace action {
         }),{std::function<bool(std::shared_ptr<display::Display>)>([](std::shared_ptr<display::Display> display){
             return (display->getType()==display::store || display->getType()==display::storage);
         })}));
+
         displayActions.push_back(Action<display::Display>("OpenMessage",0,0,1,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<display::Display>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<display::Display> display,std::vector<int> arguments = {0}){
             int messageIdx = arguments[0]-1;
             if (messageIdx<0 || messageIdx>=screen->getGame()->getMessages().size()) {
@@ -148,18 +149,46 @@ namespace action {
         })},{std::function<bool(std::shared_ptr<display::Display>)>([](std::shared_ptr<display::Display> display){
             return (display->getType()==display::messages);
         })}));
+
         displayActions.push_back(Action<display::Display>("CloseMessage",0,0,0,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<display::Display>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<display::Display> display,std::vector<int> arguments){
             display->changeDisplay(display::messages,"Messages");
             display->updateDisplay();
         }),{std::function<bool(std::shared_ptr<display::Display>)>([](std::shared_ptr<display::Display> display){
             return (display->getType()==display::conversation);
         })}));
+
         displayActions.push_back(Action<display::Display>("ScrollUp",0,0,0,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<display::Display>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<display::Display> display,std::vector<int> arguments){
             display->scrollUp();
         })));
+
         displayActions.push_back(Action<display::Display>("ScrollDown",0,0,0,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<display::Display>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<display::Display> display,std::vector<int> arguments){
             display->scrollDown();
         })));
+
+        displayActions.push_back(Action<display::Display>("ShowFurniture",0,0,2,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<display::Display>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<display::Display> display, std::vector<int> arguments){
+            int aptIdx = arguments[0]-1;
+            int roomIdx = arguments[1]-1;
+            if (screen->getGame()->getApartments().size()<=aptIdx) {
+                throw std::out_of_range("Incorrect apartment index.");
+            }
+            if (screen->getGame()->getApartments()[aptIdx]->getRooms().size()<=roomIdx) {
+                throw std::out_of_range("Incorrect room index.");
+            }
+            display->changeDisplay({aptIdx,roomIdx});
+        }),{std::function<bool(std::shared_ptr<display::Display>)>([](std::shared_ptr<display::Display> display){
+            return (display->getType()==display::furniture);
+        })}));
+
+        displayActions.push_back(Action<display::Display>("ShowRooms",0,0,1,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<display::Display>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<display::Display> display, std::vector<int> arguments){
+            int aptIdx = arguments[0]-1;
+            if (screen->getGame()->getApartments().size()<=aptIdx) {
+                throw std::out_of_range("Incorrect apartment index.");
+            }
+            display->changeDisplay({aptIdx});
+        }),{std::function<bool(std::shared_ptr<display::Display>)>([](std::shared_ptr<display::Display> display){
+            return (display->getType()==display::rooms);
+        })}));
+
         apartmentActions.push_back(Action<apartment::Apartment>("SplitRoomVertically",50,20,2,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<apartment::Apartment>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<apartment::Apartment> apartment,std::vector<int> arguments){
             int roomIdx = arguments[0]-1;
             int y = arguments[1];
@@ -172,6 +201,7 @@ namespace action {
             getline(std::cin, newName);
             apartment->addRoom(apartment->getRooms()[roomIdx]->splitVertically(newName,y,screen->getGame()->getFurnitureStorage()));
         })));
+
         apartmentActions.push_back(Action<apartment::Apartment>("SplitRoomHorizontally",50,20,2,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<apartment::Apartment>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<apartment::Apartment> apartment,std::vector<int> arguments){
             int roomIdx = arguments[0]-1;
             int x = arguments[1];
@@ -184,6 +214,7 @@ namespace action {
             getline(std::cin, newName);
             apartment->addRoom(apartment->getRooms()[roomIdx]->splitHorizontally(newName,x,screen->getGame()->getFurnitureStorage()));
         })));
+
         apartmentActions.push_back(Action<apartment::Apartment>("PlaceFurniture",0,10,4,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<apartment::Apartment>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<apartment::Apartment> apartment,std::vector<int> arguments){
             int roomIdx = arguments[0]-1;
             int furnIdx = arguments[1]-1;
@@ -202,6 +233,7 @@ namespace action {
                 throw std::out_of_range(e.what());
             }
         })));
+
         apartmentActions.push_back(Action<apartment::Apartment>("RemoveFurniture",0,10,2,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<apartment::Apartment>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<apartment::Apartment> apartment,std::vector<int> arguments){
             int roomIdx = arguments[0]-1;
             int furnIdx = arguments[1]-1;
@@ -215,6 +247,7 @@ namespace action {
             screen->getGame()->getFurnitureStorage().push_back(furniture);
             apartment->getRooms()[roomIdx]->getFurniture().erase(apartment->getRooms()[roomIdx]->getFurniture().begin()+furnIdx);
         })));
+
         apartmentActions.push_back(Action<apartment::Apartment>("ChangeRoomColor",0,0,4,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<apartment::Apartment>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<apartment::Apartment> apartment,std::vector<int> arguments){
             int roomIdx = arguments[0]-1;
             int r = arguments[1];
@@ -225,9 +258,11 @@ namespace action {
             }
             apartment->getRooms()[roomIdx]->setColor(color::BackgroundColor(r,g,b));
         })));
+
         furnitureActions.push_back(Action<furniture::Furniture>("RotateFurniture",0,0,0,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<furniture::Furniture>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<furniture::Furniture> furniture,std::vector<int> arguments){
             furniture->rotate();
         })));
+
         furnitureActions.push_back(Action<furniture::Furniture>("SellFurniture",0,0,0,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<furniture::Furniture>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<furniture::Furniture> furniture,std::vector<int> arguments){
             std::random_device dev;
             std::mt19937 gen(dev());
@@ -242,6 +277,7 @@ namespace action {
             screen->getGame()->getFurnitureStorage().erase(std::find(screen->getGame()->getFurnitureStorage().begin(),screen->getGame()->getFurnitureStorage().end(),furniture));
             screen->addLog("Sold "+furniture->getName()+" for "+std::to_string(furniture->getPrice())+".");
         })));
+
         storeActions.push_back(Action<furniture::Furniture>("BuyFurniture",0,0,0,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<furniture::Furniture>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<furniture::Furniture> furniture,std::vector<int> arguments){
             if (screen->getGame()->getMoney()<furniture->getPrice()) {
                 throw std::out_of_range("Insufficient balance.");
