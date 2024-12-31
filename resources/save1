@@ -1,52 +1,51 @@
-200
-500
+0
+1000
 60 50 30 100
 10
-Giant Hammock
-1 381 74 1 4 -1 -1 53 1
-Bright Cabinet
-2 268 25 3 3 -1 -1 94 0
-Neat Couch
-1 286 99 4 3 -1 -1 4 3
-Plain Cupboard
-2 247 65 4 4 -1 -1 65 0
-Hideous Shower
-3 601 96 2 3 -1 -1 1
+Hexagonal Cabinet
+2 199 8 1 2 -1 -1 85 0
+New Trashcan
+3 89 13 2 2 -1 -1 2 1
+Stunning Shelf
+2 447 90 1 2 -1 -1 82 0
+Tiny Cabinet
+2 246 34 2 4 -1 -1 56 0
+Classy Armchair
+1 241 47 2 1 -1 -1 14 1
+Shiny Couch
+1 337 72 4 3 -1 -1 32 3
+Colorful Bed
+1 223 8 3 1 -1 -1 55 1
+Messy Bathtub
+3 387 77 3 1 -1 -1 1 6
+Messy Trashcan
+3 88 15 2 2 -1 -1 2 2
 Plain Nightstand
-2 106 23 1 4 -1 -1 33 0
-Wacky Bathtub
-3 251 47 1 3 -1 -1 1
-Hexagonal Hammock
-1 414 78 1 2 -1 -1 26 1
-Stunning Cabinet
-2 137 40 2 1 -1 -1 15 0
-Strange Nightstand
-2 267 64 3 2 -1 -1 50 0
+2 267 34 2 3 -1 -1 76 0
 0
 1
-Daniel Martinez
-Daniel Martinez
-1862 7586 1605 0
-41 41
+Nora Marshall
+Nora Marshall
+2169 11139 1119 29082
+73 26
 1
 33 Harms Way
 0 1
-7
+5
 Bedroom
 1 0
 128 72 184
-2
-0 0 4 4
-0 5 4 6
+1
+0 0 4 6
 4
 Default Bed
 1 300 75 3 2 0 2 75 2
 Default Nightstand
 2 150 75 1 1 0 1 20 0
-Default Wardrobe
-2 250 75 1 4 4 0 70 0
 Default Cabinet
 2 200 75 3 1 2 6 50 0
+Default Wardrobe
+2 250 75 1 4 4 0 70 0
 Master bathroom
 2 -1
 72 128 184
@@ -54,11 +53,11 @@ Master bathroom
 0 7 2 11
 5
 Default Sink
-3 300 75 1 1 0 8 1
+3 300 75 1 1 0 8 1 3
 Default Toilet
-3 300 75 1 1 0 11 2
+3 300 75 1 1 0 11 2 4
 Default Bathtub
-3 350 75 1 2 2 10 1
+3 350 75 1 2 2 10 1 6
 Default Cupboard
 2 200 75 1 1 0 9 20 0
 Default Cabinet
@@ -66,11 +65,33 @@ Default Cabinet
 Living Room
 0 -1
 184 72 128
-1
-5 0 6 6
-1
+3
+3 7 4 11
+5 0 6 11
+7 8 10 11
+11
+Default Couch
+1 300 75 1 3 3 8 60 1
+Default Armchair
+1 150 75 1 1 4 7 30 1
+Default TV
+3 500 75 1 2 5 9 3 4
 Default Wardrobe
 2 250 75 1 2 6 0 50 0
+Default Cupboard
+2 200 75 1 1 8 9 20 0
+Default Cupboard
+2 200 75 1 1 8 10 20 0
+Default Cupboard
+2 200 75 1 1 8 11 20 0
+Default Cupboard
+2 200 75 1 1 10 8 20 0
+Default Cupboard
+2 200 75 1 1 10 11 20 0
+Default Sink
+3 250 75 1 1 10 9 1 3
+Default Stove
+3 350 75 1 1 10 10 0 5
 Guest bathroom
 0 -1
 128 184 72
@@ -78,11 +99,11 @@ Guest bathroom
 7 0 10 3
 5
 Default Sink
-3 300 75 1 1 8 0 1
+3 300 75 1 1 8 0 1 3
 Default Toilet
-3 300 75 1 1 10 0 2
+3 300 75 1 1 10 0 2 4
 Default Bathtub
-3 350 75 2 1 9 3 1
+3 350 75 2 1 9 3 1 6
 Default Cupboard
 2 200 75 1 1 9 0 20 0
 Default Cabinet
@@ -100,52 +121,20 @@ Default Nightstand
 Default Cabinet
 2 200 75 1 2 7 4 50 0
 Default Desk
-3 250 75 3 1 8 7 3
+3 250 75 3 1 8 7 3 0
 Default Chair
 1 100 75 1 1 9 6 10 1
-Corridor
-0 -1
-72 184 128
-4
-3 7 4 7
-3 8 4 11
-5 8 6 11
-5 7 6 7
-3
-Default Armchair
-1 150 75 1 1 4 7 30 1
-Default Couch
-1 300 75 1 3 3 8 60 1
-Default TV
-3 500 75 1 2 5 9 3
-Kitchen
-0 -1
-100 100 100
-2
-7 8 7 11
-8 8 10 11
-7
-Default Cupboard
-2 200 75 1 1 8 9 20 0
-Default Cupboard
-2 200 75 1 1 8 10 20 0
-Default Cupboard
-2 200 75 1 1 8 11 20 0
-Default Cupboard
-2 200 75 1 1 10 8 20 0
-Default Cupboard
-2 200 75 1 1 10 11 20 0
-Default Sink
-3 250 75 1 1 10 9 1
-Default Stove
-3 350 75 1 1 10 10 0
-70
+23
 0
 600 30 0
 0 0
 1
 0 20
-0
+-1
+Hunter Wright
+Hunter Wright
+1528 4367 1008 0
+37 39
 5
 uwu hey bro give me some money
 bruh no

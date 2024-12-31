@@ -21,23 +21,6 @@ int main() {
     }
     std::shared_ptr<screen::Screen> screen(new screen::Screen());
     action::ActionHandler actionHandler;
-    std::shared_ptr<tenant::Tenant> bob(new tenant::Tenant());
-    std::shared_ptr<tenant::Tenant> bob2(new tenant::Tenant());
-    std::shared_ptr<lease::Lease> lol(new lease::Lease(bob,screen->getGame()->getApartments()[0],600,30,false));
-    screen->getGame()->addLease(lol);
-    screen->getGame()->included=100;
-    screen->getGame()->usedElectricity=60;
-    screen->getGame()->usedWater=50;
-    screen->getGame()->usedOther=30;
-    screen->updateDisplays();
-    std::vector<std::shared_ptr<furniture::Furniture>> backup;
-    screen->getGame()->getApartments()[0]->getRooms()[0]->setClaim(bob);
-    screen->getGame()->getMessages().push_back(std::shared_ptr<messages::Conversation>(new messages::Conversation(bob2,"uwu hey bro give me some money",5)));
-    screen->getGame()->getMessages().back()->sendMessage("bruh no", 10, true);
-    screen->getGame()->getMessages().back()->sendMessage("why", 15);
-    screen->getGame()->getMessages().back()->sendMessage("I dont like you", 20, true);
-    screen->getGame()->getMessages().back()->sendMessage(":((",20);
-    std::cout << "\033[1A\033[2K";
     screen->update(5000);
     while (true) {
         getline(std::cin,outline);
@@ -59,7 +42,7 @@ int main() {
         } else if (first=="Save") {
             int saveNum;
             outs >> saveNum;
-            reader.saveGame(saveNum,screen->getGame());
+            reader.saveGame(saveNum-1,screen->getGame());
         } else if (first=="Load") {
             int saveNum;
             outs >> saveNum;

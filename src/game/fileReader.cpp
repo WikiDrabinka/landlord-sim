@@ -340,7 +340,7 @@ namespace fileReader {
                             int price, condition, sizeX, sizeY, posX, posY, capacity, itemNum;
                             save >> price >> condition >> sizeX >> sizeY >> posX >> posY >> capacity >> itemNum;
                             std::shared_ptr<furniture::Storage> storage(new furniture::Storage(
-                                furnName, price, condition, sizeX, sizeX, capacity
+                                furnName, price, condition, sizeX, sizeY, capacity
                             ));
                             room->addFurniture(storage,point::Point(posX,posY));
                             for (int j = 0; j<itemNum; ++j) {
