@@ -85,6 +85,9 @@ namespace fileReader {
         save << game->getTime() << std::endl;
         save << game->getMoney() << std::endl;
         save << game->usedElectricity << " " << game->usedWater << " " << game->usedOther << " " << game->included << std::endl;
+        
+    
+        // furniture
         save << game->getFurnitureStore().size() << std::endl;
         for (std::shared_ptr<furniture::Furniture> furn : game->getFurnitureStore()) {
             save << furn->getString() << std::endl;
@@ -93,6 +96,7 @@ namespace fileReader {
         for (std::shared_ptr<furniture::Furniture> furn : game->getFurnitureStorage()) {
             save << furn->getString() << std::endl;
         }
+
         // tenants
         std::vector<std::shared_ptr<tenant::Tenant>> tenants;
         save << game->getLeases().size() << std::endl;
@@ -103,6 +107,7 @@ namespace fileReader {
             save << tenants.back()->getIncome() << " " << tenants.back()->getSavings() << " " << tenants.back()->getSpending() << " " << tenants.back()->owing << std::endl;
             save << tenants.back()->getPatience() << " " << tenants.back()->getHappiness() << std::endl;
         }
+
         // apartments
         save << game->getApartments().size() << std::endl;
         for (std::shared_ptr<apartment::Apartment> apt : game->getApartments()) {
@@ -128,6 +133,7 @@ namespace fileReader {
                 }
             }
         }
+        
         // real estate
         save << game->getRealEstateMarket()->getAveragePrice() << std::endl;
         save << game->getRealEstateMarket()->getApartments().size() << std::endl;
@@ -171,18 +177,262 @@ namespace fileReader {
             throw std::runtime_error("Failed to open file: " + saves[idx]);
         }
         std::shared_ptr<game::Game> game(new game::Game(true));
-        std::string line;
         try {
-            save >> line;
-            game->setTime(stoi(line));
-            save >> line;
-            game->setMoney(stoi(line));
+            int time, money;
+            save >> time;
+            game->setTime(time);
+            save >> money;
+            game->setMoney(money);
             save >> game->usedElectricity >> game->usedWater >> game->usedOther >> game->included;
             int furnitureNum;
             save >> furnitureNum;
-        } catch (std::invalid_argument) {
+            std::string furnName;
+            for (int i = 0; i<furnitureNum; ++i) {
+                getline(save >> std::ws,furnName);
+                int type;
+                save >> type;
+                switch (type)
+                {
+                case 1:
+                {
+                    int price, condition, sizeX, sizeY, posX, posY, comfortability, capacity;
+                    save >> price >> condition >> sizeX >> sizeY >> posX >> posY >> comfortability >> capacity;
+                    game->getFurnitureStore().push_back(std::shared_ptr<furniture::Sleepable>(new furniture::Sleepable(
+                        furnName, price, condition, sizeX, sizeY, comfortability, capacity
+                    )));
+                    break;
+                }
+                case 2:
+                {
+                    int price, condition, sizeX, sizeY, posX, posY, capacity, itemNum;
+                    save >> price >> condition >> sizeX >> sizeY >> posX >> posY >> capacity >> itemNum;
+                    std::shared_ptr<furniture::Storage> storage(new furniture::Storage(
+                        furnName, price, condition, sizeX, sizeX, capacity
+                    ));
+                    game->getFurnitureStore().push_back(storage);
+                    for (int j = 0; j<itemNum; ++j) {
+                        std::string itemName;
+                        getline(save >> std::ws, itemName);
+                        int size, value;
+                        save >> size >> value;
+                        storage->addItem(std::shared_ptr<item::Item>(new item::Item(itemName, size, value)));
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    int price, condition, sizeX, sizeY, posX, posY, type, cost;
+                    save >> price >> condition >> sizeX >> sizeY >> posX >> posY >> type >> cost;
+                    game->getFurnitureStore().push_back(std::shared_ptr<furniture::Utility>(new furniture::Utility(
+                        furnName, price, condition, sizeX, sizeY, (furniture::utilityType) type, cost
+                    )));
+                    break;
+                }
+                default:
+                    throw std::invalid_argument("Incorrect furniture type: "+std::to_string(type));
+                }
+            }
+            save >> furnitureNum;
+            for (int i = 0; i<furnitureNum; ++i) {
+                getline(save >> std::ws,furnName);
+                int type;
+                save >> type;
+                switch (type)
+                {
+                case 1:
+                {
+                    int price, condition, sizeX, sizeY, posX, posY, comfortability, capacity;
+                    save >> price >> condition >> sizeX >> sizeY >> posX >> posY >> comfortability >> capacity;
+                    game->getFurnitureStorage().push_back(std::shared_ptr<furniture::Sleepable>(new furniture::Sleepable(
+                        furnName, price, condition, sizeX, sizeY, comfortability, capacity
+                    )));
+                    break;
+                }
+                case 2:
+                {
+                    int price, condition, sizeX, sizeY, posX, posY, capacity, itemNum;
+                    save >> price >> condition >> sizeX >> sizeY >> posX >> posY >> capacity >> itemNum;
+                    std::shared_ptr<furniture::Storage> storage(new furniture::Storage(
+                        furnName, price, condition, sizeX, sizeX, capacity
+                    ));
+                    game->getFurnitureStorage().push_back(storage);
+                    for (int j = 0; j<itemNum; ++j) {
+                        std::string itemName;
+                        getline(save >> std::ws, itemName);
+                        int size, value;
+                        save >> size >> value;
+                        storage->addItem(std::shared_ptr<item::Item>(new item::Item(itemName, size, value)));
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    int price, condition, sizeX, sizeY, posX, posY, type, cost;
+                    save >> price >> condition >> sizeX >> sizeY >> posX >> posY >> type >> cost;
+                    game->getFurnitureStorage().push_back(std::shared_ptr<furniture::Utility>(new furniture::Utility(
+                        furnName, price, condition, sizeX, sizeY, (furniture::utilityType) type, cost
+                    )));
+                    break;
+                }
+                default:
+                    throw std::invalid_argument("Incorrect furniture type: "+std::to_string(type));
+                }
+            }
+            // tenants
+            int tenantsNum;
+            save >> tenantsNum;
+            std::vector<std::shared_ptr<tenant::Tenant>> tenants;
+            for (int i = 0; i<tenantsNum; ++i) {
+                std::string name, nickname;
+                getline(save >> std::ws,name);
+                getline(save >> std::ws,nickname);
+                int income, savings, spending, owing, patience, happiness;
+                save >> income >> savings >> spending >> owing >> patience >> happiness;
+                tenants.push_back(std::shared_ptr<tenant::Tenant>(new tenant::Tenant(
+                    name, income, savings, spending, patience, happiness
+                )));
+                tenants.back()->setNickname(nickname);
+                tenants.back()->owing = owing;
+            }
+            // apartments
+            int aptNum;
+            save >> aptNum;
+            for (int i = 0; i<aptNum; ++i) {
+                std::string name;
+                getline(save >> std::ws,name);
+                std::shared_ptr<apartment::Apartment> apartment(new apartment::Apartment(name));
+                save >> apartment->marketPrice >> apartment->tenantsNo;
+                int roomNum;
+                save >> roomNum;
+                for (int j = 0; j<roomNum; ++j) {
+                    std::string roomName;
+                    getline(save >> std::ws,roomName);
+                    int state, tenantIdx, r, g, b, rectNum, furnNum;
+                    save >> state >> tenantIdx >> r >> g >> b >> rectNum;;
+                    std::shared_ptr<room::Room> room(new room::Room(roomName,(livingSpace::state) state,color::BackgroundColor(r,g,b)));
+                    if (room->getState()==livingSpace::claimed) {
+                        room->setClaim(tenants[tenantIdx]);
+                    }
+                    for (int k = 0; k<rectNum; ++k) {
+                        int x1, y1, x2, y2;
+                        save >> x1 >> y1 >> x2 >> y2;
+                        room->addRectangle(std::shared_ptr<rectangle::Rectangle>(new rectangle::Rectangle(point::Point(x1,y1),point::Point(x2,y2))));
+                    }
+                    save >> furnNum;
+                    for (int k = 0; k<furnNum; ++k) {
+                        getline(save >> std::ws,furnName);
+                        int type;
+                        save >> type;
+                        switch (type)
+                        {
+                        case 1:
+                        {
+                            int price, condition, sizeX, sizeY, posX, posY, comfortability, capacity;
+                            save >> price >> condition >> sizeX >> sizeY >> posX >> posY >> comfortability >> capacity;
+                            std::shared_ptr<furniture::Sleepable> sleepable(new furniture::Sleepable(
+                                furnName, price, condition, sizeX, sizeY, comfortability, capacity
+                            ));
+                            room->addFurniture(sleepable,point::Point(posX,posY));
+                            break;
+                        }
+                        case 2:
+                        {
+                            int price, condition, sizeX, sizeY, posX, posY, capacity, itemNum;
+                            save >> price >> condition >> sizeX >> sizeY >> posX >> posY >> capacity >> itemNum;
+                            std::shared_ptr<furniture::Storage> storage(new furniture::Storage(
+                                furnName, price, condition, sizeX, sizeX, capacity
+                            ));
+                            room->addFurniture(storage,point::Point(posX,posY));
+                            for (int j = 0; j<itemNum; ++j) {
+                                std::string itemName;
+                                getline(save >> std::ws, itemName);
+                                int size, value;
+                                save >> size >> value;
+                                storage->addItem(std::shared_ptr<item::Item>(new item::Item(itemName, size, value)));
+                            }
+                            break;
+                        }
+                        case 3:
+                        {
+                            int price, condition, sizeX, sizeY, posX, posY, type, cost;
+                            save >> price >> condition >> sizeX >> sizeY >> posX >> posY >> type >> cost;
+                            std::shared_ptr<furniture::Utility> utility(new furniture::Utility(
+                                furnName, price, condition, sizeX, sizeY, (furniture::utilityType) type, cost
+                            ));
+                            room->addFurniture(utility,point::Point(posX,posY));
+                            break;
+                        }
+                        default:
+                            throw std::invalid_argument("Incorrect furniture type: "+std::to_string(type));
+                        }
+                    }
+                    apartment->addRoom(room);
+                }
+                game->addApartment(apartment);
+            }
+
+            // real estate
+            int price, entryNum;
+            save >> price >> entryNum;
+            std::shared_ptr<market::RealEstate> market(new market::RealEstate(price));
+            for (int i = 0; i<entryNum; ++i) {
+                int aptIdx, rent;
+                save >> aptIdx >> rent;
+                market->addApartment(game->getApartments()[aptIdx],rent);
+            }
+            game->setRealEstateMarket(market);
+
+            // leases
+            for (int i = 0; i<tenantsNum; ++i) {
+                int rent, time, utilities, aptIdx;
+                save >> rent >> time >> utilities >> aptIdx;
+                game->addLease(std::shared_ptr<lease::Lease>(new lease::Lease(tenants[i],game->getApartments()[aptIdx],rent,time,(bool) utilities)));
+            }
+
+            // messages
+            int convNum;
+            save >> convNum;
+            for (int i = 0; i<convNum; ++i) {
+                int read, time, tenantIdx;
+                save >> read >> time >> tenantIdx;
+                std::shared_ptr<tenant::Tenant> tenant;
+                if (tenantIdx!=-1) {
+                    tenant = tenants[tenantIdx];
+                } else {
+                    std::string name, nickname;
+                    getline(save >> std::ws,name);
+                    getline(save >> std::ws,nickname);
+                    int income, savings, spending, owing, patience, happiness;
+                    save >> income >> savings >> spending >> owing >> patience >> happiness;
+                    tenants.push_back(std::shared_ptr<tenant::Tenant>(new tenant::Tenant(
+                        name, income, savings, spending, patience, happiness
+                    )));
+                    tenants.back()->setNickname(nickname);
+                    tenants.back()->owing = owing;
+                    tenant = tenants.back();
+                }
+                int messNum;
+                save >> messNum;
+                std::string message;
+                getline(save >> std::ws,message);
+                game->getMessages().push_back(std::shared_ptr<messages::Conversation>(new messages::Conversation(tenant,message,time)));
+                for (int j = 0; j<messNum-1; ++j) {
+                    getline(save >> std::ws,message);
+                    game->getMessages().back()->sendMessage(message,time);
+                }
+                game->getMessages().back()->read = (bool) read;
+                int respNum;
+                save >> respNum;
+                for (int j = 0; j<respNum; ++j) {
+                    int idx;
+                    save >> idx;
+                    game->getMessages().back()->responses.push_back(idx);
+                }
+            }
+
+        } catch (std::invalid_argument e) {
             save.close();
-            throw std::runtime_error("Corrupted save file: " + saves[idx]);
+            throw std::runtime_error("Corrupted save file: " + saves[idx] + " ("+e.what()+")");
         }
         save.close();
         return game;

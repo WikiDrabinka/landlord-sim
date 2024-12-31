@@ -1,7 +1,7 @@
 #include "../../../headers/objects/people/tenant.h"
 #include <random>
 namespace tenant {
-    Tenant::Tenant(std::string tenantName, int tenantIncome, int tenantSavings, int tenantSpending, int tenantPatience, int tenantHappiness,int tenantNeeds[4]) {
+    Tenant::Tenant(std::string tenantName, int tenantIncome, int tenantSavings, int tenantSpending, int tenantPatience, int tenantHappiness) {
         name = tenantName;
         nickname = tenantName;
         monthlyIncome = tenantIncome;
@@ -9,10 +9,6 @@ namespace tenant {
         spending = tenantSpending;
         patience = tenantPatience;
         happiness = tenantHappiness;
-        needs[0] = tenantNeeds[0];
-        needs[1] = tenantNeeds[1];
-        needs[2] = tenantNeeds[2];
-        needs[3] = tenantNeeds[3];
     }
     Tenant::Tenant() {
         std::random_device dev;
@@ -25,7 +21,6 @@ namespace tenant {
         monthlyIncome = incomeDistr(gen);
         std::normal_distribution<> savingsDistr(monthlyIncome*2,monthlyIncome*3/2);
         std::normal_distribution<> spendingDistr(monthlyIncome/2,monthlyIncome/4);
-        std::uniform_int_distribution<> needDistr(0,5);
         name = generatedFirstNames[firstNameDistr(gen)] + " " + generatedLastNames[lastNameDistr(gen)];
         nickname = name;
         savings = savingsDistr(gen);
@@ -36,16 +31,12 @@ namespace tenant {
         for (int i = 0; i<itemNo; ++i) {
             items.push_back(std::shared_ptr<item::Item>(new item::Item));
         }
-        for (int i = 0; i<4; ++i) {
-            needs[i] = needDistr(gen);
-        }
     }
     int Tenant::getIncome() { return monthlyIncome; }
     int Tenant::getSavings() { return savings; }
     int Tenant::getSpending() { return spending; }
     int Tenant::getPatience() { return patience; }
     int Tenant::getHappiness() { return happiness; }
-    int* Tenant::getNeeds() {return needs; }
     std::string Tenant::getName() { return name; }
     std::string Tenant::getNickname() { return nickname; }
     std::vector<format::FormattedString> Tenant::getDisplay() {

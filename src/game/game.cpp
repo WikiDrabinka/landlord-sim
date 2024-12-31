@@ -102,6 +102,7 @@ namespace game {
     void Game::addTime(int newTime) { time += newTime; }
     void Game::addApartment(std::shared_ptr<apartment::Apartment> newApartment) { apartments.push_back(newApartment); }
     void Game::addLease(std::shared_ptr<lease::Lease> newLease) { leases.push_back(newLease); }
+    void Game::setRealEstateMarket(std::shared_ptr<market::RealEstate> newMarket) { realEstateMarket = newMarket; }
     int Game::totalRent(std::shared_ptr<apartment::Apartment> apartment) {
         int sum = 0;
         for (std::shared_ptr<lease::Lease> lease: leases) {

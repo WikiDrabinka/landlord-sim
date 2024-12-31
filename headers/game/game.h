@@ -41,6 +41,7 @@ namespace game {
         void addTime(int newTime);
         void addApartment(std::shared_ptr<apartment::Apartment> newApartment);
         void addLease(std::shared_ptr<lease::Lease> newLease);
+        void setRealEstateMarket(std::shared_ptr<market::RealEstate> newMarket);
         int totalRent(std::shared_ptr<apartment::Apartment> apartment);
         int averageHapiness(std::shared_ptr<apartment::Apartment> apartment);
     };

@@ -25,6 +25,29 @@ namespace screen {
         displays.push_back(std::shared_ptr<display::Display>(new display::Display("Utilities",displayWidths[7],displayHeights[7],display::displayType::utilities,game)));
         displays.push_back(std::shared_ptr<display::Display>(new display::Display("Messages",displayWidths[8],displayHeights[8],display::displayType::messages,game)));
     }
+    Screen::Screen(std::shared_ptr<game::Game> screenGame) {
+        popUpOpened = false;
+        game = screenGame;
+        logBoxMemory = 20;
+        displaysX = 3;
+        displaysY = {1,5,3};
+        displayWidths = {162,30,30,30,30,30,63,30,63};
+        displayHeights = {2,16,16,16,16,16,16,16,16};
+        totalWidth = 162;
+        totalHeight = 2+16+16+5+3*3;
+        logBoxHeight = 5;
+        logBoxWidth = 162;
+        logBox = {"","","","",""};
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Game",displayWidths[0],displayHeights[0],display::displayType::other,game)));
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display(game->getApartments()[0]->getName(),displayWidths[1],displayHeights[1],display::displayType::apartment,game)));
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Apartments",displayWidths[2],displayHeights[2],display::displayType::apartments,game)));
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Tenants",displayWidths[3],displayHeights[3],display::displayType::tenants,game)));
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Rooms",displayWidths[4],displayHeights[4],display::displayType::rooms,game)));
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Furniture",displayWidths[5],displayHeights[5],display::displayType::furniture,game)));
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Store",displayWidths[6],displayHeights[6],display::displayType::store,game)));
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Utilities",displayWidths[7],displayHeights[7],display::displayType::utilities,game)));
+        displays.push_back(std::shared_ptr<display::Display>(new display::Display("Messages",displayWidths[8],displayHeights[8],display::displayType::messages,game)));
+    }
     std::shared_ptr<game::Game> Screen::getGame() { return game; }
     std::deque<std::string> Screen::getLogBox() { return logBox; }
     void Screen::addLog(std::string newLog) {

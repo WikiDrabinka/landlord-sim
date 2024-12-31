@@ -56,8 +56,19 @@ int main() {
                     screen->addLog(e.what());
                 }
             }
-        } else if (outline=="Save") {
-            reader.saveGame(0,screen->getGame());
+        } else if (first=="Save") {
+            int saveNum;
+            outs >> saveNum;
+            reader.saveGame(saveNum,screen->getGame());
+        } else if (first=="Load") {
+            int saveNum;
+            outs >> saveNum;
+            try {
+                screen = std::shared_ptr<screen::Screen>(new screen::Screen(reader.loadGame(saveNum-1)));
+                screen->update();
+            } catch (std::runtime_error e) {
+                screen->addLog(e.what());
+            }
         } else {
             actionHandler.execute(outline,screen);
             screen->updateDisplays();
