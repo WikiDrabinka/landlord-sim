@@ -32,6 +32,7 @@ namespace tenant {
         void setNickname(std::string newNickname);
         void setHappiness(int newHappiness);
         void addHappiness(int newHappiness);
+        int payRent(int rent);
     };
     std::ostream& operator<< (std::ostream& os, Tenant ten);
 }

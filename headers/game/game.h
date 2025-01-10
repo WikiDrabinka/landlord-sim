@@ -45,5 +45,6 @@ namespace game {
         void setRealEstateMarket(std::shared_ptr<market::RealEstate> newMarket);
         int totalRent(std::shared_ptr<apartment::Apartment> apartment);
         int averageHapiness(std::shared_ptr<apartment::Apartment> apartment);
+        void sendMessage(std::shared_ptr<tenant::Tenant> tenant, std::string message);
     };
 }

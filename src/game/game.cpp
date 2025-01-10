@@ -1,5 +1,7 @@
 #include "../../headers/game/game.h"
 #include <random>
+#include <algorithm>
+
 namespace game {
     Game::Game(bool empty) {
         if (empty) {
@@ -63,7 +65,7 @@ namespace game {
         std::shared_ptr<tenant::Tenant> tenant1(new tenant::Tenant());
         leases.push_back(std::shared_ptr<lease::Lease>(new lease::Lease(tenant1,apartments[0],1000,30*60*24,true)));
         std::shared_ptr<tenant::Tenant> tenant2(new tenant::Tenant());
-        leases.push_back(std::shared_ptr<lease::Lease>(new lease::Lease(tenant2,apartments[0],1000,30,true)));
+        leases.push_back(std::shared_ptr<lease::Lease>(new lease::Lease(tenant2,apartments[0],700,30*60*24,false)));
         std::random_device dev;
         std::mt19937 gen(dev());
         std::uniform_int_distribution typeDistr(1,3);
@@ -108,7 +110,25 @@ namespace game {
     void Game::setMoney(int newMoney) { money = newMoney; }
     void Game::addMoney(int newMoney) { money += newMoney; }
     void Game::setTime(int newTime) { time = newTime; }
-    void Game::addTime(int newTime) { time += newTime; }
+    void Game::addTime(int newTime) {
+        if ((60*24*7)-time%(60*24*7)<=newTime) {
+            for (std::shared_ptr<lease::Lease> lease : leases) {
+                int paid = lease->getTenant()->payRent(lease->getRent());
+                if (paid < lease->getRent()) {
+                    sendMessage(lease->getTenant(),"Hey, I can't pay this week. Sorry :(");
+                } else {
+                    sendMessage(lease->getTenant(),"Hey I just sent you " + std::to_string(paid)+".");
+                }
+                addMoney(paid);
+            }
+            addMoney(notIncluded-usedElectricity-usedOther-usedWater);
+            notIncluded = 0;
+            usedElectricity = 0;
+            usedWater = 0;
+            usedOther = 0;
+        }
+        time += newTime;
+    }
     void Game::addApartment(std::shared_ptr<apartment::Apartment> newApartment) { apartments.push_back(newApartment); }
     void Game::addLease(std::shared_ptr<lease::Lease> newLease) { leases.push_back(newLease); }
     void Game::setRealEstateMarket(std::shared_ptr<market::RealEstate> newMarket) { realEstateMarket = newMarket; }
@@ -134,5 +154,14 @@ namespace game {
             return 0;
         }
         return sum/size;
+    }
+    void Game::sendMessage(std::shared_ptr<tenant::Tenant> tenant, std::string message) {
+        auto conversation = std::find_if(messages.begin(),messages.end(),[tenant](std::shared_ptr<messages::Conversation> message){ return message->getSender()==tenant; });
+        if (conversation!=messages.end()) {
+            conversation[0]->sendMessage(message,time);
+        } else {
+            messages.push_back(std::shared_ptr<messages::Conversation>(new messages::Conversation(tenant,message,time)));
+        }
+        std::sort(messages.begin(),messages.end(),[](std::shared_ptr<messages::Conversation> &lhs, std::shared_ptr<messages::Conversation> &rhs) {return lhs->time>rhs->time;});
     }
 }

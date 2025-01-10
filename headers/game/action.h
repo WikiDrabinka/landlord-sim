@@ -43,7 +43,7 @@ namespace action {
             if (arguments.size()<argumentsNo) {
                 throw std::out_of_range("Not enough arguments.");
             }
-            if (screen->getGame()->getMoney()>=cost) {
+            if (screen->getGame()->getMoney()>=cost || cost==0) {
                 screen->getGame()->addMoney(-cost);
                 screen->getGame()->addTime(time);
                 function(screen, object, arguments);

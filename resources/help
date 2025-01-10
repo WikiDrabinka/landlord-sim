@@ -12,6 +12,10 @@ CloseMessage
 Usage: CloseMessage
 Closes the opened conversation.
 ---
+ReadAll
+Usage: ReadAll
+Marks all conversations as read.
+---
 ScrollDown
 usage: ScrollDown [displayIdx]
 Scrolls down the indicated display
@@ -59,7 +63,7 @@ Removes indicated furniture from the room and places
 it in storage.
 ---
 RepairFurniture
-Usage: RemoveFurniture [aptIdx] [roomIdx] [furnIdx]
+Usage: RepairFurniture [aptIdx] [roomIdx] [furnIdx]
 Time: 30 (successful)/5 (insufficient balance)
 Repairs indicated furniture to perfect condition.
 ---
