@@ -300,7 +300,7 @@ namespace display {
         case utilities:
         {
             format::FormattedString line1("Included in rent:");
-            format::FormattedString line2(std::to_string(game->included));
+            format::FormattedString line2(std::to_string(game->notIncluded));
             format::FormattedString emptyline("");
             emptyline.left(width);
             text.push_back(emptyline);
@@ -327,7 +327,7 @@ namespace display {
             text.push_back(line1.getDisplay()+line2.getDisplay());
             text.push_back(emptyline);
             line1 = format::FormattedString("Total:",false,false,true,false);
-            line2 = format::FormattedString(std::to_string(game->usedElectricity+game->usedWater+game->usedOther-game->included),true);
+            line2 = format::FormattedString(std::to_string(game->usedElectricity+game->usedWater+game->usedOther-game->notIncluded),true);
             line1.left(width*2/3);
             line2.left(width/3);
             text.push_back(line1.getDisplay()+line2.getDisplay());

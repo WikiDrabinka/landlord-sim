@@ -84,7 +84,7 @@ namespace fileReader {
         save.open(saves[idx],std::ios::out);
         save << game->getTime() << std::endl;
         save << game->getMoney() << std::endl;
-        save << game->usedElectricity << " " << game->usedWater << " " << game->usedOther << " " << game->included << std::endl;
+        save << game->usedElectricity << " " << game->usedWater << " " << game->usedOther << " " << game->notIncluded << std::endl;
         
     
         // furniture
@@ -183,7 +183,7 @@ namespace fileReader {
             game->setTime(time);
             save >> money;
             game->setMoney(money);
-            save >> game->usedElectricity >> game->usedWater >> game->usedOther >> game->included;
+            save >> game->usedElectricity >> game->usedWater >> game->usedOther >> game->notIncluded;
             int furnitureNum;
             save >> furnitureNum;
             std::string furnName;

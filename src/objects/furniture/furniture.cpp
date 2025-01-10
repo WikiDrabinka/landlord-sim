@@ -21,6 +21,7 @@ namespace furniture {
     std::vector<format::FormattedString> Furniture::getDisplay() const { return  {}; }
     int Furniture::getPriceMean() const { return 0; }
     int Furniture::getPriceSD() const { return 0; }
+    int Furniture::use() const { return 0; };
     void Furniture::rotate() {
         int temp = sizeX;
         sizeX = sizeY;

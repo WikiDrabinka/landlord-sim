@@ -1,6 +1,6 @@
 #include "../../../headers/objects/economy/lease.h"
 namespace lease {
-    Lease::Lease(std::shared_ptr<tenant::Tenant> newTenant,std::shared_ptr<apartment::Apartment> newApartment, int leaseRent, int leaseTime=30, bool includeUtilities=false) {
+    Lease::Lease(std::shared_ptr<tenant::Tenant> newTenant,std::shared_ptr<apartment::Apartment> newApartment, int leaseRent, int leaseTime=30, bool includeUtilities) {
         tenant = newTenant;
         apartment = newApartment;
         rent = leaseRent;

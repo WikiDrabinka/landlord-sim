@@ -24,8 +24,9 @@ namespace game {
         int usedElectricity;
         int usedWater;
         int usedOther;
-        int included;
+        int notIncluded;
         Game(bool empty=false);
+        ~Game();
         int getMoney();
         int getTime();
         std::string getTimeStr();

@@ -11,7 +11,7 @@ namespace lease {
         int rent;
         bool utilitiesIncluded;
         public:
-        Lease(std::shared_ptr<tenant::Tenant> newTenant,std::shared_ptr<apartment::Apartment> newApartment, int leaseRent, int leaseTime, bool utilitiesIncluded);
+        Lease(std::shared_ptr<tenant::Tenant> newTenant,std::shared_ptr<apartment::Apartment> newApartment, int leaseRent, int leaseTime, bool utilitiesIncluded=false);
         std::shared_ptr<tenant::Tenant> getTenant();
         std::shared_ptr<apartment::Apartment> getApartment();
         int getRent();

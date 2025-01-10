@@ -5,6 +5,10 @@ namespace game {
         if (empty) {
             return;
         }
+        notIncluded = 0;
+        usedElectricity = 0;
+        usedWater = 0;
+        usedOther = 0;
         money = 1000;
         time = 0;
         realEstateMarket = std::shared_ptr<market::RealEstate>(new market::RealEstate());
@@ -56,8 +60,10 @@ namespace game {
         apartments[0]->getRooms()[4]->addFurniture(std::shared_ptr<furniture::Storage>(new furniture::Storage("Default Cabinet",200,75,1,2,50)),point::Point(7,4));
         apartments[0]->getRooms()[4]->addFurniture(std::shared_ptr<furniture::Utility>(new furniture::Utility("Default Desk",250,75,3,1,furniture::utilityType::entertaiment,0)),point::Point(8,7));
         apartments[0]->getRooms()[4]->addFurniture(std::shared_ptr<furniture::Sleepable>(new furniture::Sleepable("Default Chair",100,75,1,1,10,1)),point::Point(9,6));
-        std::shared_ptr<tenant::Tenant> tenant(new tenant::Tenant());
-        leases.push_back(std::shared_ptr<lease::Lease>(new lease::Lease(tenant,apartments[0],1000,30,true)));
+        std::shared_ptr<tenant::Tenant> tenant1(new tenant::Tenant());
+        leases.push_back(std::shared_ptr<lease::Lease>(new lease::Lease(tenant1,apartments[0],1000,30*60*24,true)));
+        std::shared_ptr<tenant::Tenant> tenant2(new tenant::Tenant());
+        leases.push_back(std::shared_ptr<lease::Lease>(new lease::Lease(tenant2,apartments[0],1000,30,true)));
         std::random_device dev;
         std::mt19937 gen(dev());
         std::uniform_int_distribution typeDistr(1,3);
@@ -80,6 +86,7 @@ namespace game {
         }
         furnitureStorage.clear();
     }
+    Game::~Game() {}
     int Game::getMoney() { return money; }
     int Game::getTime() { return time; }
     std::string Game::getTimeStr() {

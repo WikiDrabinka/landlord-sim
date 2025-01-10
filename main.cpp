@@ -15,11 +15,30 @@ int main() {
     std::cout<<*titlescreen;
     std::string outline;
     std::cin >>outline;
+    std::shared_ptr<screen::Screen> screen;
     if (outline=="3" || outline=="Exit"){
         std::cout << "\033[?47l\033[u";
         exit(0);
+    } else if (outline=="2" || outline=="Load") {
+        int saveNum;
+        std::cin >> saveNum;
+        try {
+            screen = std::shared_ptr<screen::Screen>(new screen::Screen(reader.loadGame(saveNum-1)));
+            screen->update();
+        } catch (std::runtime_error e) {
+            std::cout << e.what() << " Enter another save number: ";
+            std::cin >> saveNum;
+                try {
+                screen = std::shared_ptr<screen::Screen>(new screen::Screen(reader.loadGame(saveNum-1)));
+                screen->update();
+            } catch (std::runtime_error e) {
+                screen = std::shared_ptr<screen::Screen>(new screen::Screen());
+                screen->addLog("Started a new game for you. Sorry. You can still try using commend Load!");
+            }
+        }
+    } else {
+        screen = std::shared_ptr<screen::Screen>(new screen::Screen());
     }
-    std::shared_ptr<screen::Screen> screen(new screen::Screen());
     action::ActionHandler actionHandler;
     screen->update(5000);
     while (true) {
@@ -57,6 +76,7 @@ int main() {
             screen->updateDisplays();
             screen->update();
         }
+        actionHandler.randomEvent(screen);
     }
     std::cout << "\033[?47l\033[u";
     return 0;

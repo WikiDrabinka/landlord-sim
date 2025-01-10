@@ -9,6 +9,7 @@ namespace tenant {
         spending = tenantSpending;
         patience = tenantPatience;
         happiness = tenantHappiness;
+        owing = 0;
     }
     Tenant::Tenant() {
         std::random_device dev;
@@ -28,6 +29,7 @@ namespace tenant {
         patience = traitDistr(gen);
         happiness = traitDistr(gen);
         int itemNo = itemNoDistr(gen);
+        owing = 0;
         for (int i = 0; i<itemNo; ++i) {
             items.push_back(std::shared_ptr<item::Item>(new item::Item));
         }

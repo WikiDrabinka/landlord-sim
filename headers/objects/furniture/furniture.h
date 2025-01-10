@@ -32,6 +32,7 @@ namespace furniture {
         virtual std::vector<format::FormattedString> getDisplay() const;
         virtual int getPriceMean() const;
         virtual int getPriceSD() const;
+        virtual int use() const;
         void rotate();
         void claimFurniture(std::shared_ptr<tenant::Tenant> newClaim);
         void setCondition(int newCondition);

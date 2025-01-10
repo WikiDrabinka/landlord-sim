@@ -146,6 +146,14 @@ namespace action {
         // action not found
         return 3;
     }
+
+    void ActionHandler::randomEvent(std::shared_ptr<screen::Screen> screen) {
+        for (std::shared_ptr<lease::Lease> lease : screen->getGame()->getLeases()) {
+            randomEvents[0].execute(screen, lease->getTenant(),{});
+        }
+        screen->getGame()->getLeases().erase(std::remove_if(screen->getGame()->getLeases().begin(),screen->getGame()->getLeases().end(),[screen](std::shared_ptr<lease::Lease> lease){return screen->getGame()->getTime()>lease->getTime();}),screen->getGame()->getLeases().end());
+    }
+
     ActionHandler::ActionHandler() {
         displayActions.push_back(Action<display::Display>("SwitchStorage",0,0,0,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<display::Display>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<display::Display> display, std::vector<int> arguments){
             if (display->getType()==display::storage) {
@@ -481,6 +489,82 @@ namespace action {
             screen->getGame()->getFurnitureStorage().push_back(furniture);
             screen->getGame()->getFurnitureStore().erase(std::find(screen->getGame()->getFurnitureStore().begin(),screen->getGame()->getFurnitureStore().end(),furniture));
         })));
+
+
+        randomEvents.push_back(Action<tenant::Tenant>("UseFurniture",0,5,0,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<tenant::Tenant>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<tenant::Tenant> tenant,std::vector<int> arguments) {
+            std::random_device dev;
+            std::mt19937 gen(dev());
+            auto apartment = std::find_if(screen->getGame()->getLeases().begin(),screen->getGame()->getLeases().end(),[tenant](std::shared_ptr<lease::Lease> lease) {return lease->getTenant()==tenant; })[0]->getApartment();
+            std::uniform_int_distribution<> roomDistr(0,apartment->getRooms().size()-1);
+            int roomIdx = roomDistr(gen);
+            std::uniform_int_distribution<> furnDistr(0,apartment->getRooms()[roomIdx]->getFurniture().size()-1);
+            int furnIdx = furnDistr(gen);
+            auto furn = apartment->getRooms()[roomIdx]->getFurniture()[furnIdx];
+            int price = furn->use();
+            if (price>0) {
+                bool included = std::find_if(screen->getGame()->getLeases().begin(),screen->getGame()->getLeases().end(),[tenant](std::shared_ptr<lease::Lease> lease){return lease->getTenant()==tenant;})[0]->getUtilities();
+                furniture::Utility *utility(static_cast<furniture::Utility*>(furn.get()));
+                switch (utility->getType()) {
+                    case furniture::cooking:
+                    {
+                        if (!included) {
+                            screen->getGame()->notIncluded += price;
+                            tenant->owing += price;
+                        }
+                        screen->getGame()->usedElectricity += price;
+                        break;
+                    }
+                    case furniture::waste:
+                    {
+                        if (!included) {
+                            screen->getGame()->notIncluded += price;
+                            tenant->owing += price;
+                        }
+                        screen->getGame()->usedOther += price;
+                        break;
+                    }
+                    case furniture::entertaiment:
+                    {
+                        if (!included) {
+                            screen->getGame()->notIncluded += price;
+                            tenant->owing += price;
+                        }
+                        screen->getGame()->usedElectricity += price;
+                        break;
+                    }
+                    case furniture::hygiene:
+                    {
+                        if (!included) {
+                            screen->getGame()->notIncluded += price;
+                            tenant->owing += price;
+                        }
+                        screen->getGame()->usedWater += price;
+                        break;
+                    }
+                }
+            }
+            std::normal_distribution<> conditionDistr(furn->getCondition(),furn->getCondition()/4);
+            int newCondition = conditionDistr(gen);
+            while (newCondition<0 || newCondition>100) {
+                newCondition = conditionDistr(gen);
+            }
+            if (newCondition<=10) {
+                tenant->addHappiness(-5);
+                auto conversation = std::find_if(screen->getGame()->getMessages().begin(),screen->getGame()->getMessages().end(),[tenant](std::shared_ptr<messages::Conversation> message){ return message->getSender()==tenant; });
+                if (conversation!=screen->getGame()->getMessages().end()) {
+                    conversation[0]->sendMessage("Hey I think I broke "+furn->getName()+", can you come and fix it?",screen->getGame()->getTime());
+                    screen->addLog("You have a new message!");
+                } else {
+                    screen->getGame()->getMessages().push_back(std::shared_ptr<messages::Conversation>(new messages::Conversation(tenant,"Hey I think I broke "+furn->getName()+", can you come and fix it?",screen->getGame()->getTime())));
+                }
+                std::sort(screen->getGame()->getMessages().begin(),screen->getGame()->getMessages().end(),[](std::shared_ptr<messages::Conversation> &lhs, std::shared_ptr<messages::Conversation> &rhs) {return lhs->time>rhs->time;});
+            }
+            if (newCondition>=90) {
+                tenant->addHappiness(5);
+            }
+            furn->setCondition(newCondition);
+        })));
     }
+
 
 }

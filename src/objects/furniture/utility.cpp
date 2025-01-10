@@ -35,6 +35,9 @@ namespace furniture {
     std::string Utility::getString() const {
         return name + "\n3 " + std::to_string(price) + " " + std::to_string(condition) + " " + std::to_string(sizeX) + " " + std::to_string(sizeY) + " " + position.getString() + " " + std::to_string(type) + " " + std::to_string(averageHourlyCost);
     }
+    int Utility::use() const {
+        return averageHourlyCost;
+    }
     std::vector<format::FormattedString> Utility::getDisplay() const {
         std::vector<format::FormattedString> display;
         display.push_back(format::FormattedString(name,true,false,false,false));

@@ -14,6 +14,7 @@ namespace furniture {
         color::ForegroundColor getColor() const;
         std::string getString() const;
         std::vector<format::FormattedString> getDisplay() const;
+        int use() const;
         int getPriceMean() const;
         int getPriceSD() const;
     };
