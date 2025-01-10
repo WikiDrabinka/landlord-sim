@@ -40,6 +40,7 @@ int main() {
         screen = std::shared_ptr<screen::Screen>(new screen::Screen());
     }
     action::ActionHandler actionHandler;
+    std::cout<<"\033[1B";
     screen->update(5000);
     while (true) {
         getline(std::cin,outline);

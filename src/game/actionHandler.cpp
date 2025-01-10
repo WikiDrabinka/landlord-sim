@@ -190,6 +190,26 @@ namespace action {
             return (display->getType()==display::conversation);
         })}));
 
+        displayActions.push_back(Action<display::Display>("Reply",0,0,1,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<display::Display>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<display::Display> display,std::vector<int> arguments = {0}){
+            int messageIdx = arguments[0]-1;
+            if (messageIdx<0 || messageIdx>=screen->getGame()->getMessages().size()) {
+                throw std::out_of_range("Incorrect message index.");
+            }
+            display->changeDisplay(display::conversation,"Conversation");
+            display->changeDisplay({messageIdx});
+            screen->getGame()->getMessages()[messageIdx]->read = true;
+            screen->addLog("Enter the reply");
+            std::string message;
+            getline(std::cin, message);
+            std::cout<<"\033[1A\033[2K";
+            screen->getGame()->getMessages()[messageIdx]->sendMessage(message,screen->getGame()->getTime(),true);
+            display->updateDisplay();
+        }),{std::function<bool(std::shared_ptr<game::Game>)>([](std::shared_ptr<game::Game> game){
+            return (game->getMessages().size()>0);
+        })},{std::function<bool(std::shared_ptr<display::Display>)>([](std::shared_ptr<display::Display> display){
+            return (display->getType()==display::messages);
+        })}));
+
         displayActions.push_back(Action<display::Display>("ReadAll",0,0,0,std::function<void(std::shared_ptr<screen::Screen>,std::shared_ptr<display::Display>,std::vector<int>)>([](std::shared_ptr<screen::Screen> screen,std::shared_ptr<display::Display> display,std::vector<int> arguments = {0}){
             for (std::shared_ptr<messages::Conversation> message : screen->getGame()->getMessages()) {
                 message->read = true;

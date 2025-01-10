@@ -16,6 +16,10 @@ ReadAll
 Usage: ReadAll
 Marks all conversations as read.
 ---
+Reply
+Usage: Reply [index]
+Replies to a conversation.
+---
 ScrollDown
 usage: ScrollDown [displayIdx]
 Scrolls down the indicated display

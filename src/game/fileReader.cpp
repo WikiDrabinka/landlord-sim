@@ -392,7 +392,6 @@ namespace fileReader {
             // messages
             int convNum;
             save >> convNum;
-            std::cerr << convNum;
             for (int i = 0; i<convNum; ++i) {
                 int read, time, tenantIdx;
                 save >> read >> time >> tenantIdx;
