@@ -144,7 +144,7 @@ namespace fileReader {
         for (int i=0; i<game->getLeases().size(); ++i) {
             std::shared_ptr<lease::Lease> lease = game->getLeases()[i];
             save << lease->getRent() << " " << lease->getTime() << " " << lease->getUtilities() << std::endl;
-            save << i << " " << std::distance(game->getApartments().begin(),std::find(game->getApartments().begin(),game->getApartments().end(),lease->getApartment())) << std::endl;
+            save << " " << std::distance(game->getApartments().begin(),std::find(game->getApartments().begin(),game->getApartments().end(),lease->getApartment())) << std::endl;
         }
         // messages
         save << game->getMessages().size() << std::endl;
@@ -392,6 +392,7 @@ namespace fileReader {
             // messages
             int convNum;
             save >> convNum;
+            std::cerr << convNum;
             for (int i = 0; i<convNum; ++i) {
                 int read, time, tenantIdx;
                 save >> read >> time >> tenantIdx;
@@ -415,19 +416,20 @@ namespace fileReader {
                 save >> messNum;
                 std::string message;
                 getline(save >> std::ws,message);
-                game->getMessages().push_back(std::shared_ptr<messages::Conversation>(new messages::Conversation(tenant,message,time)));
+                std::shared_ptr<messages::Conversation> conv(new messages::Conversation(tenant,message,time));
                 for (int j = 0; j<messNum-1; ++j) {
                     getline(save >> std::ws,message);
-                    game->getMessages().back()->sendMessage(message,time);
+                    conv->sendMessage(message,time);
                 }
-                game->getMessages().back()->read = (bool) read;
+                conv->read = (bool) read;
                 int respNum;
                 save >> respNum;
                 for (int j = 0; j<respNum; ++j) {
                     int idx;
                     save >> idx;
-                    game->getMessages().back()->responses.push_back(idx);
+                    conv->responses.push_back(idx);
                 }
+                game->getMessages().push_back(conv);
             }
 
         } catch (std::invalid_argument e) {
