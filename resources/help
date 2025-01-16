@@ -62,7 +62,7 @@ Usage: PlaceFurniture [aptIdx] [roomIdx] [furnIdx] [x] [y]
 Places furniture from storage into the indicated room.
 ---
 RemoveFurniture
-Usage: RepairFurniture [aptIdx] [roomIdx] [furnIdx]
+Usage: RemoveFurniture [aptIdx] [roomIdx] [furnIdx]
 Removes indicated furniture from the room and places
 it in storage.
 ---

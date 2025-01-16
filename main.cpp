@@ -82,5 +82,3 @@ int main() {
     std::cout << "\033[?47l\033[u";
     return 0;
 }
-
-//TO DO : adding empty game and loading, saving, add actions, (!) finish saving and loading files, unit tests, make room state relevant (never)
